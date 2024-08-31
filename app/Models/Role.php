@@ -10,11 +10,9 @@ class Role extends Model
     use HasFactory;
 
 
-    const SUPER_ADMIN = 1;
+    const User =1;
     const ADMIN = 2;
-    const DESIGNER = 3;
-    const CUSTOMER = 4;
-    const MANUFACTURER = 5;
+    const KITCHEN = 3;
 
     protected $casts = [
         'permissions' => 'array',

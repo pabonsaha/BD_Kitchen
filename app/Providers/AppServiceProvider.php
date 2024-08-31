@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('shop_Setting', function () {
-            $id = Role::SUPER_ADMIN;
-            if (Auth::user() && Auth::user()->role_id == Role::DESIGNER) {
+            $id = Role::ADMIN;
+            if (Auth::user() && Auth::user()->role_id == Role::KITCHEN) {
                 $id = Auth::user()->id;
             }
             return ShopSetting::where('user_id', $id)->first();
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            return env('APP_FRONTEND_URL').'auth/reset-password?token=' . $token.'&email='.$user->email;
+            return env('APP_FRONTEND_URL') . 'auth/reset-password?token=' . $token . '&email=' . $user->email;
         });
     }
 }

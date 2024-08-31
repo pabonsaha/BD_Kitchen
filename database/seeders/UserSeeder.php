@@ -22,12 +22,7 @@ class UserSeeder extends Seeder
             $user->email = Str::slug($role->name) . '@gmail.com';
             $user->password = bcrypt('password');
             $user->role_id = $role->id;
-
-            if($role->id == Role::CUSTOMER){
-                $user->designer_id = 3;
-            }
             $user->save();
         }
-
     }
 }

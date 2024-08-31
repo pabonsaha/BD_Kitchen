@@ -13,13 +13,6 @@ class OrderClaimReplySeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create();
-        for ($i = 0; $i < 10; $i++) {
-            $data = new OrderClaimReply();
-            $data->order_claim_id = 2;
-            $data->user_id = 1;
-            $data->details = $faker->paragraph();
-            $data->save();
-        }
+        
     }
 }

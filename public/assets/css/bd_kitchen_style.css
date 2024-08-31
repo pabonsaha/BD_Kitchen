@@ -1,0 +1,74 @@
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.inter-400 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter-500 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter-600 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter-700 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.border-radius {
+  border-radius: 0px 8px;
+}
+.border-radius2 {
+  border-radius: 0px 24px;
+}
+.border-radius3 {
+  border-radius: 0px 8px 0px 0px;
+}
+.border-radius4 {
+  border-radius: 0px 0px 0px 8px;
+}
+.border-radius5{
+    border-radius: 0px 6px;
+}
+.box-shadow {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.asset-shadow {
+  border-radius: 0px 12px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
+}
+.menu-padding {
+  padding: 16px 39px 15px 40px;
+}
+.menu-border_radius {
+  border-radius: 0px 4px;
+}
+.advertise {
+  background: radial-gradient(
+    408.5% 35.62% at 47.58% 50.09%,
+    rgba(252, 234, 235, 0.7) 0%,
+    rgba(255, 234, 230, 0) 100%
+  );
+}

@@ -1,5 +1,0 @@
-providers:
-  - Laravel\Cashier\CashierServiceProvider
-
-migrations:
-  - database/migrations

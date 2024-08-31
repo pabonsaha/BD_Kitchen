@@ -1,0 +1,523 @@
+<?php
+
+namespace App\Http\Controllers;
+
+
+use Exception;
+use App\Models\Role;
+use App\Models\Unit;
+use App\Models\User;
+use App\Models\Brand;
+use App\Models\Vendor;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Attribute;
+use App\Models\ShopSetting;
+use App\Models\ProductImage;
+use Illuminate\Http\Request;
+use App\Models\ProductVariant;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use App\Http\Traits\FileUploadTrait;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Cache;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\IdValidationRequest;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+
+class ProductController extends Controller
+{
+    use FileUploadTrait;
+
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Product::with('category', 'user.role')->isClient();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->editColumn('thumbnail_img', function ($row) {
+                    return '<img src="' . getFilePath($row->thumbnail_img) . '" width="50px" height="50px"/>';
+                })
+                ->addColumn('added_by', function ($row) {
+                    return optional($row->user)->name;
+                })
+                ->addColumn('status', function ($row) {
+                    if (hasPermission('product_status_change')) {
+                        $isChecked = $row->is_published == 1 ? 'checked' : '';
+                        $statusLabel = $row->is_published == 1 ? 'Published' : 'Unpublished';
+                        $statusBadgeClass = $row->is_published == 1 ? 'custom-bg-success' : 'custom-bg-danger';
+
+                        return '<div class="custom-status-container">
+                    <label class="switch switch-success" style="margin-right: 10px;">
+                        <input type="checkbox" class="switch-input changeStatus" data-id="' . $row->id . '" ' . $isChecked . ' />
+                        <span class="switch-toggle-slider">
+                            <span class="switch-on">
+                                <i class="ti ti-check"></i>
+                            </span>
+                            <span class="switch-off">
+                                <i class="ti ti-x"></i>
+                            </span>
+                        </span>
+                    </label>
+                    <span class="badge ' . $statusBadgeClass . '">' . $statusLabel . '</span>
+                    </div>';
+                    }
+                })
+                ->filter(function ($instance) use ($request) {
+                    if ($request->get('status') == '0' || $request->get('status') == '1') {
+                        $instance->where('is_published', $request->get('status'));
+                    }
+
+                    if ($request->get('category') != '') {
+                        $instance->where('category_id', $request->get('category'));
+                    }
+
+                    if ($request->get('role') != ''){
+                        $instance->whereHas('user.role', function ($query) use ($request) {
+                            $query->where('role_id', $request->get('role'));
+                        });
+                    }
+
+                    if ($request->get('user') != ''){
+                        $instance->where('user_id', $request->get('user'));
+                    }
+                },true)
+
+                ->editColumn('unit_price', function ($row) {
+                    return getPriceFormat($row->unit_price);
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    if (hasPermission('product_update') || hasPermission('product_delete')) {
+                        $btn = '<div class="d-inline-block text-nowrap">' .
+                            '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
+                            '<div class="dropdown-menu dropdown-menu-end m-0">';
+                    }
+
+                    if (hasPermission('product_update')) {
+                        $btn .= '<a href="' . route('product.edit', $row->id) . '" class="dropdown-item product_edit_button"><i class="ti ti-edit"></i> ' . _trans('common.Edit') . '</a>';
+                    }
+
+                    if (hasPermission('product_delete')) {
+                        $btn .= '<a href="javascript:void(0);" class="dropdown-item product_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> ' . _trans('common.Delete') . '</a>' .
+                            '</div>' .
+                            '</div>';
+                    }
+
+                    return $btn;
+                })
+
+                ->rawColumns(['action', 'thumbnail_img', 'status'])
+                ->make(true);
+        }
+
+        $categories = Category::all();
+        $sellers = User::whereIn('role_id', [Role::DESIGNER, Role::MANUFACTURER])->get();
+
+        return view('product.index', compact('categories', 'sellers'));
+    }
+
+    public function create()
+    {
+        $setting = shopSetting();
+        $categories = Category::where('active_status', 1)->get();
+        $brands = Brand::where('active_status', 1)->get();
+        $vendors = Vendor::where('is_active', 1)->get();
+        $units = Unit::where('is_active', 1)->get();
+        $attributes = Attribute::where('status', 1)->get();
+        return view('product.create', compact('categories', 'brands', 'vendors', 'units', 'attributes', 'setting'));
+    }
+
+
+    public function store(StoreProductRequest $request)
+    {
+
+        try {
+            DB::beginTransaction();
+            $tags = [];
+            if ($request->ecommerce_product_tags) {
+                $array = json_decode($request->ecommerce_product_tags, true);
+                $tags = array_column($array, 'value');
+            }
+
+            $attributes = [];
+            if ($request['attributes']) {
+                foreach ($request['attributes'] as $attribute) {
+                    array_push($attributes, $attribute);
+                }
+            }
+
+            $variants = [];
+            if ($request['attribute_values']) {
+                foreach ($request['attribute_values'] as $variant) {
+                    $arr = [
+                        'attribute_id' => $variant['attribute_id'],
+                        'value' => $variant['value'],
+                    ];
+
+                    array_push($variants, $arr);
+                }
+            }
+
+            $weightAndDiamensions = [];
+
+            if ($request['weightAndDiamensions']['title']) {
+                foreach ($request['weightAndDiamensions']['title'] as $key => $value) {
+                    $arr = [
+                        'title' => $value,
+                        'details' => $request['weightAndDiamensions']['details'][$key],
+                    ];
+                    array_push($weightAndDiamensions, $arr);
+                }
+            }
+
+            $specifications = [];
+
+            if ($request['specifications']['title']) {
+                foreach ($request['specifications']['title'] as $key => $value) {
+                    $arr = [
+                        'title' => $value,
+                        'details' => $request['specifications']['value'][$key],
+                    ];
+                    array_push($specifications, $arr);
+                }
+            }
+
+
+            $productID = Product::insertGetId([
+                'name' => $request->title,
+                'slug' => createSlug($request->title),
+                'user_id' => getUserId(),
+                'category_id' => $request->category,
+                'brand_id' => $request->brand_id,
+                'vendor_id' => $request->vendor_id,
+                'unit' => $request->unit_id,
+                'video_link' => $request->video_link,
+                'tags' => json_encode($tags),
+                'attributes' => json_encode($attributes),
+                'choice_options' => json_encode($variants),
+                'barcode' => $request->barcode,
+                'num_of_sale' => 0,
+                'description' => $request->description,
+                'unit_price' => $request->unit_price,
+                'weight_dimensions' => json_encode($weightAndDiamensions),
+                'specifications' => json_encode($specifications),
+                'shipping_policy' => $request->shipping_policy,
+                'return_policy' => $request->return_policy,
+                'disclaimer' => $request->disclaimer,
+                'discount_type' => $request->discount_type,
+                'discount' => $request->discount_value,
+                'meta_title' => $request->mata_title,
+                'meta_description' => $request->meta_description,
+                'is_published' => $request->status,
+            ]);
+
+            $product = Product::find($productID);
+            if ($request->hasFile('meta_image')) {
+                $path = $this->uploadFile($request->file('meta_image'), 'products/' . $product->id);
+                $product->meta_img = $path;
+            }
+            if ($request->hasFile('thumbnail')) {
+                $path = $this->uploadFile($request->file('thumbnail'), 'products/' . $product->id);
+                $product->thumbnail_img = $path;
+            }
+
+            $product->save();
+
+
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $this->uploadFile($image, 'products/' . $product->id);
+                    $productImage = new ProductImage();
+                    $productImage->path = $path;
+                    $productImage->product_id = $product->id;
+                    $productImage->save();
+                }
+            }
+
+            if ($request->variant) {
+
+                foreach ($request['variant'] as $key => $combination) {
+                    $product_variant = new ProductVariant();
+                    $product_variant->product_id = $product->id;
+                    $product_variant->variant = $combination['name'];
+                    $product_variant->price = $combination['price'];
+                    $product_variant->qty = $combination['quantity'];
+                    $product_variant->save();
+
+
+                    if ($request['variant'][$key]['image'] != 'undefined') {
+                        $path = $this->uploadFile($combination['image'], 'products/' . $product->id);
+                        $product_variant->image = $path;
+                    }
+
+                    $product_variant->save();
+                }
+            }
+
+            DB::commit();
+
+            Toastr::success('Product Created Successfully');
+
+            return response()->json(['message' => 'Product Created', 'status' => 200], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => "Something went wrong"], 500);
+        }
+    }
+
+    public function edit($id)
+    {
+
+        $product = Product::with(['variants', 'choiceOptions.values', 'images'])->find($id);
+        hasPermissionForOperation($product);
+        $categories = Category::where('active_status', 1)->get();
+        $brands = Brand::where('active_status', 1)->get();
+        $vendors = Vendor::where('is_active', 1)->get();
+        $units = Unit::where('is_active', 1)->get();
+        $attributes = Attribute::where('status', 1)->get();
+        return view('product.edit', compact('categories', 'brands', 'vendors', 'units', 'attributes', 'product'));
+    }
+
+    public function update(UpdateProductRequest $request)
+    {
+        try {
+
+            $product = Product::find($request->product_id);
+            hasPermissionForOperation($product);
+            $tags = [];
+            if ($request->ecommerce_product_tags) {
+                $array = json_decode($request->ecommerce_product_tags, true);
+                $tags = array_column($array, 'value');
+            }
+
+            $attributes = [];
+            if ($request['attributes']) {
+                foreach ($request['attributes'] as $attribute) {
+                    array_push($attributes, $attribute);
+                }
+            }
+
+            $variants = [];
+            if ($request['attribute_values']) {
+                foreach ($request['attribute_values'] as $variant) {
+                    $arr = [
+                        'attribute_id' => $variant['attribute_id'],
+                        'value' => $variant['value'],
+                    ];
+
+                    array_push($variants, $arr);
+                }
+            }
+
+            $weightAndDiamensions = [];
+            if ($request->has('weightAndDiamensions')) {
+                if ($request['weightAndDiamensions']['title']) {
+                    foreach ($request['weightAndDiamensions']['title'] as $key => $value) {
+                        $arr = [
+                            'title' => $value,
+                            'details' => $request['weightAndDiamensions']['details'][$key],
+                        ];
+                        array_push($weightAndDiamensions, $arr);
+                    }
+                }
+            }
+
+            $specifications = [];
+            if ($request->has('specifications')) {
+                if ($request['specifications']['title']) {
+                    foreach ($request['specifications']['title'] as $key => $value) {
+                        $arr = [
+                            'title' => $value,
+                            'details' => $request['specifications']['value'][$key],
+                        ];
+                        array_push($specifications, $arr);
+                    }
+                }
+            }
+
+            DB::beginTransaction();
+            $product = Product::where('id', $request->product_id)->update([
+                'name' => $request->title,
+                'slug' => createSlug($request->title),
+                'user_id' => getUserId(),
+                'category_id' => $request->category,
+                'brand_id' => $request->brand_id,
+                'vendor_id' => $request->vendor_id,
+                'unit' => $request->unit_id,
+                'video_link' => $request->video_link,
+                'tags' => json_encode($tags),
+                'attributes' => json_encode($attributes),
+                'choice_options' => json_encode($variants),
+                'barcode' => $request->barcode,
+                'num_of_sale' => 0,
+                'description' => $request->description,
+                'unit_price' => $request->unit_price,
+                'weight_dimensions' => json_encode($weightAndDiamensions),
+                'specifications' => json_encode($specifications),
+                'shipping_policy' => $request->shipping_policy,
+                'return_policy' => $request->return_policy,
+                'disclaimer' => $request->disclaimer,
+                'discount_type' => $request->discount_type,
+                'discount' => $request->discount_value,
+                'meta_title' => $request->mata_title,
+                'meta_description' => $request->meta_description,
+                'is_published' => $request->status,
+            ]);
+
+            $product = Product::find($request->product_id);
+            if ($request->hasFile('meta_image')) {
+                $path = $this->uploadFile($request->file('meta_image'), 'products/' . $product->id);
+                $this->deleteFile($product->meta_img);
+                $product->meta_img = $path;
+            }
+            if ($request->hasFile('thumbnail')) {
+                $path = $this->uploadFile($request->file('thumbnail'), 'products/' . $product->id);
+                $this->deleteFile($product->thumbnail_img);
+                $product->thumbnail_img = $path;
+            }
+
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $this->uploadFile($image, 'products/' . $product->id);
+                    $productImage = new ProductImage();
+                    $productImage->path = $path;
+                    $productImage->product_id = $product->id;
+                    $productImage->save();
+                }
+            }
+            $product->save();
+
+
+            $existing_product_variant = ProductVariant::where('product_id', $request->product_id)->pluck('id')->toArray();
+            $new_product_variant = [];
+            if ($request->variant) {
+
+                foreach ($request['variant'] as $key => $combination) {
+                    $product_variant = new ProductVariant();
+                    if (array_key_exists('combination_id', $combination) && $combination['combination_id'] != null) {
+                        $product_variant = ProductVariant::find($combination['combination_id']);
+                        $new_product_variant[] = $combination['combination_id'];
+                    }
+
+                    $product_variant->variant = $combination['name'];
+                    $product_variant->price = $combination['price'];
+                    $product_variant->qty = $combination['quantity'];
+                    $product_variant->product_id = $product->id;
+                    $product_variant->save();
+                    if ($request['variant'][$key]['image'] != 'undefined') {
+                        $path = $this->uploadFile($combination['image'], 'products/' . $product->id);
+                        if ($product_variant->image) {
+                            $this->deleteFile($product_variant->image);
+                        }
+                        $product_variant->image = $path;
+                    }
+
+                    $product_variant->save();
+                }
+            }
+
+            $deleted_product_variant = array_diff($existing_product_variant, $new_product_variant);
+            $variantToDelete = ProductVariant::findMany($deleted_product_variant);
+            foreach ($variantToDelete as $variant) {
+                if ($variant->image) {
+                    $this->deleteFile($product_variant->image);
+                }
+                $variant->delete();
+            }
+
+            DB::commit();
+
+            Toastr::success('Product Updated');
+
+            return response()->json(['message' => 'Product Updated', 'status' => 200], 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => "Something went wrong"], 500);
+        }
+    }
+
+    public function destroy(IdValidationRequest $request)
+    {
+        try {
+            $product = Product::find($request->product_id);
+
+            hasPermissionForOperation($product);
+
+            if ($product->thumbnail_img != null && $product->thumbnail_img) {
+                $this->deleteFile($product->thumbnail_img);
+            }
+            if ($product->meta_image != null && $product->meta_image) {
+                $this->deleteFile($product->meta_image);
+            }
+
+            $product_variants = ProductVariant::where('product_id', $request->product_id)->get();
+
+            foreach ($product_variants as $product_variant) {
+                $this->deleteFile($product_variant->image);
+                $product_variant->delete();
+            }
+
+            $product->delete();
+            return response()->json(['text' => 'Product has been deleted.', 'icon' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['message' => "Something went wrong"]);
+        }
+    }
+
+    public function imageDestroy(IdValidationRequest $request)
+    {
+        try {
+            $productImage = ProductImage::find($request->product_image_id);
+
+            if ($productImage->path != null && $productImage->path) {
+                $this->deleteFile($productImage->path);
+            }
+
+            $productImage->delete();
+            return response()->json(['text' => 'Product Image has been deleted.', 'icon' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['message' => "Something went wrong"]);
+        }
+    }
+
+    public function attributeValueList(Request $request)
+    {
+        $validated = $request->validate([
+            'attibute_ids' => 'array',
+            'attibute_ids.*' => 'exists:attributes,id',
+        ]);
+
+        $attributes = Attribute::where('status', 1)
+            ->with('values')
+            ->findMany($request->attibute_ids);
+
+        return response()->json(['message' => 'Attribute List With Value', 'data' => $attributes, 'status' => 200], 200);
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:products,id',
+        ]);
+
+        try {
+
+            $product = Product::find($request->id);
+            $product->is_published = !$product->is_published;
+            $product->save();
+
+            return response()->json(['message' => 'Status Updated Successfully', 'status' => 200], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => "Something went Wrong!"], 500);
+        }
+    }
+
+    public function user($id){
+        $users = User::where('role_id', $id)->get();
+        return response()->json(['users' => $users]);
+    }
+}

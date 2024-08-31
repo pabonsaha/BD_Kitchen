@@ -1,0 +1,19 @@
+.font-size-12{
+    font-size: 12px;
+}
+/* breadcrumb css*/
+.text-right {
+    text-align: right !important;
+}
+
+.dashboard_breadcam {
+    float: right;
+    margin-right: 8px;
+}
+/* breadcrumb css  end*/
+
+.data-info{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}

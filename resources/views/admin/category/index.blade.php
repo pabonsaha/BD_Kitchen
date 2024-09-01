@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('portfolio.Category'))
 
@@ -188,7 +188,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url  : '{{ route('category.index') }}',
+                    url  : '{{ route('admin.category.index') }}',
                     data: function (d){
                         d.status = $('#status').val()
                     }
@@ -287,7 +287,7 @@
 
                 $('.error').text('');
                 $.ajax({
-                    url: '{{ route('category.store') }}',
+                    url: '{{ route('admin.category.store') }}',
                     type: 'POST',
                     contentType: 'multipart/form-data',
                     cache: false,
@@ -334,7 +334,7 @@
                 $('#edit_parenet_category_id').trigger('change.select2');
                 $('#edit_status').trigger('change.select2');
                 $.ajax({
-                    url: '/category/' + $id,
+                    url: '/admin/category/' + $id,
                     type: 'GET',
                     success: function(response) {
                         $('#category_id').val(response.data.id);
@@ -386,7 +386,7 @@
 
                 $('.error').text('');
                 $.ajax({
-                    url: '{{ route('category.update') }}',
+                    url: '{{ route('admin.category.update') }}',
                     type: 'POST',
                     contentType: 'multipart/form-data',
                     cache: false,
@@ -441,7 +441,7 @@
                     if (result.value) {
 
                         $.ajax({
-                            url: '{{ route('category.destroy') }}',
+                            url: '{{ route('admin.category.destroy') }}',
                             method: 'POST',
                             data: {
                                 "_token": "{{ csrf_token() }}",

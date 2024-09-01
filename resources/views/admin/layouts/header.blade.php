@@ -23,7 +23,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ url('/css/custom-style.css') }}">
     @stack('styles')
 </head>
 <body>

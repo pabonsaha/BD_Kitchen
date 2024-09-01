@@ -1,4 +1,4 @@
-:root {
+{{-- :root {
     --color-primary: {{ colorTheme()->primary_color }};
     --color-secondary: {{ colorTheme()->secondary_color }};
     --color-background: {{ colorTheme()->background_color }};
@@ -10,4 +10,4 @@
     --color-shadow: {{ colorTheme()->shadow_color }};
     --color-sidebar-bg: {{ colorTheme()->sidebar_bg }};
     --color-sidebar-hover: {{ colorTheme()->sidebar_hover }};
-}
+} --}}

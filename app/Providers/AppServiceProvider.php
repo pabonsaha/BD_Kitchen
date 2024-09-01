@@ -24,9 +24,6 @@ class AppServiceProvider extends ServiceProvider
             return GeneralSetting::with('currency', 'timezone', 'DateFormat')->first();
         });
 
-        $this->app->singleton('color_theme', function () {
-            return ColorTheme::where('type', 1)->where('active_status', 1)->first();
-        });
 
         $this->app->singleton('active_languages', function () {
             return Language::where('active_status', 1)->get();

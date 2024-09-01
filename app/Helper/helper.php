@@ -30,12 +30,6 @@ if (!function_exists('globalSetting')) {
     }
 }
 
-if (!function_exists('colorTheme')) {
-    function colorTheme()
-    {
-        return app('color_theme');
-    }
-}
 if (!function_exists('shopSetting')) {
     function shopSetting()
     {
@@ -68,7 +62,7 @@ if (!function_exists('getUserId')) {
             Return the user ID of the designer if the user is a designer;
             otherwise, return the user ID of the super admin, which is always 1.
         */
-        if (Auth::user()->role_id == Role::DESIGNER || Auth::user()->role_id == Role::MANUFACTURER) {
+        if (Auth::user()->role_id == Role::KITCHEN) {
             return Auth::user()->id;
         }
 
@@ -140,7 +134,7 @@ if (!function_exists('hasPermissionForOperation')) {
         }
 
         foreach ($model as $data) {
-            if ($data->user_id !== Auth::user()->id && Auth::user()->role_id !== Role::SUPER_ADMIN && $data->seller_id !== Auth::user()->id) {
+            if ($data->kitchen_id !== Auth::user()->id && Auth::user()->role_id !== Role::ADMIN) {
                 abort(401, 'Unauthorized access.');
             }
         }

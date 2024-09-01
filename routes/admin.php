@@ -1,62 +1,62 @@
 <?php
 
 
-use App\Http\Controllers\AttributeController;
-use App\Http\Controllers\BackgroundSettingsController;
-use App\Http\Controllers\BlogCategoryController;
-use App\Http\Controllers\BlogPostController;
-use App\Http\Controllers\ColorThemeController;
-use App\Http\Controllers\ContactRequestController;
-use App\Http\Controllers\EmailCampaignController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\EventTypeController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\FileSystemController;
-use App\Http\Controllers\FooterWidgetController;
-use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\OrderClaimController;
-use App\Http\Controllers\OrderClaimReplyController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\PaymentMethodController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\SliderController;
-use App\Http\Controllers\SubscriberController;
+
+use App\Http\Controllers\Admin\BackgroundSettingsController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogPostController;
+use App\Http\Controllers\Admin\ColorThemeController;
+use App\Http\Controllers\Admin\ContactRequestController;
+use App\Http\Controllers\Admin\EmailCampaignController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventTypeController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FileSystemController;
+use App\Http\Controllers\Admin\FooterWidgetController;
+use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\OrderClaimController;
+use App\Http\Controllers\Admin\OrderClaimReplyController;
+use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PaymentMethodController;
+use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\SubscriberController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\MyOrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ShopSettingController;
-use App\Http\Controllers\EmailSettingController;
-use App\Http\Controllers\AttributeValueController;
-use App\Http\Controllers\BlogPostDetailController;
-use App\Http\Controllers\BulkExportController;
-use App\Http\Controllers\BulkImportController;
-use App\Http\Controllers\DesignerContactController;
-use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\ExpenseTypeController;
-use App\Http\Controllers\GalleryDetailsController;
-use App\Http\Controllers\GeneralSettingController;
-use App\Http\Controllers\GlobalSettingController;
-use App\Http\Controllers\NoticeBoardController;
-use App\Http\Controllers\NoticeTypeController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\ProductRequestController;
-use App\Http\Controllers\ShippingAddressController;
-use App\Http\Controllers\SpecialSectionController;
-use App\Http\Controllers\SpecialSectionDetailController;
-use App\Http\Controllers\SpecialSectionCategoryController;
-use App\Http\Controllers\StripeWebhookController;
-use App\Http\Controllers\SubscripitonController;
+use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UnitController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\MyOrderController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ShopSettingController;
+use App\Http\Controllers\Admin\EmailSettingController;
+use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\BlogPostDetailController;
+use App\Http\Controllers\Admin\BulkExportController;
+use App\Http\Controllers\Admin\BulkImportController;
+use App\Http\Controllers\Admin\DesignerContactController;
+use App\Http\Controllers\Admin\ExpenseController;
+use App\Http\Controllers\Admin\ExpenseTypeController;
+use App\Http\Controllers\Admin\GalleryDetailsController;
+use App\Http\Controllers\Admin\GeneralSettingController;
+use App\Http\Controllers\Admin\GlobalSettingController;
+use App\Http\Controllers\Admin\NoticeBoardController;
+use App\Http\Controllers\Admin\NoticeTypeController;
+use App\Http\Controllers\Admin\OrderItemController;
+use App\Http\Controllers\Admin\ProductRequestController;
+use App\Http\Controllers\Admin\ShippingAddressController;
+use App\Http\Controllers\Admin\SpecialSectionController;
+use App\Http\Controllers\Admin\SpecialSectionDetailController;
+use App\Http\Controllers\Admin\SpecialSectionCategoryController;
+use App\Http\Controllers\Admin\StripeWebhookController;
+use App\Http\Controllers\Admin\SubscripitonController;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -81,10 +81,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/css/custom-style.css', function () {
-    $css = view('css.custom-style')->render();
-    return response($css)->header('Content-Type', 'text/css');
-});
+
 
 
 Route::middleware(['auth'])->group(function () {

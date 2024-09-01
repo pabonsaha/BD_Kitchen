@@ -112,7 +112,7 @@
 
 
             <!-- User -->
-            {{-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                         <img src="{{ getFilePath(Auth::user()->avatar) }}" alt class="rounded-circle" />
@@ -120,7 +120,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="{{ route('profile') }}">
+                        <a class="dropdown-item" href="{{ route('admin.profile') }}">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
@@ -146,10 +146,10 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{route('admin.setting.shop-setting.index')}}">
+                        {{-- <a class="dropdown-item" href="{{route('admin.setting.shop-setting.index')}}">
                             <i class="ti ti-settings me-2 ti-sm"></i>
                             <span class="align-middle">Settings</span>
-                        </a>
+                        </a> --}}
                     </li>
 
                     <li>
@@ -157,39 +157,39 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item" href="{{ route('subscription.plan.index') }}">
+                        {{-- <a class="dropdown-item" href="{{ route('subscription.plan.index') }}">
                             <span class="d-flex align-items-center align-middle">
                                 <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
                                 <span class="flex-grow-1 align-middle">Billing</span>
                                 <span
                                     class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
                             </span>
-                        </a>
+                        </a> --}}
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('subscription.customer.index') }}">
+                        {{-- <a class="dropdown-item" href="{{ route('subscription.customer.index') }}">
                             <i class="ti ti-currency-dollar me-2 ti-sm"></i>
                             <span class="align-middle">Pricing</span>
-                        </a>
+                        </a> --}}
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
 
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="dropdown-item" href="{{ route('admin.logout') }}"
                             onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                             <i class="ti ti-logout me-2 ti-sm"></i>
                             <span class="align-middle">Log Out</span>
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </li>
                 </ul>
-            </li> --}}
+            </li>
             <!--/ User -->
         </ul>
     </div>

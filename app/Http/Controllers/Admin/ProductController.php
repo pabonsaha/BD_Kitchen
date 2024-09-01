@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Controller;
 use Exception;
 use App\Models\Role;
 use App\Models\Unit;
@@ -35,7 +35,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::with('category', 'user.role')->isClient();
+            $data = Product::with('category', 'user.role')->isKitchen();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('thumbnail_img', function ($row) {
@@ -75,37 +75,37 @@ class ProductController extends Controller
                         $instance->where('category_id', $request->get('category'));
                     }
 
-                    if ($request->get('role') != ''){
+                    if ($request->get('role') != '') {
                         $instance->whereHas('user.role', function ($query) use ($request) {
                             $query->where('role_id', $request->get('role'));
                         });
                     }
 
-                    if ($request->get('user') != ''){
+                    if ($request->get('user') != '') {
                         $instance->where('user_id', $request->get('user'));
                     }
-                },true)
+                }, true)
 
                 ->editColumn('unit_price', function ($row) {
                     return getPriceFormat($row->unit_price);
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '';
-                    if (hasPermission('product_update') || hasPermission('product_delete')) {
-                        $btn = '<div class="d-inline-block text-nowrap">' .
-                            '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
-                            '<div class="dropdown-menu dropdown-menu-end m-0">';
-                    }
 
-                    if (hasPermission('product_update')) {
-                        $btn .= '<a href="' . route('product.edit', $row->id) . '" class="dropdown-item product_edit_button"><i class="ti ti-edit"></i> ' . _trans('common.Edit') . '</a>';
-                    }
+                    $btn = '<div class="d-inline-block text-nowrap">' .
+                        '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
+                        '<div class="dropdown-menu dropdown-menu-end m-0">';
 
-                    if (hasPermission('product_delete')) {
-                        $btn .= '<a href="javascript:void(0);" class="dropdown-item product_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> ' . _trans('common.Delete') . '</a>' .
-                            '</div>' .
-                            '</div>';
-                    }
+
+
+                    $btn .= '<a href="' . route('admin.product.edit', $row->id) . '" class="dropdown-item product_edit_button"><i class="ti ti-edit"></i> ' . _trans('common.Edit') . '</a>';
+
+
+
+                    $btn .= '<a href="javascript:void(0);" class="dropdown-item product_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> ' . _trans('common.Delete') . '</a>' .
+                        '</div>' .
+                        '</div>';
+
 
                     return $btn;
                 })
@@ -115,20 +115,16 @@ class ProductController extends Controller
         }
 
         $categories = Category::all();
-        $sellers = User::whereIn('role_id', [Role::DESIGNER, Role::MANUFACTURER])->get();
+        $sellers = User::where('role_id', Role::KITCHEN)->get();
 
-        return view('product.index', compact('categories', 'sellers'));
+        return view('admin.product.index', compact('categories', 'sellers'));
     }
 
     public function create()
     {
         $setting = shopSetting();
         $categories = Category::where('active_status', 1)->get();
-        $brands = Brand::where('active_status', 1)->get();
-        $vendors = Vendor::where('is_active', 1)->get();
-        $units = Unit::where('is_active', 1)->get();
-        $attributes = Attribute::where('status', 1)->get();
-        return view('product.create', compact('categories', 'brands', 'vendors', 'units', 'attributes', 'setting'));
+        return view('admin.product.create', compact('categories', 'setting'));
     }
 
 
@@ -143,36 +139,7 @@ class ProductController extends Controller
                 $tags = array_column($array, 'value');
             }
 
-            $attributes = [];
-            if ($request['attributes']) {
-                foreach ($request['attributes'] as $attribute) {
-                    array_push($attributes, $attribute);
-                }
-            }
 
-            $variants = [];
-            if ($request['attribute_values']) {
-                foreach ($request['attribute_values'] as $variant) {
-                    $arr = [
-                        'attribute_id' => $variant['attribute_id'],
-                        'value' => $variant['value'],
-                    ];
-
-                    array_push($variants, $arr);
-                }
-            }
-
-            $weightAndDiamensions = [];
-
-            if ($request['weightAndDiamensions']['title']) {
-                foreach ($request['weightAndDiamensions']['title'] as $key => $value) {
-                    $arr = [
-                        'title' => $value,
-                        'details' => $request['weightAndDiamensions']['details'][$key],
-                    ];
-                    array_push($weightAndDiamensions, $arr);
-                }
-            }
 
             $specifications = [];
 
@@ -190,23 +157,15 @@ class ProductController extends Controller
             $productID = Product::insertGetId([
                 'name' => $request->title,
                 'slug' => createSlug($request->title),
-                'user_id' => getUserId(),
+                'kitchen_id' => getUserId(),
                 'category_id' => $request->category,
-                'brand_id' => $request->brand_id,
-                'vendor_id' => $request->vendor_id,
-                'unit' => $request->unit_id,
                 'video_link' => $request->video_link,
                 'tags' => json_encode($tags),
-                'attributes' => json_encode($attributes),
-                'choice_options' => json_encode($variants),
-                'barcode' => $request->barcode,
                 'num_of_sale' => 0,
                 'description' => $request->description,
                 'unit_price' => $request->unit_price,
-                'weight_dimensions' => json_encode($weightAndDiamensions),
                 'specifications' => json_encode($specifications),
                 'shipping_policy' => $request->shipping_policy,
-                'return_policy' => $request->return_policy,
                 'disclaimer' => $request->disclaimer,
                 'discount_type' => $request->discount_type,
                 'discount' => $request->discount_value,
@@ -238,25 +197,7 @@ class ProductController extends Controller
                 }
             }
 
-            if ($request->variant) {
 
-                foreach ($request['variant'] as $key => $combination) {
-                    $product_variant = new ProductVariant();
-                    $product_variant->product_id = $product->id;
-                    $product_variant->variant = $combination['name'];
-                    $product_variant->price = $combination['price'];
-                    $product_variant->qty = $combination['quantity'];
-                    $product_variant->save();
-
-
-                    if ($request['variant'][$key]['image'] != 'undefined') {
-                        $path = $this->uploadFile($combination['image'], 'products/' . $product->id);
-                        $product_variant->image = $path;
-                    }
-
-                    $product_variant->save();
-                }
-            }
 
             DB::commit();
 
@@ -265,21 +206,17 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product Created', 'status' => 200], 200);
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => "Something went wrong"], 500);
+            return response()->json(['message' => $e], 500);
         }
     }
 
     public function edit($id)
     {
 
-        $product = Product::with(['variants', 'choiceOptions.values', 'images'])->find($id);
+        $product = Product::with('images')->find($id);
         hasPermissionForOperation($product);
         $categories = Category::where('active_status', 1)->get();
-        $brands = Brand::where('active_status', 1)->get();
-        $vendors = Vendor::where('is_active', 1)->get();
-        $units = Unit::where('is_active', 1)->get();
-        $attributes = Attribute::where('status', 1)->get();
-        return view('product.edit', compact('categories', 'brands', 'vendors', 'units', 'attributes', 'product'));
+        return view('admin.product.edit', compact('categories','product'));
     }
 
     public function update(UpdateProductRequest $request)
@@ -343,23 +280,15 @@ class ProductController extends Controller
             $product = Product::where('id', $request->product_id)->update([
                 'name' => $request->title,
                 'slug' => createSlug($request->title),
-                'user_id' => getUserId(),
+                'kitchen_id' => getUserId(),
                 'category_id' => $request->category,
-                'brand_id' => $request->brand_id,
-                'vendor_id' => $request->vendor_id,
-                'unit' => $request->unit_id,
                 'video_link' => $request->video_link,
                 'tags' => json_encode($tags),
-                'attributes' => json_encode($attributes),
-                'choice_options' => json_encode($variants),
-                'barcode' => $request->barcode,
                 'num_of_sale' => 0,
                 'description' => $request->description,
                 'unit_price' => $request->unit_price,
-                'weight_dimensions' => json_encode($weightAndDiamensions),
                 'specifications' => json_encode($specifications),
                 'shipping_policy' => $request->shipping_policy,
-                'return_policy' => $request->return_policy,
                 'disclaimer' => $request->disclaimer,
                 'discount_type' => $request->discount_type,
                 'discount' => $request->discount_value,
@@ -392,43 +321,6 @@ class ProductController extends Controller
             $product->save();
 
 
-            $existing_product_variant = ProductVariant::where('product_id', $request->product_id)->pluck('id')->toArray();
-            $new_product_variant = [];
-            if ($request->variant) {
-
-                foreach ($request['variant'] as $key => $combination) {
-                    $product_variant = new ProductVariant();
-                    if (array_key_exists('combination_id', $combination) && $combination['combination_id'] != null) {
-                        $product_variant = ProductVariant::find($combination['combination_id']);
-                        $new_product_variant[] = $combination['combination_id'];
-                    }
-
-                    $product_variant->variant = $combination['name'];
-                    $product_variant->price = $combination['price'];
-                    $product_variant->qty = $combination['quantity'];
-                    $product_variant->product_id = $product->id;
-                    $product_variant->save();
-                    if ($request['variant'][$key]['image'] != 'undefined') {
-                        $path = $this->uploadFile($combination['image'], 'products/' . $product->id);
-                        if ($product_variant->image) {
-                            $this->deleteFile($product_variant->image);
-                        }
-                        $product_variant->image = $path;
-                    }
-
-                    $product_variant->save();
-                }
-            }
-
-            $deleted_product_variant = array_diff($existing_product_variant, $new_product_variant);
-            $variantToDelete = ProductVariant::findMany($deleted_product_variant);
-            foreach ($variantToDelete as $variant) {
-                if ($variant->image) {
-                    $this->deleteFile($product_variant->image);
-                }
-                $variant->delete();
-            }
-
             DB::commit();
 
             Toastr::success('Product Updated');
@@ -452,13 +344,6 @@ class ProductController extends Controller
             }
             if ($product->meta_image != null && $product->meta_image) {
                 $this->deleteFile($product->meta_image);
-            }
-
-            $product_variants = ProductVariant::where('product_id', $request->product_id)->get();
-
-            foreach ($product_variants as $product_variant) {
-                $this->deleteFile($product_variant->image);
-                $product_variant->delete();
             }
 
             $product->delete();
@@ -516,7 +401,8 @@ class ProductController extends Controller
         }
     }
 
-    public function user($id){
+    public function user($id)
+    {
         $users = User::where('role_id', $id)->get();
         return response()->json(['users' => $users]);
     }

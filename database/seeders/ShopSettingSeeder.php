@@ -16,11 +16,11 @@ class ShopSettingSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::whereIn('role_id',[Role::SUPER_ADMIN, Role::DESIGNER])->get();
+        $users = User::where('role_id',Role::KITCHEN)->get();
         foreach ($users as $key => $user) {
             $setting            = new ShopSetting();
             $setting->user_id   = $user->id;
-            $setting->shop_name = $user->role_id == 1? "House Brand": $user->name;
+            $setting->shop_name = $user->role_id == 1? "BD Kitchen": $user->name;
             $setting->logo      = 'uploads/house-brand/icon/logo.png';
             $setting->favicon   = 'uploads/house-brand/icon/favicon.png';
             $setting->slug      = Str::slug($user->role_id == 1? "House Brand": $user->name);

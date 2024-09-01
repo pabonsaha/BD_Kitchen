@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 trait CommonQueryTraits
 {
 
-    public function scopeIsClient($query, $columnName = 'kitchen_id')
+    public function scopeIsKitchen($query, $columnName = 'kitchen_id')
     {
         if (Auth::user()->role_id == Role::KITCHEN) {
             $query = $query->where($columnName, Auth::user()->id);

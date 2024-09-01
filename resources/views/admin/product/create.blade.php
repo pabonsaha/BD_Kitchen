@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? __('Add Product'))
 
@@ -20,18 +20,20 @@
                         <!-- Product Information -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-tile mb-0">{{_trans('product.Product information')}}</h5>
+                                <h5 class="card-tile mb-0">{{ _trans('product.Product information') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-9">
-                                        <label class="form-label" for="ecommerce-product-name">{{_trans('common.Title')}}</label>
+                                        <label class="form-label"
+                                            for="ecommerce-product-name">{{ _trans('common.Title') }}</label>
                                         <input type="text" class="form-control" id="title"
                                             placeholder="Product title" name="title" aria-label="Product title" />
                                         <span class="text-danger titleError error"></span>
                                     </div>
                                     <div class="col-3">
-                                        <label class="form-label" for="ecommerce-product-barcode">{{_trans('product.Barcode')}}</label>
+                                        <label class="form-label"
+                                            for="ecommerce-product-barcode">{{ _trans('product.Barcode') }}</label>
                                         <input type="text" class="form-control" id="barcode" placeholder="0123-4567"
                                             name="barcode" aria-label="Product barcode" />
                                         <span class="text-danger barcodeError error"></span>
@@ -39,7 +41,7 @@
                                 </div>
                                 <!-- Description -->
                                 <div>
-                                    <label class="form-label">{{_trans('common.Description')}} (Optional)</label>
+                                    <label class="form-label">{{ _trans('common.Description') }} (Optional)</label>
                                     <div class="form-control p-0 pt-1">
                                         <div class="comment-toolbar border-0 border-bottom">
                                             <div class="d-flex justify-content-start">
@@ -65,7 +67,7 @@
                         <!-- Product Image -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Product Images')}}
+                                <h5 class="card-title mb-0">{{ _trans('product.Product Images') }}
                                     <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
                                         data-bs-toggle="popover" data-bs-placement="right"
                                         data-bs-content="You can upload multiple image of a product" title="Variants"><small
@@ -78,101 +80,29 @@
                             <div class="card-body">
                                 <div class="multiple-uploader" id="multiple-uploader">
                                     <div class="mup-msg">
-                                        <span class="mup-main-msg">{{_trans('product.Click to upload images')}}.</span>
-                                        <span class="mup-msg" id="max-upload-number">{{_trans('product.Upload up to 10 images')}}</span>
-                                        <span class="mup-msg">{{_trans('product.Select multiple image together')}}</span>
+                                        <span class="mup-main-msg">{{ _trans('product.Click to upload images') }}.</span>
+                                        <span class="mup-msg"
+                                            id="max-upload-number">{{ _trans('product.Upload up to 10 images') }}</span>
+                                        <span class="mup-msg">{{ _trans('product.Select multiple image together') }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Product Image -->
 
-                        <!-- Variants -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('profuct.Variants')}}
-                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
-                                        data-bs-toggle="popover" data-bs-placement="right"
-                                        data-bs-content="Select Variant to set variant wise product price"
-                                        title="Variants"><small class="rounded-circle p-0 m-0 px-1 bg-primary"><i
-                                                class="fa-solid fa-question text-white"
-                                                style="font-size: 10px !important"></i></small>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div class="card-body">
 
-
-                                <div class="row mb-2">
-                                    <div
-                                        class="col-4 d-flex align-items-center justify-content-center bg-secondary rounded bg-opacity-50 border border-success">
-                                        <h6 class="mb-0 text-dark">{{_trans('product.Select Variant Attribute')}}</h6>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="select2-primary">
-                                            <select id="attributes" name="attributes[]" class="select2 form-select"
-                                                data-placeholder="Select Attribute" multiple>
-                                                @foreach ($attributes as $attribute)
-                                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <small><span class="text-danger">*</span>{{_trans('product.Chose attibute of a product and then input values of each attribute')}}</small>
-                                </div>
-
-                                <div class="row" id="attribute_value_container">
-
-                                </div>
-                                <div class="row" id="attribute_value_combination">
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <!-- /Variants -->
                         <!-- /Diamension & Specifications-->
 
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Diamension & Specifications')}}</h5>
+                                <h5 class="card-title mb-0">{{ _trans('product.Specifications') }}</h5>
                             </div>
                             <div class="card-body">
-                                <div class="row" id="weightAndDiamensionsContainer">
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <h6>{{_trans('product.Weight And Diamension')}}:</h6>
-                                        </div>
-                                        <div class="col-3 text-end"><button class="btn btn-primary btn-sm" type="button"
-                                                id="addMoreWeightAndDiamensions"><i
-                                                    class="ti ti-plus ti-xs me-0"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-4">
-                                            <label class="form-label" for="weightAndDiamensions">{{_trans('common.Title')}}</label>
-                                            <input type="text" class="form-control parentWeightAndDiamensionsTitle"
-                                                id="ecommerce-product-name" placeholder="Weight or Diamensions Title"
-                                                name="weightAndDiamensions[title][]"
-                                                aria-label="Weight or Diamensions Title" />
-                                        </div>
-                                        <div class="col-8">
-                                            <label class="form-label" for="ecommerce-product-name">{{_trans('product.Value')}}</label>
-                                            <input type="text"
-                                                class="form-control parentWeightAndDiamensionsDescription"
-                                                id="ecommerce-product-name" placeholder="Weight or Diamensions Details"
-                                                name="weightAndDiamensions[details][]"
-                                                aria-label="Weight or Diamensions Details" />
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="row mt-4" id="specificationsContainer">
                                     <div class="row justify-content-between">
                                         <div class="col-6">
-                                            <h6>{{_trans('product.Specifications')}}:</h6>
+                                            <h6>{{ _trans('product.Specifications') }}:</h6>
                                         </div>
                                         <div class="col-3 text-end"><button class="btn btn-primary btn-sm" type="button"
                                                 id="addMoreSpecifications"><i class="ti ti-plus ti-xs me-0"></i></button>
@@ -180,13 +110,15 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-4">
-                                            <label class="form-label" for="Specifications">{{_trans('common.Title')}}</label>
+                                            <label class="form-label"
+                                                for="Specifications">{{ _trans('common.Title') }}</label>
                                             <input type="text" class="form-control parentSpecificationsTitle"
                                                 id="ecommerce-product-name" placeholder="Specifications title"
                                                 name="specifications[title][]" aria-label="Specifications Title" />
                                         </div>
                                         <div class="col-8">
-                                            <label class="form-label" for="ecommerce-product-name">{{_trans('product.Value')}}</label>
+                                            <label class="form-label"
+                                                for="ecommerce-product-name">{{ _trans('product.Value') }}</label>
                                             <input type="text" class="form-control parentSpecificationsDescription"
                                                 id="ecommerce-product-name" placeholder="Specifications"
                                                 name="specifications[value][]" aria-label="Specifications" />
@@ -237,7 +169,7 @@
                         <!-- Media -->
                         <div class="card mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0 card-title">{{_trans('common.Thumbnail')}}</h5>
+                                <h5 class="mb-0 card-title">{{ _trans('common.Thumbnail') }}</h5>
                             </div>
                             <div class="card-body">
 
@@ -248,7 +180,7 @@
                                     <div class="button-wrapper">
                                         <label for="darkLogoInput"
                                             class="btn btn-primary me-2 mb-3 waves-effect waves-light" tabindex="0">
-                                            <span class="d-none d-sm-block">{{_trans('product.Upload Image')}}</span>
+                                            <span class="d-none d-sm-block">{{ _trans('product.Upload Image') }}</span>
                                             <i class="ti ti-upload d-block d-sm-none"></i>
                                             <input type="file" id="darkLogoInput" class="darkLogo-account-file-input"
                                                 name="dark_logo" hidden=""
@@ -257,16 +189,17 @@
                                         <button type="button"
                                             class="btn btn-label-secondary darkLogo-account-image-reset mb-3 waves-effect">
                                             <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block">{{_trans('common.Reset')}}</span>
+                                            <span class="d-none d-sm-block">{{ _trans('common.Reset') }}</span>
                                         </button>
 
-                                        <div class="text-muted">{{_trans('product.Allowed JPG, GIF or PNG. Max size of 800KB')}}</div>
+                                        <div class="text-muted">
+                                            {{ _trans('product.Allowed JPG, GIF or PNG. Max size of 800KB') }}</div>
                                         <span class="text-danger dark_logoError error"></span>
                                     </div>
                                 </div>
                                 <span class="text-danger thumbnailImageError error"></span>
                                 <div class="mb-3 mt-3">
-                                    <h6 class="mb-1 card-title">{{_trans('product.Video Link')}}</h6>
+                                    <h6 class="mb-1 card-title">{{ _trans('product.Video Link') }}</h6>
                                     <input type="text" class="form-control" placeholder="ex. www.youtube.com/abc"
                                         id="video_link" name="video_link" aria-label="Product title" />
                                 </div>
@@ -276,7 +209,7 @@
                         <!-- Pricing Card -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Pricing')}}
+                                <h5 class="card-title mb-0">{{ _trans('product.Pricing') }}
                                     <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
                                         data-bs-toggle="popover" data-bs-placement="right"
                                         data-bs-content="Setting a base price for our essential product is required. If there are no discounts, the base price will stay the same."
@@ -289,7 +222,8 @@
                             <div class="card-body">
                                 <!-- Base Price -->
                                 <div class="mb-3">
-                                    <label class="form-label" for="ecommerce-product-price">{{_trans('product.Base Price')}}</label>
+                                    <label class="form-label"
+                                        for="ecommerce-product-price">{{ _trans('product.Base Price') }}</label>
                                     <input type="number" class="form-control" id="product_price" placeholder="Price"
                                         name="unit_price" aria-label="Product price" />
                                     <span class="text-danger unitPriceError error"></span>
@@ -298,14 +232,16 @@
                                 <div class="mb-3 col ecommerce-select2-dropdown">
                                     <label class="form-label mb-1 d-flex justify-content-between align-items-center"
                                         for="discout_type">
-                                        <span>{{_trans('order.Discount Type')}}</span>
+                                        <span>{{ _trans('order.Discount Type') }}</span>
                                     </label>
                                     <select id="discout_type" name="discount_type" class="select2 form-select"
                                         data-placeholder="Select Category">
-                                        <option value="0">{{_trans('common.Select').' '._trans('common.Option')}}</option>
+                                        <option value="0">
+                                            {{ _trans('common.Select') . ' ' . _trans('common.Option') }}
+                                        </option>
                                         <option value="0">No Discount</option>
-                                        <option value="1">{{_trans('common.Percentage')}} %</option>
-                                        <option value="2">{{_trans('common.Fixed')}}</option>
+                                        <option value="1">{{ _trans('common.Percentage') }} %</option>
+                                        <option value="2">{{ _trans('common.Fixed') }}</option>
                                     </select>
                                 </div>
                                 <span class="text-danger discountTypeError error"></span>
@@ -313,14 +249,16 @@
 
                                 <!-- Discounted Price -->
                                 <div class="mb-3">
-                                    <label class="form-label" for="ecommerce-product-discount-price">{{_trans('common.Discount')}}</label>
+                                    <label class="form-label"
+                                        for="ecommerce-product-discount-price">{{ _trans('common.Discount') }}</label>
                                     <input type="number" class="form-control" id="discount_price"
                                         placeholder="Discounted Price" name="discount_value"
                                         aria-label="Product discounted price" />
 
                                     <span class="text-danger discountValueError error"></span>
                                     <br />
-                                    <small class="text-primary"><span class="text-danger">*</span>{{_trans('product.Dont need input if product dont have discount')}}.</small>
+                                    <small class="text-primary"><span
+                                            class="text-danger">*</span>{{ _trans('product.Dont need input if product dont have discount') }}.</small>
                                 </div>
 
 
@@ -330,7 +268,7 @@
                         <!-- Organize Card -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Organize')}}</h5>
+                                <h5 class="card-title mb-0">{{ _trans('product.Organize') }}</h5>
                             </div>
                             <div class="card-body">
 
@@ -338,61 +276,33 @@
                                 <div class="mb-3 col ecommerce-select2-dropdown">
                                     <label class="form-label mb-1 d-flex justify-content-between align-items-center"
                                         for="category-org">
-                                        <span>{{_trans('portfolio.Category')}}</span>
+                                        <span>{{ _trans('portfolio.Category') }}</span>
                                     </label>
                                     <select id="category" name="category" class="select2 form-select"
                                         data-placeholder="Select Category">
-                                        <option value="">{{_trans('common.Select').' '._trans('portfolio.Category')}}</option>
+                                        <option value="">
+                                            {{ _trans('common.Select') . ' ' . _trans('portfolio.Category') }}</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
 
                                     </select>
                                 </div>
-                                <!-- Collection -->
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="collection">{{_trans('product.Select').' '._trans('product.Brand')}}</label>
-                                    <select id="brand" name="brand_id" class="select2 form-select"
-                                        data-placeholder="Select Brand">
-                                        <option value="">{{_trans('product.Select').' '._trans('product.Brand')}}</option>
-                                        @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <!-- Vendor -->
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="unit">Unit</label>
-                                    <select id="unit" name="unit_id" class="select2 form-select"
-                                        data-placeholder="Select Unit">
-                                        <option value="">{{_trans('common.Select').' '._trans('product.Unit')}}</option>
-                                        @foreach ($units as $unit)
-                                            <option value="{{ $unit->name }}">{{ $unit->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="vendor"> {{_trans('product.Manufacturer')}} </label>
-                                    <select id="vendor" name="vendor_id" class="select2 form-select"
-                                        data-placeholder="Select Vendor">
-                                        <option value="">{{_trans('product.Select Vendor')}}</option>
-                                        @foreach ($vendors as $vendor)
-                                            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                                 <!-- Status -->
                                 <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="status-org">{{_trans('common.Status')}} </label>
+                                    <label class="form-label mb-1" for="status-org">{{ _trans('common.Status') }}
+                                    </label>
                                     <select id="status" name="status" class="select2 form-select"
                                         data-placeholder="Published">
-                                        <option value="1" selected>{{_trans('common.Published')}}</option>
-                                        <option value="0">{{_trans('common.Unpublished')}}</option>
+                                        <option value="1" selected>{{ _trans('common.Published') }}</option>
+                                        <option value="0">{{ _trans('common.Unpublished') }}</option>
                                     </select>
                                 </div>
                                 <!-- Tags -->
                                 <div class="mb-3">
-                                    <label for="ecommerce-product-tags" class="form-label mb-1">{{_trans('product.Tags')}}</label>
+                                    <label for="ecommerce-product-tags"
+                                        class="form-label mb-1">{{ _trans('product.Tags') }}</label>
                                     <input id="ecommerce-product-tags" class="form-control" name="ecommerce_product_tags"
                                         aria-label="Product Tags" />
                                 </div>
@@ -403,12 +313,12 @@
                         <!-- Terms & Polices -->
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('common.Terms & Polices')}}</h5>
+                                <h5 class="card-title mb-0">{{ _trans('common.Terms & Polices') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div>
-                                        <h6>{{_trans('common.Shipping Policy')}}</h6>
+                                        <h6>{{ _trans('common.Shipping Policy') }}</h6>
                                         <div class="form-control p-0 pt-1">
                                             <div class="shipping-policy-toolbar border-0 border-bottom">
                                                 <div class="d-flex justify-content-start">
@@ -428,30 +338,6 @@
                                             </div>
                                         </div>
                                         <span class="text-danger shippingPolicyError error"></span>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div>
-                                        <h6>Return Policy</h6>
-                                        <div class="form-control p-0 pt-1">
-                                            <div class="return-policy-toolbar border-0 border-bottom">
-                                                <div class="d-flex justify-content-start">
-                                                    <span class="ql-formats me-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-link"></button>
-                                                        {{-- <button class="ql-image"></button> --}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="return_policy border-0 pb-4" id="return_policy-description">
-                                                {!! $setting->return_policy !!}
-                                            </div>
-                                        </div>
-                                        <span class="text-danger returnPolicyError error"></span>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -488,11 +374,12 @@
                     <!-- /Second column -->
                 </div>
 
-                @if (hasPermission('product_create'))
-                    <div class="row justify-content-center">
-                        <button type="submit" id="addProduct" class="btn btn-primary col-4">{{_trans('common.Submit')}}</button>
-                    </div>
-                @endif
+
+                <div class="row justify-content-center">
+                    <button type="submit" id="addProduct"
+                        class="btn btn-primary col-4">{{ _trans('common.Submit') }}</button>
+                </div>
+
             </form>
         </div>
 
@@ -521,32 +408,6 @@
                 }
 
 
-                $('#addMoreWeightAndDiamensions').on('click', function() {
-                    let s = $(
-                        `<div class="row mb-3 parentWeightAndDiamensions">
-                        <div class="col-4" >
-                            <label class="form-label" for= "weightAndDiamensions">Title</label>
-                            <input type = "text" class="form-control parentWeightAndDiamensionsTitle" id = "ecommerce-product-name" placeholder = "Weight or Diamensions Title" name = "weightAndDiamensions[title][]" aria-label = "Weight or Diamensions Title" />
-                        </div>
-                        <div class="col-8" >
-                            <label class="form-label" for="ecommerce-product-name"> Details </label>
-                            <div class="row">
-                                <div class='col-11'>
-                                    <input type="text" class="form-control parentWeightAndDiamensionsDescription" id="ecommerce-product-name" placeholder = "Weight or Diamensions Details" name = "weightAndDiamensions[details][]" aria-label = "Weight or Diamensions Details" />
-                                </div>
-                                <div class="col-1 text-danger deleteWeightAndDiamensions" >
-                                    <i class="ti ti-trash "></i>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>`
-                    );
-
-                    $('#weightAndDiamensionsContainer').append(s);
-
-                });
-
                 $('#addMoreSpecifications').on('click', function() {
                     let s = $(
                         `<div class="row mb-3 parentSpecifications">
@@ -573,133 +434,10 @@
 
                 });
 
-                $(document).on('click', '.deleteWeightAndDiamensions', function() {
-                    $(this).closest('.parentWeightAndDiamensions').remove();
-
-                });
                 $(document).on('click', '.deleteSpecifications', function() {
                     $(this).closest('.parentSpecifications').remove();
 
                 });
-
-
-                $('#attributes').on('change', function() {
-                    var data = $("#attributes").val();
-                    $.ajax({
-                        url: '{{ route('product.attribute_value.list') }}',
-                        type: 'POST',
-                        data: {
-                            '_token': "{{ csrf_token() }}",
-                            'attibute_ids': data,
-                        },
-                        success: function(response) {
-                            $('#attribute_value_container').empty();
-                            $('#attribute_value_combination').empty();
-                            let s = '<h6 class="mb-2 text-dark">Select Values</h6>';
-                            $('#attribute_value_container').append(s);
-
-                            $.each(response.data, function(index, value) {
-                                let s = `<div class="row mb-2">
-                                    <div
-                                        class="col-4 d-flex align-items-center justify-content-center bg-secondary rounded bg-opacity-50 border border-primary">
-                                        <h6 class="mb-0 text-dark">${value.name}</h6>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="select2-primary">
-                                            <input hidden name="attribute_values[${value.id}][attribute_id]" value="${value.id}" />
-                                            <select id="${'attribute' + value.id}" name="attribute_values[${value.id}][value][]" class="select2 form-select attribute_values"
-                                                data-placeholder="Select Attribute" multiple>`;
-
-                                $.each(value.values, function(index2, valueName) {
-                                    s +=
-                                        `<option value="${valueName.name}">${valueName.name}</option>`;
-                                });
-
-
-                                s += `</select>
-                                        </div>
-                                    </div>
-                                </div>`
-                                $('#attribute_value_container').append(s);
-                                $(`#${'attribute' + value.id}`).select2();
-                            });
-
-                        },
-                        error: function(error) {
-                            toastr.error(error.responseJSON.message);
-                        }
-                    });
-                });
-
-
-                $(document).on('change', '.attribute_values', function() {
-
-                    let attibute_value = [];
-
-                    $.each($('.attribute_values'), function(index, value) {
-                        if ($(value).val().length > 0) {
-                            attibute_value.push($(value).val());
-                        }
-                    });
-
-                    let s = `
-                <h6>Set Variant Price</h6>
-                <table class="table">
-                            <thead>
-                                <tr>
-                                <th scope="col">Variant</th>
-                                <th scope="col">Variant Price</th>
-                                <th scope="col">Variant Quantity</th>
-                                <th scope="col">Variant Image</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-
-
-                    let combination = cartesian(attibute_value);
-                    $('#attribute_value_combination').empty();
-                    $(combination).each(function(index, value) {
-
-                        s += `<tr class='combination' data-id='${index}'>`;
-                        let variant = '';
-
-                        $(value).each(function(index2, value2) {
-                            variant += value2;
-                            if (value.length - 1 != index2) {
-                                variant += '-';
-                            }
-                        });
-                        s += `<td style="width: 40%"> <input type="text" class="form-control " id="variant_value_name${index}"   value="${variant}" name="variant[${index}][name]" readonly />  </td>
-                    <td> <input type="number" class="form-control"   id="variant_value_price${index}" placeholder="Price" name="variant[${index}][price]" aria-label="Price" /> </td>
-                    <td><input type="number" class="form-control"   id="variant_value_quantity${index}" value="0" placeholder="Quantity" name="variant[${index}][quantity]" aria-label="Quantity" /> </td>
-                    <td> <input type="file" class="form-control variation_combination_image"   id="variant_value_image${index}" placeholder="Image" name="variant[${index}][image]" aria-label="Image" /> </td>
-                    </tr>`
-                    });
-                    s += `</tbody>
-                    </table>`;
-
-                    $('#attribute_value_combination').append('<p>' + s + '</p>');
-                });
-
-                // Funtion to get all combinations
-                function cartesian(args) {
-
-                    var r = [],
-                        max = args.length - 1;
-
-                    function helper(arr, i) {
-                        for (var j = 0, l = args[i].length; j < l; j++) {
-                            var a = arr.slice(0); // clone arr
-                            a.push(args[i][j]);
-                            if (i == max)
-                                r.push(a);
-                            else
-                                helper(a, i + 1);
-                        }
-                    }
-                    helper([], 0);
-                    return r;
-                }
 
 
                 $('#addProduct').click(function() {
@@ -714,15 +452,12 @@
                     formData.append('return_policy', $('#return_policy-description').children().first().html());
                     formData.append('disclaimer', $('#disclaimer-description').children().first().html());
 
-                    $.each($('.variation_combination_image'), function(index, value) {
-                        formData.append(`variant[${index}][image]`, $(value).prop('files')[0]);
-                    });
                     formData.append(`thumbnail`, $('#darkLogoInput').prop('files')[0] ?? '');
 
                     $('.error').empty();
 
                     $.ajax({
-                        url: '{{ route('product.store') }}',
+                        url: '{{ route('admin.product.store') }}',
                         type: 'POST',
                         data: formData,
                         contentType: 'multipart/form-data',
@@ -731,7 +466,7 @@
                         processData: false,
                         success: function(response) {
                             toastr.success(response.message);
-                            window.location.href = "{{ route('product.index') }}";
+                            window.location.href = "{{ route('admin.product.index') }}";
                         },
                         error: function(error) {
                             if (error.status == 422) {

@@ -15,8 +15,6 @@ class Product extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'attributes' => 'array',
-        'choice_options' => 'array',
         'weight_dimensions' => 'array',
         'specifications' => 'array',
     ];
@@ -26,15 +24,8 @@ class Product extends Model
     const FIXED = 1;
     const PERCENTAGE  = 2;
 
-    public function choiceOptions()
-    {
-        return $this->belongsToJson(Attribute::class, 'choice_options[]->attribute_id');
-    }
 
-    public function variants()
-    {
-        return $this->hasMany(ProductVariant::class);
-    }
+
 
     public function images()
     {
@@ -45,10 +36,7 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+
 
     public function wishlist()
     {
@@ -80,6 +68,6 @@ class Product extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'kitchen_id');
     }
 }

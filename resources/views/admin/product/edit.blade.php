@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('common.Update').' '._trans('product.Products'))
 
@@ -100,129 +100,6 @@
                         </div>
                         <!-- Product Image -->
 
-                        <!-- Variants -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Variants')}}
-                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
-                                        data-bs-toggle="popover" data-bs-placement="right"
-                                        data-bs-content="Select Variant to set variant wise product price"
-                                        title="Variants"><small class="rounded-circle p-0 m-0 px-1 bg-primary"><i
-                                                class="fa-solid fa-question text-white"
-                                                style="font-size: 10px !important"></i></small>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-
-
-                                <div class="row mb-2">
-                                    <div
-                                        class="col-4 d-flex align-items-center justify-content-center bg-secondary rounded bg-opacity-50 border border-success">
-                                        <h6 class="mb-0 text-dark">{{_trans('common.Select').' '. _trans('product.Variants').' '._trans('product.Attribute')}}</h6>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="select2-primary">
-
-                                            <select id="attributes" name="attributes[]" class="select2 form-select"
-                                                data-placeholder="Select Attribute" multiple>
-                                                @foreach ($attributes as $attribute)
-
-                                                    <option value="{{ $attribute->id }}"
-                                                        {{ (($product->attributes!=null) && in_array($attribute->id, $product->attributes)) ? 'selected' : '' }}>
-                                                        {{ $attribute->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <small><span class="text-danger">*</span>{{_trans('product.Choose attribute of a product and then input values of each attribute')}}</small>
-                                </div>
-
-                                <div class="row" id="attribute_value_container">
-                                    @foreach ($product->choiceOptions as $choiceOption)
-                                        <div class="row mb-2">
-                                            <div
-                                                class="col-4 d-flex align-items-center justify-content-center bg-secondary rounded bg-opacity-50 border border-primary">
-                                                <h6 class="mb-0 text-dark">{{ $choiceOption->name }}</h6>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="select2-primary">
-                                                    {{-- {{dd($choiceOption->values)}} --}}
-                                                    <input hidden
-                                                        name="attribute_values[{{ $choiceOption->id }}][attribute_id]"
-                                                        value="{{ $choiceOption->id }}" />
-                                                    <select id=""
-                                                        name="attribute_values[{{ $choiceOption->id }}][value][]"
-                                                        class="select2 form-select attribute_values"
-                                                        data-placeholder="Select Attribute" multiple>`;
-                                                        @foreach ($choiceOption->values as $value)
-                                                            <option value="{{ $value->name }}"
-                                                                {{ in_array($value->name, $choiceOption->pivot->value) ? 'selected' : '' }}>
-                                                                {{ $value->name }}</option>
-                                                        @endforeach
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                </div>
-                                <div class="row" id="attribute_value_combination">
-                                    <h6>{{_trans('product.Set Variants Price')}}</h6>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">{{_trans('product.Variants')}}</th>
-                                                <th scope="col">{{_trans('product.Variants Price')}}</th>
-                                                <th scope="col">{{_trans('product.Variants Quantity')}}</th>
-                                                <th scope="col">{{_trans('product.Variants Image')}}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($product->variants as $variant)
-                                                <tr class='combination' data-id='{{ $variant->id }}'>
-                                                    <td style="width: 40%"> <input type="text" class="form-control "
-                                                            id="variant_value_name{{ $variant->id }}"
-                                                            value="{{ $variant->variant }}"
-                                                            name="variant[{{ $variant->id }}][name]" readonly />
-                                                    </td>
-                                                    <td> <input type="number" class="form-control"
-                                                            id="variant_value_price{{ $variant->id }}"
-                                                            placeholder="Price"
-                                                            name="variant[{{ $variant->id }}][price]" aria-label="Price"
-                                                            value="{{ $variant->price }}" />
-                                                    </td>
-                                                    <td><input type="number" class="form-control"
-                                                            id="variant_value_quantity{{ $variant->id }}" value="0"
-                                                            placeholder="Quantity"
-                                                            name="variant[{{ $variant->id }}][quantity]"
-                                                            aria-label="Quantity" value="{{ $variant->qty }}" />
-                                                    </td>
-                                                    <td class="d-flex justify-content-center align-items-center"> <input
-                                                            type="file"
-                                                            class="form-control variation_combination_image"
-                                                            id="variant_value_image{{ $variant->id }}"
-                                                            placeholder="Image" data-id="{{ $variant->id }}"
-                                                            name="variant[{{ $variant->id }}][image]"
-                                                            aria-label="Image" />
-                                                        <img class="ms-1" src="{{ getFilePath($variant->image) }}"
-                                                            alt="" width="35x" height="35px">
-                                                        <input type="number" hidden
-                                                            name="variant[{{ $variant->id }}][combination_id]"
-                                                            value="{{ $variant->id }}">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                    </table>
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <!-- /Variants -->
                         <!-- /Diamension & Specifications-->
 
                         <div class="card mb-4">
@@ -230,68 +107,6 @@
                                 <h5 class="card-title mb-0">{{_trans('product.Diamension & Specifications')}}</h5>
                             </div>
                             <div class="card-body">
-                                <div class="row" id="weightAndDiamensionsContainer">
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <h6>{{_trans('product.Weight And Diamension')}}:</h6>
-                                        </div>
-                                        <div class="col-3 text-end"><button class="btn btn-primary btn-sm" type="button"
-                                                id="addMoreWeightAndDiamensions"><i
-                                                    class="ti ti-plus ti-xs me-0"></i></button>
-                                        </div>
-                                    </div>
-
-                                    @forelse($product->weight_dimensions as $weight_dimension)
-                                        <div class="row mb-3 parentWeightAndDiamensions">
-                                            <div class="col-4">
-                                                <label class="form-label" for= "weightAndDiamensions">Title</label>
-                                                <input type = "text" class="form-control parentWeightAndDiamensionsTitle"
-                                                    id = "ecommerce-product-name"
-                                                    placeholder = "Weight or Diamensions Title"
-                                                    name = "weightAndDiamensions[title][]"
-                                                    value="{{ $weight_dimension['title'] }}"
-                                                    aria-label = "Weight or Diamensions Title" />
-                                            </div>
-                                            <div class="col-8">
-                                                <label class="form-label" for="ecommerce-product-name"> {{_trans('common.Details')}} </label>
-                                                <div class="row">
-                                                    <div class='col-11'>
-                                                        <input type="text"
-                                                            class="form-control parentWeightAndDiamensionsDescription"
-                                                            id="ecommerce-product-name"
-                                                            placeholder = "Weight or Diamensions Details"
-                                                            name = "weightAndDiamensions[details][]"
-                                                            value="{{ $weight_dimension['details'] }}"
-                                                            aria-label = "Weight or Diamensions Details" />
-                                                    </div>
-                                                    <div class="col-1 text-danger deleteWeightAndDiamensions">
-                                                        <i class="ti ti-trash "></i>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        <div class="row mb-3">
-                                            <div class="col-4">
-                                                <label class="form-label" for="weightAndDiamensions">{{_trans('common.Title')}}</label>
-                                                <input type="text" class="form-control parentWeightAndDiamensionsTitle"
-                                                    id="ecommerce-product-name" placeholder="Weight or Diamensions Title"
-                                                    name="weightAndDiamensions[title][]"
-                                                    aria-label="Weight or Diamensions Title" />
-                                            </div>
-                                            <div class="col-8">
-                                                <label class="form-label" for="ecommerce-product-name">Value</label>
-                                                <input type="text"
-                                                    class="form-control parentWeightAndDiamensionsDescription"
-                                                    id="ecommerce-product-name"
-                                                    placeholder="Weight or Diamensions Details"
-                                                    name="weightAndDiamensions[details][]"
-                                                    aria-label="Weight or Diamensions Details" />
-                                            </div>
-                                        </div>
-                                    @endforelse
-                                </div>
 
                                 <div class="row mt-4" id="specificationsContainer">
                                     <div class="row justify-content-between">
@@ -519,44 +334,7 @@
 
                                     </select>
                                 </div>
-                                <!-- Collection -->
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="collection">{{_trans('product.Select')._trans('product.Brand')}}</label>
-                                    <select id="brand" name="brand_id" class="select2 form-select"
-                                        data-placeholder="Select Brand">
-                                        <option value="">{{_trans('product.Select').' '._trans('product.Brand')}}</option>
-                                        @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}"
-                                                {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
-                                                {{ $brand->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <!-- Vendor -->
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="unit">{{_trans('product.Unit')}}</label>
-                                    <select id="unit" name="unit_id" class="select2 form-select"
-                                        data-placeholder="Select Unit">
-                                        <option value="">{{_trans('common.Select')._trans('product.Unit')}}</option>
-                                        @foreach ($units as $unit)
-                                            <option value="{{ $unit->name }}"
-                                                {{ $product->unit == $unit->name ? 'selected' : '' }}>{{ $unit->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3 col ecommerce-select2-dropdown">
-                                    <label class="form-label mb-1" for="vendor"> {{_trans('product.Manufacturer')}} </label>
-                                    <select id="vendor" name="vendor_id" class="select2 form-select"
-                                        data-placeholder="Select Vendor">
-                                        <option value="">{{_trans('common.Select'). _trans('product.Manufacturer')}}</option>
-                                        @foreach ($vendors as $vendor)
-                                            <option value="{{ $vendor->id }}"
-                                                {{ $product->vendor_id == $vendor->id ? 'selected' : '' }}>
-                                                {{ $vendor->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                                 <!-- Status -->
                                 <div class="mb-3 col ecommerce-select2-dropdown">
                                     <label class="form-label mb-1" for="status-org">{{_trans('common.Status')}} </label>
@@ -609,30 +387,6 @@
                                         <span class="text-danger shippingPolicyError error"></span>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div>
-                                        <h6>{{_trans('common.Return Policy')}}</h6>
-                                        <div class="form-control p-0 pt-1">
-                                            <div class="return-policy-toolbar border-0 border-bottom">
-                                                <div class="d-flex justify-content-start">
-                                                    <span class="ql-formats me-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-link"></button>
-                                                        {{-- <button class="ql-image"></button> --}}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="return_policy border-0 pb-4" id="return_policy-description">
-                                                {!! $product->return_policy !!}
-                                            </div>
-                                        </div>
-                                        <span class="text-danger returnPolicyError error"></span>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div>
                                         <h6>{{_trans('common.Disclaimer')}}</h6>
@@ -667,11 +421,11 @@
                     <!-- /Second column -->
                 </div>
 
-                @if(hasPermission('product_update'))
+
                     <div class="row justify-content-center">
                         <button type="submit" id="addProduct" class="btn btn-primary col-4">{{_trans('common.Submit')}}</button>
                     </div>
-                @endif
+
         </form>
     </div>
 
@@ -700,31 +454,7 @@
             }
 
 
-            $('#addMoreWeightAndDiamensions').on('click', function() {
-                let s = $(
-                    `<div class="row mb-3 parentWeightAndDiamensions">
-                        <div class="col-4" >
-                            <label class="form-label" for= "weightAndDiamensions">Title</label>
-                            <input type = "text" class="form-control parentWeightAndDiamensionsTitle" id = "ecommerce-product-name" placeholder = "Weight or Diamensions Title" name = "weightAndDiamensions[title][]" aria-label = "Weight or Diamensions Title" />
-                        </div>
-                        <div class="col-8" >
-                            <label class="form-label" for="ecommerce-product-name"> Details </label>
-                            <div class="row">
-                                <div class='col-11'>
-                                    <input type="text" class="form-control parentWeightAndDiamensionsDescription" id="ecommerce-product-name" placeholder = "Weight or Diamensions Details" name = "weightAndDiamensions[details][]" aria-label = "Weight or Diamensions Details" />
-                                </div>
-                                <div class="col-1 text-danger deleteWeightAndDiamensions" >
-                                    <i class="ti ti-trash "></i>
-                                </div>
 
-                            </div>
-                        </div>
-                    </div>`
-                );
-
-                $('#weightAndDiamensionsContainer').append(s);
-
-            });
 
             $('#addMoreSpecifications').on('click', function() {
                 let s = $(
@@ -752,133 +482,19 @@
 
             });
 
-            $(document).on('click', '.deleteWeightAndDiamensions', function() {
-                $(this).closest('.parentWeightAndDiamensions').remove();
 
-            });
             $(document).on('click', '.deleteSpecifications', function() {
                 $(this).closest('.parentSpecifications').remove();
 
             });
 
 
-            $('#attributes').on('change', function() {
-                var data = $("#attributes").val();
-                $.ajax({
-                    url: '{{ route('product.attribute_value.list') }}',
-                    type: 'POST',
-                    data: {
-                        '_token': "{{ csrf_token() }}",
-                        'attibute_ids': data,
-                    },
-                    success: function(response) {
-                        $('#attribute_value_container').empty();
-                        $('#attribute_value_combination').empty();
-                        let s = '<h6 class="mb-2 text-dark">Select Values</h6>';
-                        $('#attribute_value_container').append(s);
-
-                        $.each(response.data, function(index, value) {
-                            let s = `<div class="row mb-2">
-                                    <div
-                                        class="col-4 d-flex align-items-center justify-content-center bg-secondary rounded bg-opacity-50 border border-primary">
-                                        <h6 class="mb-0 text-dark">${value.name}</h6>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="select2-primary">
-                                            <input hidden name="attribute_values[${value.id}][attribute_id]" value="${value.id}" />
-                                            <select id="${'attribute' + value.id}" name="attribute_values[${value.id}][value][]" class="select2 form-select attribute_values"
-                                                data-placeholder="Select Attribute" multiple>`;
-
-                            $.each(value.values, function(index2, valueName) {
-                                s +=
-                                    `<option value="${valueName.name}">${valueName.name}</option>`;
-                            });
 
 
-                            s += `</select>
-                                        </div>
-                                    </div>
-                                </div>`
-                            $('#attribute_value_container').append(s);
-                            $(`#${'attribute'+ value.id}`).select2();
-                        });
-
-                    },
-                    error: function(error) {
-                        toastr.error(error.responseJSON.message);
-                    }
-                });
-            });
 
 
-            $(document).on('change', '.attribute_values', function() {
-
-                let attibute_value = [];
-
-                $.each($('.attribute_values'), function(index, value) {
-                    if ($(value).val().length > 0) {
-                        attibute_value.push($(value).val());
-                    }
-                });
-
-                let s = `
-                <h6>Set Variant Price</h6>
-                <table class="table">
-                            <thead>
-                                <tr>
-                                <th scope="col">Variant</th>
-                                <th scope="col">Variant Price</th>
-                                <th scope="col">Variant Quantity</th>
-                                <th scope="col">Variant Image</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
 
 
-                let combination = cartesian(attibute_value);
-                $('#attribute_value_combination').empty();
-                $(combination).each(function(index, value) {
-
-                    s += `<tr class='combination' data-id='${index}'>`;
-                    let variant = '';
-
-                    $(value).each(function(index2, value2) {
-                        variant += value2;
-                        if (value.length - 1 != index2) {
-                            variant += '-';
-                        }
-                    });
-                    s += `<td style="width: 40%"> <input type="text" class="form-control " id="variant_value_name${index}"   value="${variant}" name="variant[${index}][name]" readonly />  </td>
-                    <td> <input type="number" class="form-control"   id="variant_value_price${index}" placeholder="Price" name="variant[${index}][price]" aria-label="Price" /> </td>
-                    <td><input type="number" class="form-control"   id="variant_value_quantity${index}" value="0" placeholder="Quantity" name="variant[${index}][quantity]" aria-label="Quantity" /> </td>
-                    <td> <input type="file" class="form-control variation_combination_image" id="variant_value_image${index}" placeholder="Image" name="variant[${index}][image]" aria-label="Image" /> </td>
-                    </tr>`
-                });
-                s += `</tbody>
-                    </table>`;
-
-                $('#attribute_value_combination').append('<p>' + s + '</p>');
-            });
-
-            // Funtion to get all combinations
-            function cartesian(args) {
-
-                var r = [],
-                    max = args.length - 1;
-
-                function helper(arr, i) {
-                    for (var j = 0, l = args[i].length; j < l; j++) {
-                        var a = arr.slice(0); // clone arr
-                        a.push(args[i][j]);
-                        if (i == max)
-                            r.push(a);
-                        else
-                            helper(a, i + 1);
-                    }
-                }
-                helper([], 0);
-                return r;
-            }
 
 
             $('#addProduct').click(function() {
@@ -890,22 +506,15 @@
                 formData.append('description', $('#description').children().first().html());
                 formData.append('shipping_policy', $('#shipping_policy-description').children().first()
                     .html());
-                formData.append('return_policy', $('#return_policy-description').children().first().html());
                 formData.append('disclaimer', $('#disclaimer-description').children().first().html());
 
-                $.each($('.variation_combination_image'), function(index, value) {
-                    let id = $(value).data('id');
-                    if (id) {
-                        index = id;
-                    }
-                    formData.append(`variant[${index}][image]`, $(value).prop('files')[0]);
-                });
+
                 formData.append(`thumbnail`, $('#darkLogoInput').prop('files')[0] ?? '');
 
                 $('.error').empty();
 
                 $.ajax({
-                    url: '{{ route('product.update') }}',
+                    url: '{{ route('admin.product.update') }}',
                     type: 'POST',
                     data: formData,
                     contentType: 'multipart/form-data',
@@ -915,7 +524,7 @@
                     success: function(response) {
                         toastr.success(response.message);
                         console.log(response);
-                        window.location.href = "{{ route('product.index') }}";
+                        window.location.href = "{{ route('admin.product.index') }}";
                     },
                     error: function(error) {
                         if (error.status == 422) {
@@ -993,7 +602,7 @@
                     if (result.value) {
 
                         $.ajax({
-                            url: '{{ route('product.image.destroy') }}',
+                            url: '{{ route('admin.product.image.destroy') }}',
                             method: 'POST',
                             data: {
                                 "_token": "{{ csrf_token() }}",

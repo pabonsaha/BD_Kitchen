@@ -30,9 +30,9 @@ class DatabaseSeeder extends Seeder
             TimeZoneSeeder::class,
             CurrenciesSeeder::class,
             DateFormatSeeder::class,
-
+            ShopSettingSeeder::class,
             CategorySeeder::class,
-
+            
         ]);
     }
 }

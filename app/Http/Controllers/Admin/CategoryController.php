@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Requests\IdValidationRequest;
@@ -46,23 +47,23 @@ class CategoryController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $btn = '';
-                    if (hasPermission('category_update') || hasPermission('category_delete')) {
-                        $btn = '<div class="d-inline-block text-nowrap">' .
-                            '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
-                            '<div class="dropdown-menu dropdown-menu-end m-0">';
-                    }
+
+                    $btn = '<div class="d-inline-block text-nowrap">' .
+                        '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
+                        '<div class="dropdown-menu dropdown-menu-end m-0">';
+
 
 
                     // Check if the user has the permission to update the category
-                    if (hasPermission('category_update')) {
-                        $btn .= '<a href="javascript:0;" class="dropdown-item category_edit_button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCategoryEditModal" data-id="' . $row->id . '"><i class="ti ti-edit"></i> ' . _trans('common.Edit') . '</a>';
-                    }
 
-                    if (hasPermission('category_delete')) {
+                        $btn .= '<a href="javascript:0;" class="dropdown-item category_edit_button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCategoryEditModal" data-id="' . $row->id . '"><i class="ti ti-edit"></i> ' . _trans('common.Edit') . '</a>';
+
+
+
                         $btn .= '<a href="javascript:0;" class="dropdown-item category_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> ' . _trans('common.Delete') . '</a>' .
                             '</div>' .
                             '</div>';
-                    }
+
 
                     return $btn;
                 })
@@ -72,7 +73,7 @@ class CategoryController extends Controller
         }
 
         $categories = Category::all();
-        return view('category.index', compact('categories'));
+        return view('admin.category.index', compact('categories'));
     }
 
     public function store(CategoryStoreRequest $request)

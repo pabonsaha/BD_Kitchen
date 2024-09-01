@@ -16,9 +16,6 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'title' => 'required|unique:products,name|max:255',
-            'attributes' => 'nullable|array',
-            'attribute_values' => 'nullable|array',
-            'variant' => 'nullable|array',
             'weightAndDiamensions' => 'nullable|array',
             'specifications' => 'nullable|array',
             'ecommerce_product_tags' => 'nullable',

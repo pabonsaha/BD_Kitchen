@@ -334,7 +334,7 @@
                                                 </div>
                                             </div>
                                             <div class="shipping_policy border-0 pb-4" id="shipping_policy-description">
-                                                {!! $setting->shipping_policy !!}
+
                                             </div>
                                         </div>
                                         <span class="text-danger shippingPolicyError error"></span>
@@ -358,7 +358,7 @@
                                                 </div>
                                             </div>
                                             <div class="disclaimer border-0 pb-4" id="disclaimer-description">
-                                                {!! $setting->disclaimer !!}
+
                                             </div>
                                         </div>
                                         <span class="text-danger disclaimerError error"></span>

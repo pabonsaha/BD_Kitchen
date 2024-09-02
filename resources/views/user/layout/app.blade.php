@@ -3,13 +3,13 @@
 <body>
     <!-- Navbar Start -->
     <header>
-        <section class="container mx-auto mb-[85px]">
+        <section class="container mx-auto mb-[50px]">
             <div class="navbar bg-base-100 flex flex-col lg:flex-row md:flex-row items-center space-y-4 lg:space-y-0">
                 <div class="navbar-start">
                     <a class="btn btn-ghost text-[32px] pacifico-regular text-[#E32938]">BDKitchen</a>
                 </div>
                 <div class="navbar-center lg:flex flex-col inter-500">
-                    <button
+                    <a href="{{route('register')}}"
                         class="flex items-center btn text-[#E32938] border-radius border border-solid border-[#E3293880] bg-[#FCEAEB]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18"
                             fill="none">
@@ -18,7 +18,7 @@
                                 fill="#E32938" />
                         </svg>
                         Create your Kitchen
-                    </button>
+                    </a>
                 </div>
                 <div class="navbar-end">
                     <div class="flex items-center justify-around pr-[29px]">

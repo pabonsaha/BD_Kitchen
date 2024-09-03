@@ -35,7 +35,7 @@
                 </a>
                 <ul class="menu-sub">
                     @if (hasPermission('product_read'))
-                        <li class="menu-item {{ activeMenu('product') }}">
+                        <li class="menu-item {{ activeMenu('admin.product') }}">
                             <a href="{{ route('admin.product.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('product.Products') }}">{{ _trans('product.Products') }}
                                 </div>
@@ -493,7 +493,8 @@
                 </ul>
             </li>
         @endif
-        @if (hasPermission('system_settings_read'))
+        --}}
+
             <li class="menu-item {{ openMenu(['setting']) }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons ti ti-settings"></i>
@@ -501,7 +502,7 @@
                         {{ _trans('system.System') }} {{ _trans('system.Settings') }}</div>
                 </a>
                 <ul class="menu-sub">
-                    @if (hasPermission('general_settings_read'))
+                    {{-- @if (hasPermission('general_settings_read'))
                         <li class="menu-item {{ activeMenu('setting.general-setting') }}">
                             <a href="{{ route('setting.general-setting.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('system.General') }} {{ _trans('system.Settings') }}">
@@ -517,18 +518,18 @@
                                     {{ _trans('system.File') }} {{ _trans('system.System') }}</div>
                             </a>
                         </li>
-                    @endif
+                    @endif --}}
 
-                    @if (hasPermission('shop_settings_read'))
-                        <li class="menu-item {{ activeMenu('setting.shop-setting') }}">
-                            <a href="{{ route('setting.shop-setting.index') }}" class="menu-link">
+
+                        <li class="menu-item {{ activeMenu('admin.setting.shop-setting') }}">
+                            <a href="{{ route('admin.setting.shop-setting.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('system.Shop') }} {{ _trans('system.System') }}">
                                     {{ _trans('system.Shop') }} {{ _trans('system.System') }}</div>
                             </a>
                         </li>
-                    @endif
 
-                    @if (hasPermission('global_settings_read'))
+
+                    {{-- @if (hasPermission('global_settings_read'))
                         <li class="menu-item {{ activeMenu('setting.global-setting') }}">
                             <a href="{{ route('setting.global-setting.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('system.Global') }} {{ _trans('system.System') }}">
@@ -580,10 +581,10 @@
                                     {{ _trans('system.Language') }} {{ _trans('system.Settings') }}</div>
                             </a>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
             </li>
-        @endif --}}
+
 
 
     </ul>

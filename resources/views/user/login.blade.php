@@ -104,7 +104,7 @@
         }
 
         .form .error {
-            font-size: 8px;
+            font-size: 12px;
             color: #E32938;
         }
 

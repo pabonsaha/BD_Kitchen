@@ -1,10 +1,13 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('shop_setting.Shop Setting'))
 
 @section('content')
     <div class="col-12 mb-4">
-        {!! breadcrumb(_trans('shop_setting.Shop Setting') .' ',['#'=> _trans('setting.System').' '. _trans('setting.Settings'),'setting'=> _trans('shop_setting.Shop Setting') ]) !!}
+        {!! breadcrumb(_trans('shop_setting.Shop Setting') . ' ', [
+            '#' => _trans('setting.System') . ' ' . _trans('setting.Settings'),
+            'setting' => _trans('shop_setting.Shop Setting'),
+        ]) !!}
         <div class="bs-stepper vertical wizard-vertical-icons-example mt-2">
             <div class="bs-stepper-header">
                 <div class="step" data-target="#system-info-setting">
@@ -13,8 +16,10 @@
                             <i class="ti ti-file-description"></i>
                         </span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">{{ _trans('setting.Shop'). ' '. _trans('setting.Info') }}</span>
-                            <span class="bs-stepper-subtitle">{{ _trans('setting.Setup'). ' '.  _trans('setting.Shop'). ' '.  _trans('setting.Info') }}</span>
+                            <span
+                                class="bs-stepper-title">{{ _trans('setting.Shop') . ' ' . _trans('setting.Info') }}</span>
+                            <span
+                                class="bs-stepper-subtitle">{{ _trans('setting.Setup') . ' ' . _trans('setting.Shop') . ' ' . _trans('setting.Info') }}</span>
                         </span>
                     </button>
                 </div>
@@ -25,8 +30,9 @@
                             <i class="ti ti-user"></i>
                         </span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">{{ _trans('common.Site').' '._trans('common.Logo') }}</span>
-                            <span class="bs-stepper-subtitle"> {{ _trans('common.Add'). ' '. _trans('common.Site').' '._trans('common.Logo') }}</span>
+                            <span class="bs-stepper-title">{{ _trans('common.Site') . ' ' . _trans('common.Logo') }}</span>
+                            <span class="bs-stepper-subtitle">
+                                {{ _trans('common.Add') . ' ' . _trans('common.Site') . ' ' . _trans('common.Logo') }}</span>
                         </span>
                     </button>
                 </div>
@@ -35,8 +41,9 @@
                     <button type="button" class="step-trigger">
                         <span class="bs-stepper-circle"><i class="ti ti-brand-instagram"></i> </span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title"> {{_trans('shop_setting.Social Links')}}</span>
-                            <span class="bs-stepper-subtitle">{{ _trans('common.Add'). ' '. _trans('shop_setting.Social Links')}}</span>
+                            <span class="bs-stepper-title"> {{ _trans('shop_setting.Social Links') }}</span>
+                            <span
+                                class="bs-stepper-subtitle">{{ _trans('common.Add') . ' ' . _trans('shop_setting.Social Links') }}</span>
                         </span>
                     </button>
                 </div>
@@ -46,7 +53,8 @@
                         <span class="bs-stepper-circle"><i class="ti ti-notes"></i> </span>
                         <span class="bs-stepper-label">
                             <span class="bs-stepper-title">{{ _trans('common.Terms & Polices') }}</span>
-                            <span class="bs-stepper-subtitle">{{ _trans('common.Add'). ' '. _trans('common.Terms & Polices')}}</span>
+                            <span
+                                class="bs-stepper-subtitle">{{ _trans('common.Add') . ' ' . _trans('common.Terms & Polices') }}</span>
                         </span>
                     </button>
                 </div>
@@ -57,14 +65,15 @@
                     <form method="POST" id="system-info-setting-form">
                         @csrf
                         <div class="content-header mb-3">
-                            <h6 class="mb-0">{{ _trans('setting.Shop'). ' '._trans('common.Info') }}</h6>
-                            <small>{{ _trans('common.Enter'). ' '. _trans('setting.Shop'). ' '._trans('common.Info') }}</small>
+                            <h6 class="mb-0">{{ _trans('setting.Shop') . ' ' . _trans('common.Info') }}</h6>
+                            <small>{{ _trans('common.Enter') . ' ' . _trans('setting.Shop') . ' ' . _trans('common.Info') }}</small>
                         </div>
                         <div class="row g-3">
                             <div class="col-sm-6">
-                                <label class="form-label" for="shop_name">{{ _trans('setting.Shop'). ' '._trans('common.Name') }}</label>
+                                <label class="form-label"
+                                    for="shop_name">{{ _trans('setting.Shop') . ' ' . _trans('common.Name') }}</label>
                                 <input type="text" id="shop_name" name="shop_name" class="form-control"
-                                       placeholder="House Brand" value="{{ $setting->shop_name }}"/>
+                                    placeholder="House Brand" value="{{ $setting->shop_name }}" />
 
                                 <span class="text-danger shop_nameError error"></span>
 
@@ -72,9 +81,7 @@
                             <div class="col-sm-12">
                                 <label class="form-label" for="address">{{ _trans('common.Address') }}</label>
                                 <div class="input-group input-group-merge">
-                                    <textarea name="address" id="address" class="form-control"
-                                              placeholder="24/A, Road-6, Miami"
-                                              rows="3">{{ $setting->location }}</textarea>
+                                    <textarea name="address" id="address" class="form-control" placeholder="24/A, Road-6, Miami" rows="3">{{ $setting->location }}</textarea>
 
                                 </div>
 
@@ -84,7 +91,7 @@
                                 <label class="form-label" for="phone">{{ _trans('common.Phone') }}</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="phone" name="phone" class="form-control" required
-                                           placeholder="+88754451415" value="{{ $setting->phone }}"/>
+                                        placeholder="+88754451415" value="{{ $setting->phone }}" />
                                 </div>
                                 <span class="text-danger phoneError error"></span>
                             </div>
@@ -92,18 +99,17 @@
                                 <label class="form-label" for="email">{{ _trans('common.Email') }}</label>
                                 <div class="input-group input-group-merge">
                                     <input type="email" id="email" name="email" class="form-control" required
-                                           value="{{ $setting->email }}" placeholder="housebrand@example.com"/>
+                                        value="{{ $setting->email }}" placeholder="housebrand@example.com" />
                                 </div>
 
                                 <span class="text-danger emailError error"></span>
 
                             </div>
                             <div class="col-sm-12">
-                                <label class="form-label" for="mapLocation">{{ _trans('common.Map') .' '. _trans('common.Location') }}</label>
+                                <label class="form-label"
+                                    for="mapLocation">{{ _trans('common.Map') . ' ' . _trans('common.Location') }}</label>
                                 <div class="input-group input-group-merge">
-                                    <textarea id="map_location" name="map_location" class="form-control"
-                                              placeholder="Iframe Map Location"
-                                              rows="3">{{ $setting->map_location }}</textarea>
+                                    <textarea id="map_location" name="map_location" class="form-control" placeholder="Iframe Map Location" rows="3">{{ $setting->map_location }}</textarea>
                                 </div>
 
                                 <span class="text-danger map_locationError error"></span>
@@ -111,7 +117,8 @@
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn btn-primary" type="submit">
-                                    <span class="align-middle d-sm-inline-block d-none me-sm-1">{{ _trans('common.Submit') }}</span>
+                                    <span
+                                        class="align-middle d-sm-inline-block d-none me-sm-1">{{ _trans('common.Submit') }}</span>
                                     <i class="ti ti-arrow-up"></i>
                                 </button>
                             </div>
@@ -124,7 +131,7 @@
                     <form method="POST" id="logo-setting-form" enctype="multipart/form-data">
                         @csrf
                         <div class="content-header mb-3">
-                            <h6 class="mb-0">{{ _trans('common.Site').' '._trans('common.Logo') }}</h6>
+                            <h6 class="mb-0">{{ _trans('common.Site') . ' ' . _trans('common.Logo') }}</h6>
                             <small>{{ _trans('shop_setting.Enter Your Site Logo') }}</small>
                         </div>
                         <div class="row g-3">
@@ -135,27 +142,30 @@
                                     <div class="card-body">
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                                             <img src="{{ asset('storage/' . $setting->logo) }}"
-                                                 onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
-                                                 alt="user-avatar" class="d-block w-px-100 h-px-100 rounded"
-                                                 id="lightLogo"/>
+                                                onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
+                                                alt="user-avatar" class="d-block w-px-100 h-px-100 rounded"
+                                                id="lightLogo" />
 
                                             <div class="button-wrapper">
                                                 <label for="lightLogoInput"
-                                                       class="btn btn-primary me-2 mb-3 waves-effect waves-light"
-                                                       tabindex="0">
-                                                    <span class="d-none d-sm-block">{{ _trans('shop_setting.Upload new light logo') }}</span>
+                                                    class="btn btn-primary me-2 mb-3 waves-effect waves-light"
+                                                    tabindex="0">
+                                                    <span
+                                                        class="d-none d-sm-block">{{ _trans('shop_setting.Upload new light logo') }}</span>
                                                     <i class="ti ti-upload d-block d-sm-none"></i>
                                                     <input type="file" id="lightLogoInput" name="light_logo"
-                                                           class=" lightLogo-account-file-input" hidden=""
-                                                           accept="image/png, image/jpeg, image/jpg"/>
+                                                        class=" lightLogo-account-file-input" hidden=""
+                                                        accept="image/png, image/jpeg, image/jpg" />
                                                 </label>
                                                 <button type="button"
-                                                        class="btn btn-label-secondary  mb-3 waves-effect lightLogo-account-image-reset">
+                                                    class="btn btn-label-secondary  mb-3 waves-effect lightLogo-account-image-reset">
                                                     <i class="ti ti-refresh-dot d-block d-sm-none"></i>
                                                     <span class="d-none d-sm-block">{{ _trans('common.Reset') }}</span>
                                                 </button>
 
-                                                <div class="text-muted">{{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}</div>
+                                                <div class="text-muted">
+                                                    {{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}
+                                                </div>
                                                 <span class="text-danger light_logoError error"></span>
                                             </div>
                                         </div>
@@ -171,25 +181,28 @@
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
 
                                             <img src="{{ asset('storage/' . $setting->favicon) }}"
-                                                 onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
-                                                 class="d-block w-px-100 h-px-100 rounded" id="feviconLogo"/>
+                                                onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
+                                                class="d-block w-px-100 h-px-100 rounded" id="feviconLogo" />
                                             <div class="button-wrapper">
                                                 <label for="feviconLogoInput"
-                                                       class="btn btn-primary me-2 mb-3 waves-effect waves-light"
-                                                       tabindex="0">
-                                                    <span class="d-none d-sm-block">{{ _trans('shop_setting.Upload new favicon') }}</span>
+                                                    class="btn btn-primary me-2 mb-3 waves-effect waves-light"
+                                                    tabindex="0">
+                                                    <span
+                                                        class="d-none d-sm-block">{{ _trans('shop_setting.Upload new favicon') }}</span>
                                                     <i class="ti ti-upload d-block d-sm-none"></i>
                                                     <input type="file" id="feviconLogoInput"
-                                                           class="fevicon-account-file-input" name="favicon" hidden=""
-                                                           accept="image/png, image/jpeg, image/jpg">
+                                                        class="fevicon-account-file-input" name="favicon" hidden=""
+                                                        accept="image/png, image/jpeg, image/jpg">
                                                 </label>
                                                 <button type="button"
-                                                        class="btn btn-label-secondary fevicon-account-image-reset mb-3 waves-effect">
+                                                    class="btn btn-label-secondary fevicon-account-image-reset mb-3 waves-effect">
                                                     <i class="ti ti-refresh-dot d-block d-sm-none"></i>
                                                     <span class="d-none d-sm-block">{{ _trans('common.Reset') }}</span>
                                                 </button>
 
-                                                <div class="text-muted">{{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}</div>
+                                                <div class="text-muted">
+                                                    {{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}
+                                                </div>
                                                 <span class="text-danger faviconError error"></span>
                                             </div>
                                         </div>
@@ -201,12 +214,13 @@
 
                             <div class="col-6">
                                 <div class="card mb-4">
-                                    <h5 class="card-header">{{ _trans('common.Current').' '._trans('common.Banner') }}</h5>
+                                    <h5 class="card-header">{{ _trans('common.Current') . ' ' . _trans('common.Banner') }}
+                                    </h5>
                                     <!-- Account -->
                                     <div class="card-body">
                                         <img src="{{ asset('storage/' . $setting->banner) }}" id="darkLogo"
-                                             onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
-                                             alt="user-avatar" class="d-block w-100 h-px-100 rounded"/>
+                                            onerror="this.onerror=null;this.src='{{ asset('assets/img/illustrations/page-pricing-enterprise.png') }}'"
+                                            alt="user-avatar" class="d-block w-100 h-px-100 rounded" />
 
                                     </div>
                                     <!-- /Account -->
@@ -214,27 +228,30 @@
                             </div>
                             <div class="col-6">
                                 <div class="card mb-4">
-                                    <h5 class="card-header">{{_trans('common.Banner')}}</h5>
+                                    <h5 class="card-header">{{ _trans('common.Banner') }}</h5>
                                     <!-- Account -->
                                     <div class="card-body">
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                                             <div class="button-wrapper">
                                                 <label for="darkLogoInput"
-                                                       class="btn btn-primary me-2 mb-3 waves-effect waves-light"
-                                                       tabindex="0">
-                                                    <span class="d-none d-sm-block">{{_trans('common.Upload').' '._trans('common.New').' '._trans('common.Banner')}}</span>
+                                                    class="btn btn-primary me-2 mb-3 waves-effect waves-light"
+                                                    tabindex="0">
+                                                    <span
+                                                        class="d-none d-sm-block">{{ _trans('common.Upload') . ' ' . _trans('common.New') . ' ' . _trans('common.Banner') }}</span>
                                                     <i class="ti ti-upload d-block d-sm-none"></i>
                                                     <input type="file" id="darkLogoInput"
-                                                           class="darkLogo-account-file-input" name="banner"
-                                                           hidden="" accept="image/png, image/jpeg, image/jpg">
+                                                        class="darkLogo-account-file-input" name="banner" hidden=""
+                                                        accept="image/png, image/jpeg, image/jpg">
                                                 </label>
                                                 <button type="button"
-                                                        class="btn btn-label-secondary darkLogo-account-image-reset mb-3 waves-effect">
+                                                    class="btn btn-label-secondary darkLogo-account-image-reset mb-3 waves-effect">
                                                     <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                                                    <span class="d-none d-sm-block">{{_trans('common.Reset')}}</span>
+                                                    <span class="d-none d-sm-block">{{ _trans('common.Reset') }}</span>
                                                 </button>
 
-                                                <div class="text-muted">{{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}</div>
+                                                <div class="text-muted">
+                                                    {{ _trans('shop_setting.Allowed JPG, GIF or PNG. Max size of 800KB') }}
+                                                </div>
                                                 <span class="text-danger dark_logoError error"></span>
                                             </div>
                                         </div>
@@ -245,7 +262,8 @@
 
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn btn-primary" type="submit">
-                                    <span class="align-middle d-sm-inline-block d-none me-sm-1">{{_trans('common.Submit')}}</span>
+                                    <span
+                                        class="align-middle d-sm-inline-block d-none me-sm-1">{{ _trans('common.Submit') }}</span>
                                     <i class="ti ti-arrow-up"></i>
                                 </button>
                             </div>
@@ -257,49 +275,51 @@
                     <form method="POST" id="social-links-vertical-form">
                         @csrf
                         <div class="content-header mb-3">
-                            <h6 class="mb-0">{{_trans('shop_setting.Social Links')}}</h6>
-                            <small>Enter Your {{ _trans('common.Enter').' '._trans('common.Your').' '._trans('shop_setting.Social Links')}}</small>
+                            <h6 class="mb-0">{{ _trans('shop_setting.Social Links') }}</h6>
+                            <small>Enter Your
+                                {{ _trans('common.Enter') . ' ' . _trans('common.Your') . ' ' . _trans('shop_setting.Social Links') }}</small>
                         </div>
                         <div class="row g-3">
                             <div class="col-sm-6">
-                                <label class="form-label" for="twitter1">{{_trans('contact.Twitter')}}</label>
+                                <label class="form-label" for="twitter1">{{ _trans('contact.Twitter') }}</label>
                                 <input type="text" id="twitter1" name="twitter" class="form-control"
-                                       value="{{ $setting->twitter_url }}" placeholder="https://twitter.com/abc"/>
+                                    value="{{ $setting->twitter_url }}" placeholder="https://twitter.com/abc" />
                                 <span class="text-danger twitterError error"></span>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label" for="facebook1">{{_trans('contact.Facebook')}}</label>
+                                <label class="form-label" for="facebook1">{{ _trans('contact.Facebook') }}</label>
                                 <input type="text" id="facebook1" name="facebook" class="form-control"
-                                       value="{{ $setting->facebook_url }}" placeholder="https://facebook.com/abc"/>
+                                    value="{{ $setting->facebook_url }}" placeholder="https://facebook.com/abc" />
                                 <span class="text-danger facebookError error"></span>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label" for="facebook1">{{_trans('contact.Instagram')}}</label>
+                                <label class="form-label" for="facebook1">{{ _trans('contact.Instagram') }}</label>
                                 <input type="text" id="instagram" name="instagram" class="form-control"
-                                       value="{{ $setting->instagram_url }}" placeholder="https://instagram.com/abc"/>
+                                    value="{{ $setting->instagram_url }}" placeholder="https://instagram.com/abc" />
                                 <span class="text-danger instagramError error"></span>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label" for="linkedin1">{{_trans('contact.Linkedin')}}</label>
+                                <label class="form-label" for="linkedin1">{{ _trans('contact.Linkedin') }}</label>
                                 <input type="text" id="linkedin1" name="linkedin" class="form-control"
-                                       value="{{ $setting->linkedin }}" placeholder="https://linkedin.com/abc"/>
+                                    value="{{ $setting->linkedin }}" placeholder="https://linkedin.com/abc" />
                                 <span class="text-danger linkedinError error"></span>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label" for="linkedin1">{{_trans('contact.Youtube')}}</label>
+                                <label class="form-label" for="linkedin1">{{ _trans('contact.Youtube') }}</label>
                                 <input type="text" id="youtube" name="youtube" class="form-control"
-                                       value="{{ $setting->youtube_url }}" placeholder="https://youtube.com/abc"/>
+                                    value="{{ $setting->youtube_url }}" placeholder="https://youtube.com/abc" />
                                 <span class="text-danger youtubeError error"></span>
                             </div>
                             <div class="col-sm-6">
-                                <label class="form-label" for="linkedin1">{{_trans('contact.Tiktok')}}</label>
+                                <label class="form-label" for="linkedin1">{{ _trans('contact.Tiktok') }}</label>
                                 <input type="text" id="tiktok" name="tiktok" class="form-control"
-                                       value="{{ $setting->tiktok_url }}" placeholder="https://tiktok.com/abc"/>
+                                    value="{{ $setting->tiktok_url }}" placeholder="https://tiktok.com/abc" />
                                 <span class="text-danger tiktokError error"></span>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn btn-primary" type="submit">
-                                    <span class="align-middle d-sm-inline-block d-none me-sm-1">{{_trans('common.Submit')}}</span>
+                                    <span
+                                        class="align-middle d-sm-inline-block d-none me-sm-1">{{ _trans('common.Submit') }}</span>
                                     <i class="ti ti-arrow-up"></i>
                                 </button>
                             </div>
@@ -311,22 +331,22 @@
                 <div id="terms-polices" class="content">
                     <!-- Terms & Polices -->
                     <div>
-                        <h6 class="mb-3">{{_trans('common.Terms & Polices')}}</h6>
+                        <h6 class="mb-3">{{ _trans('common.Terms & Polices') }}</h6>
                         <div class="row mb-3">
                             <div>
-                                <small>{{_trans('common.Shipping Policy')}}</small>
+                                <small>{{ _trans('common.Shipping Policy') }}</small>
                                 <div class="form-control p-0 pt-1">
                                     <div class="shipping-policy-toolbar border-0 border-bottom">
                                         <div class="d-flex justify-content-start">
-                                                    <span class="ql-formats me-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-link"></button>
-                                                        {{-- <button class="ql-image"></button> --}}
-                                                    </span>
+                                            <span class="ql-formats me-0">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-list" value="ordered"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                                <button class="ql-link"></button>
+                                                {{-- <button class="ql-image"></button> --}}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="shipping_policy border-0 pb-4" id="shipping_policy-description">
@@ -338,19 +358,19 @@
                         </div>
                         <div class="row mb-3">
                             <div>
-                                <small>{{_trans('common.Return Policy')}}</small>
+                                <small>{{ _trans('common.Return Policy') }}</small>
                                 <div class="form-control p-0 pt-1">
                                     <div class="return-policy-toolbar border-0 border-bottom">
                                         <div class="d-flex justify-content-start">
-                                                    <span class="ql-formats me-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-link"></button>
-                                                        {{-- <button class="ql-image"></button> --}}
-                                                    </span>
+                                            <span class="ql-formats me-0">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-list" value="ordered"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                                <button class="ql-link"></button>
+                                                {{-- <button class="ql-image"></button> --}}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="return_policy border-0 pb-4" id="return_policy-description">
@@ -362,19 +382,19 @@
                         </div>
                         <div class="row">
                             <div>
-                                <small>{{_trans('common.Disclaimer')}}</small>
+                                <small>{{ _trans('common.Disclaimer') }}</small>
                                 <div class="form-control p-0 pt-1">
                                     <div class="disclaimer-toolbar border-0 border-bottom">
                                         <div class="d-flex justify-content-start">
-                                                    <span class="ql-formats me-0">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-link"></button>
-                                                        {{-- <button class="ql-image"></button> --}}
-                                                    </span>
+                                            <span class="ql-formats me-0">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-list" value="ordered"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                                <button class="ql-link"></button>
+                                                {{-- <button class="ql-image"></button> --}}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="disclaimer border-0 pb-4" id="disclaimer-description">
@@ -387,7 +407,8 @@
                     </div>
                     <div class="col-12 d-flex justify-content-end mt-3">
                         <button id="add-terms-polices" class="btn btn-primary" type="button">
-                            <span class="align-middle d-sm-inline-block d-none me-sm-1">{{_trans('common.Submit')}}</span>
+                            <span
+                                class="align-middle d-sm-inline-block d-none me-sm-1">{{ _trans('common.Submit') }}</span>
                             <i class="ti ti-arrow-up"></i>
                         </button>
                     </div>
@@ -404,12 +425,12 @@
     {{-- form submit ajax --}}
 
     <script>
-        $('#system-info-setting-form').on('submit', function (e) {
+        $('#system-info-setting-form').on('submit', function(e) {
             e.preventDefault();
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('setting.shop-setting.system_info.store') }}',
+                url: '{{ route('admin.setting.shop-setting.system_info.store') }}',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -420,12 +441,13 @@
                     email: $('#email').val(),
                     map_location: $('#map_location').val(),
                 },
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 403) {
                         console.log(response.errors.phone[0]);
 
-                        $('.shop_nameError').text(response.errors?.shop_name ? response.errors?.shop_name[
-                            0] : '');
+                        $('.shop_nameError').text(response.errors?.shop_name ? response.errors
+                            ?.shop_name[
+                                0] : '');
                         $('.siteTitleError').text(response.errors?.siteTitle ? response.errors
                             ?.siteTitle[0] : '');
                         $('.addressError').text(response.errors?.address ? response.errors?.address[0] :
@@ -437,14 +459,14 @@
                         toastr.success(response.message);
                     }
                 },
-                error: function (error) {
+                error: function(error) {
                     toastr.error(error.responseJSON.message);
                 }
             });
         });
 
 
-        $('#logo-setting-form').on('submit', function (e) {
+        $('#logo-setting-form').on('submit', function(e) {
             e.preventDefault();
 
             var formData = new FormData();
@@ -463,14 +485,14 @@
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('setting.shop-setting.site_logo.store') }}',
+                url: '{{ route('admin.setting.shop-setting.site_logo.store') }}',
                 type: 'POST',
                 contentType: 'multipart/form-data',
                 cache: false,
                 contentType: false,
                 processData: false,
                 data: formData,
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 403) {
                         $('.light_logoError').text(response.errors?.light_logo ? response.errors
                             ?.light_logo[0] : '');
@@ -482,19 +504,19 @@
                         toastr.success(response.message);
                     }
                 },
-                error: function (error) {
+                error: function(error) {
                     toastr.error(error.responseJSON.message);
                 }
             });
         });
 
 
-        $('#social-links-vertical-form').on('submit', function (e) {
+        $('#social-links-vertical-form').on('submit', function(e) {
             e.preventDefault();
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('setting.shop-setting.social_link.store') }}',
+                url: '{{ route('admin.setting.shop-setting.social_link.store') }}',
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -505,15 +527,17 @@
                     youtube: $('#youtube').val(),
                     tiktok: $('#tiktok').val(),
                 },
-                success: function (response) {
+                success: function(response) {
                     if (response.status == 403) {
                         $('.twitterError').text(response.errors?.twitter ? response.errors
                             ?.twitter[0] : '');
                         $('.facebookError').text(response.errors?.facebook ? response.errors
                             ?.facebook[0] : '');
-                        $('.instagramError').text(response.errors?.instagram ? response.errors?.instagram[0] :
+                        $('.instagramError').text(response.errors?.instagram ? response.errors
+                            ?.instagram[0] :
                             '');
-                        $('.linkedinError').text(response.errors?.linkedin ? response.errors?.linkedin[0] :
+                        $('.linkedinError').text(response.errors?.linkedin ? response.errors?.linkedin[
+                                0] :
                             '');
                         $('.youtubeError').text(response.errors?.youtube ? response.errors?.youtube[0] :
                             '');
@@ -523,33 +547,33 @@
                         toastr.success(response.message);
                     }
                 },
-                error: function (error) {
+                error: function(error) {
 
                     toastr.error(error.responseJSON.message);
                 }
             });
         });
 
-        $('#add-terms-polices').click(function (e) {
+        $('#add-terms-polices').click(function(e) {
             e.preventDefault();
 
             $.ajax({
-                url: '{{ route('setting.shop-setting.terms_polices.store') }}',
+                url: '{{ route('admin.setting.shop-setting.terms_polices.store') }}',
                 type: 'POST',
                 data: {
-                    '_token' : "{{ csrf_token() }}",
+                    '_token': "{{ csrf_token() }}",
                     'shipping_policy': $('#shipping_policy-description').children().first().html(),
                     'disclaimer': $('#disclaimer-description').children().first().html(),
                     'return_policy': $('#return_policy-description').children().first().html(),
                 },
-                success: function (response) {
+                success: function(response) {
                     if (response.status === 403) {
                         toastr.error(response.message);
                     } else if (response.status === 200) {
                         toastr.success(response.message);
                     }
                 },
-                error: function (error) {
+                error: function(error) {
                     toastr.error(error.responseJSON.message);
                 }
             });

@@ -7,36 +7,46 @@
                 <img src="{{ asset('assets/img/pages/loginPage.webp') }}" alt="">
             </div>
             <div id="formcontainer">
-                <form action="">
+                <form action="{{ route('register.store') }}" method="POST">
                     <h4>Create Your Account</h4>
                     @csrf
                     <div class="form">
                         <label for="Name">Name</label>
-                        <input class="inputForm" type="text" name="name">
-                        <span class="error"></span>
+                        <input class="inputForm" value="{{old('name')}}" type="text" name="name">
+                        @error('name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form">
                         <label for="Name">Kitchen Name</label>
-                        <input class="inputForm" type="text" name="kitchen_name">
-                        <span class="error"></span>
+                        <input class="inputForm" type="text" value="{{old('kitchen_name')}}" name="kitchen_name">
+                         @error('kitchen_name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
                     <div class="form">
                         <label for="Name">Email</label>
-                        <input class="inputForm" type="email" name="email">
-                        <span class="error"></span>
+                        <input class="inputForm" type="email" value="{{old('email')}}" name="email">
+                         @error('email')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
                     <div class="form">
                         <label for="Name">Password</label>
                         <input class="inputForm" type="password" name="password">
-                        <span class="error"></span>
+                         @error('password')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
                     <div class="form">
                         <label for="Name">Confirm Password</label>
-                        <input class="inputForm" type="password" name="confirm_password">
-                        <span class="error"></span>
+                        <input class="inputForm" type="password" name="password_confirmation">
+                         @error('password_confirmation')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
                     <div class="submit">
@@ -118,7 +128,7 @@
         }
 
         .form .error {
-            font-size: 8px;
+            font-size: 12px;
             color: #E32938;
         }
 
@@ -135,7 +145,8 @@
             margin-bottom: 8px;
             margin-top: 0px;
         }
-        .submit p a{
+
+        .submit p a {
             color: #E32938;
             font-weight: bold;
         }

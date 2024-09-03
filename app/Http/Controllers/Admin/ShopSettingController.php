@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SiteLogoStoreRequest;
 use App\Http\Requests\SocialLinkStoreRequest;
 use App\Http\Requests\SystemInfoStoreRequest;
@@ -22,7 +23,7 @@ class ShopSettingController extends Controller
     {
         $setting = shopSetting();
 
-        return view('setting.shop-setting', compact('setting'));
+        return view('admin.setting.shop-setting', compact('setting'));
     }
 
     public function storeSystemInfo(SystemInfoStoreRequest $request)
@@ -49,7 +50,7 @@ class ShopSettingController extends Controller
     public function storeSiteLogo(SiteLogoStoreRequest $request)
     {
 
-        $general_setting = ShopSetting::first();
+        $general_setting = ShopSetting::where('user_id', getUserId())->first();
 
         try {
             if ($request->hasFile('light_logo')) {

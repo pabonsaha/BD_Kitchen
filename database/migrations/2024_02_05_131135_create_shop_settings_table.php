@@ -24,6 +24,8 @@ return new class extends Migration
             $table->text('map_location')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('delivery_charge')->nullable();
+            $table->string('delivery_time')->nullable();
             $table->longText('shipping_policy')->nullable();
             $table->longText('return_policy')->nullable();
             $table->longText('disclaimer')->nullable();

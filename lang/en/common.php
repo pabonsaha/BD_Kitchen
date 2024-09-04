@@ -60,5 +60,8 @@
     "New" => "New",
     "Your" => "Your",
     "Return Policy" => "Return Policy",
+    "Cooking Time" => "Cooking Time",
+    "Delivery Time" => "Delivery Time",
+    "Delivery Charge" => "Delivery Charge",
         ]
 ?>

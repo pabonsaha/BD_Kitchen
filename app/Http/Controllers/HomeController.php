@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\ShopSetting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -10,6 +12,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('user.home');
+        $shops = ShopSetting::with('user')->get();
+        return view('user.home',compact('shops'));
     }
 }

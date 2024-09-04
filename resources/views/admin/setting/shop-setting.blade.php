@@ -105,11 +105,32 @@
                                 <span class="text-danger emailError error"></span>
 
                             </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="email">{{ _trans('common.Delivery Charge') }}</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="delivery_charge" name="delivery_charge" class="form-control"
+                                        required value="{{ $setting->delivery_charge }}" placeholder="30min" />
+                                </div>
+
+                                <span class="text-danger delivery_chargeError error"></span>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="email">{{ _trans('common.Delivery Time') }}</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="delivery_time" name="delivery_time" class="form-control"
+                                        required value="{{ $setting->delivery_time }}" placeholder="1h 30min" />
+                                </div>
+
+                                <span class="text-danger delivery_timeError error"></span>
+
+                            </div>
                             <div class="col-sm-12">
                                 <label class="form-label"
                                     for="mapLocation">{{ _trans('common.Map') . ' ' . _trans('common.Location') }}</label>
                                 <div class="input-group input-group-merge">
-                                    <textarea id="map_location" name="map_location" class="form-control" placeholder="Iframe Map Location" rows="3">{{ $setting->map_location }}</textarea>
+                                    <textarea id="map_location" name="map_location" class="form-control" placeholder="Iframe Map Location"
+                                        rows="3">{{ $setting->map_location }}</textarea>
                                 </div>
 
                                 <span class="text-danger map_locationError error"></span>
@@ -439,6 +460,10 @@
                     address: $('#address').val(),
                     phone: $('#phone').val(),
                     email: $('#email').val(),
+                    delivery_charge: $('#delivery_charge').val(),
+                    delivery_time: $('#delivery_time').val(),
+                    email: $('#email').val(),
+
                     map_location: $('#map_location').val(),
                 },
                 success: function(response) {
@@ -454,6 +479,11 @@
                             '');
                         $('.phoneError').text(response.errors?.phone ? response.errors?.phone[0] : '');
                         $('.emailError').text(response.errors?.email ? response.errors?.email[0] : '');
+                        $('.delivery_timeError').text(response.errors?.delivery_time ? response.errors
+                            ?.delivery_time[0] : '');
+                        $('.delivery_chargeError').text(response.errors?.delivery_charge ? response
+                            .errors
+                            ?.delivery_charge[0] : '');
 
                     } else if (response.status == 200) {
                         toastr.success(response.message);

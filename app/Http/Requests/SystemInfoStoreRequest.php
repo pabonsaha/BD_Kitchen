@@ -21,6 +21,8 @@ class SystemInfoStoreRequest extends FormRequest
             'address' => 'nullable|string',
             'phone' => 'required|string|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
             'email' => 'required|email',
+            'delivery_charge' => 'required',
+            'delivery_time' => 'required',
             'map_location' => 'nullable|string',
             'copy_right' => 'nullable|string',
         ];

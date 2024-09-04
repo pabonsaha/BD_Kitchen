@@ -37,6 +37,8 @@ class ShopSettingController extends Controller
             $shop_setting->location = $request->address;
             $shop_setting->phone = $request->phone;
             $shop_setting->email = $request->email;
+            $shop_setting->delivery_time = $request->delivery_time;
+            $shop_setting->delivery_charge = $request->delivery_charge;
             $shop_setting->map_location = $request->map_location;
             $shop_setting->save();
 
@@ -107,7 +109,8 @@ class ShopSettingController extends Controller
         }
     }
 
-    public function storeTermsPolices(Request $request){
+    public function storeTermsPolices(Request $request)
+    {
         try {
             $shop_setting = ShopSetting::where('user_id', getUserId())->first();
             $shop_setting->shipping_policy = $request->shipping_policy;
@@ -116,7 +119,7 @@ class ShopSettingController extends Controller
 
             $shop_setting->update();
             return response()->json(['message' => 'Terms & Polices Updated', 'status' => 200], 200);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return response()->json(['message' => 'Something went wrong', 'status' => 403], 403);
         }
     }

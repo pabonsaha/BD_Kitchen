@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>House Brand</title>
+    <title>BD Kitchen</title>
 
     <meta name="description" content="" />
 
@@ -66,11 +66,11 @@
                                             fill="#7367F0" />
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-body fw-bold ms-1">House Brand</span>
+                                <span class="app-brand-text demo text-body fw-bold ms-1">BD Kitchen</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-1 pt-2">Welcome to House Brand! 👋</h4>
+                        <h4 class="mb-1 pt-2">Welcome to BD Kitchen! 👋</h4>
                         <p class="mb-4">Please sign-in to your account and manage your store</p>
 
                         <form id="" class="mb-3" action="{{ route('admin.login') }}" method="POST">

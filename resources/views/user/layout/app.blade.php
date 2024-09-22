@@ -6,7 +6,7 @@
         <section class="container mx-auto mb-[50px]">
             <div class="navbar bg-base-100 flex flex-col lg:flex-row md:flex-row items-center space-y-4 lg:space-y-0">
                 <div class="navbar-start">
-                    <a class="btn btn-ghost text-[32px] pacifico-regular text-[#E32938]">BDKitchen</a>
+                    <a class="btn btn-ghost text-[32px] pacifico-regular text-[#E32938]" href="{{route('home')}}">BDKitchen</a>
                 </div>
                 <div class="navbar-center lg:flex flex-col inter-500">
                     <a href="{{route('register')}}"
@@ -28,7 +28,14 @@
                                 d="M6.5 0C7.36195 0 8.1886 0.34241 8.7981 0.951903C9.40759 1.5614 9.75 2.38805 9.75 3.25C9.75 4.11195 9.40759 4.9386 8.7981 5.5481C8.1886 6.15759 7.36195 6.5 6.5 6.5C5.63805 6.5 4.8114 6.15759 4.2019 5.5481C3.59241 4.9386 3.25 4.11195 3.25 3.25C3.25 2.38805 3.59241 1.5614 4.2019 0.951903C4.8114 0.34241 5.63805 0 6.5 0ZM6.5 8.125C10.0913 8.125 13 9.57938 13 11.375V13H0V11.375C0 9.57938 2.90875 8.125 6.5 8.125Z"
                                 fill="#E32938" />
                         </svg>
-                        <p class="pl-[10px] text-[#E32938] inter-500">Login/Signup</p>
+                        @if (auth()->user())
+
+                        <p class="pl-[10px] text-[#E32938] inter-500"><a href="#">{{auth()->user()->name}}</a>/ <a href="{{route('logout')}}">Logout</a></p>
+                        @else
+                        <p class="pl-[10px] text-[#E32938] inter-500"><a href="{{route('login')}}">Login</a>/<a href="{{route('userRegister')}}">SignUp</a></p>
+
+                        @endif
+
                     </div>
 
                     <div class="flex items-center justify-around">
@@ -39,7 +46,7 @@
                                 fill="#E32938" />
                         </svg>
 
-                        <p class="pl-[10px] text-[#E32938] inter-500">Cart</p>
+                        <p class="pl-[10px] text-[#E32938] inter-500">Orders</p>
                     </div>
                 </div>
             </div>

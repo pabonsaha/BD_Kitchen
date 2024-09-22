@@ -7,7 +7,7 @@ use App\Http\Controllers\HomeController;
 
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +22,17 @@ use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginConfirm'])->name('loginConfirm');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register/store',[AuthController::class,'store'])->name('register.store');
 
 
+Route::get('/user-register',[AuthController::class,'userRegister'])->name('userRegister');
+Route::post('/user-register',[AuthController::class,'userRegisterStore'])->name('userRegisterStore');
 
-Route::middleware(['auth', 'is_subscribed'])->group(function () {});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+});

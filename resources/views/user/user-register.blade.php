@@ -7,7 +7,7 @@
                 <img src="{{ asset('assets/img/pages/loginPage.webp') }}" alt="">
             </div>
             <div id="formcontainer">
-                <form action="{{ route('register.store') }}" method="POST">
+                <form action="{{ route('userRegisterStore') }}" method="POST">
                     <h4>Create Your Account</h4>
                     @csrf
                     <div class="form">
@@ -18,17 +18,17 @@
                         @enderror
                     </div>
                     <div class="form">
-                        <label for="Name">Kitchen Name</label>
-                        <input class="inputForm" type="text" value="{{old('kitchen_name')}}" name="kitchen_name">
-                         @error('kitchen_name')
+                        <label for="Name">Email</label>
+                        <input class="inputForm" type="email" value="{{old('email')}}" name="email">
+                         @error('email')
                             <span class="error">{{ $message }}</span>
                         @enderror
 
                     </div>
                     <div class="form">
-                        <label for="Name">Email</label>
-                        <input class="inputForm" type="email" value="{{old('email')}}" name="email">
-                         @error('email')
+                        <label for="Name">Phone Number</label>
+                        <input class="inputForm" type="tel" value="{{old('phone')}}" name="phone">
+                         @error('phone')
                             <span class="error">{{ $message }}</span>
                         @enderror
 
@@ -50,7 +50,7 @@
 
                     </div>
                     <div class="submit">
-                        <p>Already have accout? <a href="{{ route('login') }}">Login</a></p>
+                        <p>Already have kitchen account? <a href="{{ route('admin.login') }}">Login</a></p>
                         <button type="submit">Register</button>
                     </div>
                 </form>

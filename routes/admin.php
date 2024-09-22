@@ -79,7 +79,7 @@ use Stripe\Checkout\Session as StripeSession;
 
 Route::get('/', function () {
     return redirect('/login');
-});
+})->name('login');
 
 
 

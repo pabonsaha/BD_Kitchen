@@ -10,7 +10,7 @@ class Role extends Model
     use HasFactory;
 
 
-    const User =1;
+    const USER =1;
     const ADMIN = 2;
     const KITCHEN = 3;
 

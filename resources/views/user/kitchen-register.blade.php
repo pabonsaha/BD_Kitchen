@@ -7,29 +7,52 @@
                 <img src="{{ asset('assets/img/pages/loginPage.webp') }}" alt="">
             </div>
             <div id="formcontainer">
-                <form action="{{ route('loginConfirm') }}" method="POST">
-                    <h4>Login To Your Account</h4>
+                <form action="{{ route('register.store') }}" method="POST">
+                    <h4>Create Your Kitchen</h4>
                     @csrf
+                    <div class="form">
+                        <label for="Name">Name</label>
+                        <input class="inputForm" value="{{old('name')}}" type="text" name="name">
+                        @error('name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form">
+                        <label for="Name">Kitchen Name</label>
+                        <input class="inputForm" type="text" value="{{old('kitchen_name')}}" name="kitchen_name">
+                         @error('kitchen_name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
+                    </div>
                     <div class="form">
                         <label for="Name">Email</label>
-                        <input class="inputForm" required type="email" name="email">
+                        <input class="inputForm" type="email" value="{{old('email')}}" name="email">
+                         @error('email')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
                     <div class="form">
                         <label for="Name">Password</label>
-                        <input class="inputForm" required type="password" name="password">
+                        <input class="inputForm" type="password" name="password">
+                         @error('password')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
                     </div>
-                    @if (Session::has('message'))
-                        <p class="text-danger">{{ Session::get('message') }}</p>
-                    @endif
+                    <div class="form">
+                        <label for="Name">Confirm Password</label>
+                        <input class="inputForm" type="password" name="password_confirmation">
+                         @error('password_confirmation')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
 
+                    </div>
                     <div class="submit">
-                        <p>Already have accout? <a href="{{ route('userRegister') }}">register</a></p>
+                        <p>Already have kitchen account? <a href="{{ route('admin.login') }}">Login</a></p>
                         <button type="submit">Register</button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -135,11 +158,6 @@
             font-size: 16px;
             padding: 5px 20px;
             border-radius: 5px;
-        }
-
-        .text-danger{
-            color: #E32938;
-            font-size: 16px;
         }
     </style>
 @endpush

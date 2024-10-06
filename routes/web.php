@@ -4,8 +4,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
-
-
+use App\Http\Controllers\KitchenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +30,10 @@ Route::post('/register/store',[AuthController::class,'store'])->name('register.s
 Route::get('/user-register',[AuthController::class,'userRegister'])->name('userRegister');
 Route::post('/user-register',[AuthController::class,'userRegisterStore'])->name('userRegisterStore');
 
+
+
+Route::get('kitchens',[HomeController::class,'kitchens'])->name('kitchens');
+Route::get('kitchen/{slug}',[KitchenController::class,'index'])->name('kitchen.index');
 
 
 Route::middleware(['auth'])->group(function () {

@@ -112,9 +112,9 @@
                 </p>
             </div>
             <div class="lg:text-right text-center md:text-right mt-[21px]">
-                <button class="btn bg-[#E32938] text-white border-radius5">
+                <a href="{{route('kitchens')}}" class="btn bg-[#E32938] text-white border-radius5">
                     See All
-                </button>
+                </a>
             </div>
         </section>
         <!-- populer kitchen description  end -->
@@ -124,6 +124,7 @@
         <section class="container mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach ($shops as $shop)
+                <a href="{{route('kitchen.index',$shop->slug)}}">
                     <div class="flex flex-col items-center justify-center">
                         <div class="card w-[306px] h-[327px] asset-shadow">
                             <figure class="px-[12px] pt-[40px]">
@@ -188,6 +189,7 @@
                             </div>
                         </div>
                     </div>
+                </a>
                 @endforeach
 
             </div>

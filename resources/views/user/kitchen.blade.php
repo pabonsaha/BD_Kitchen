@@ -15,7 +15,7 @@
                     <p class="capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl mb-[40px]">Product List</p>
                     @foreach ($products as $product)
                         <div
-                            class="mb-[15px] h-[150px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            class="mb-[15px] h-[120px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                             <img class="object-contain w-full rounded-t-lg h-36 md:w-48 md:rounded-none md:rounded-s-lg"
                                 src="{{ asset('storage/' . $product->thumbnail_img) }}" alt="">
                             <div class="flex flex-col justify-between p-4 leading-normal w-full">
@@ -39,17 +39,24 @@
                     <p class="capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl mb-[40px]">Cart List</p>
                     <div class="border">
 
-                        <div
-                            class="w-auto h-auto flex flex-col items-center bg-white border-b md:flex-row">
+                        <div class="w-auto h-auto flex flex-col items-center bg-white border-b md:flex-row">
                             <img class="object-cover rounded-t-lg h-[50px] w-[150px] md:rounded-none md:rounded-s-lg ml-2"
                                 src="{{ asset('storage/' . $shop->banner) }}" alt="">
                             <div class="flex flex-col justify-between p-4 leading-normal w-full">
                                 <h5 class="mb-2 text-base font-semibold tracking-tight text-gray-900 dark:text-white">
                                     test Product</h5>
-                                    <input type="number" min="1" class="w-[150px] border border-[#E32938] text-[#E32938] text-bold">
+                                <div class="flex flex-row">
+                                    <button
+                                        class="text-[#E32938] text-extrabold text-2xl mr-2 cart_increment_button">+</button>
+                                    <input type="number" min="1" disabled value="1"
+                                        class="w-[50px] border border-[#E32938] text-[#E32938] text-extrabold pl-2 text-center">
+                                    <button
+                                        class="text-[#E32938] text-extrabold text-xl ml-2 cart_decrement_button">-</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <button class="mt-2 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB] m-auto">Order</button>
                 </div>
             </div>
 
@@ -58,3 +65,18 @@
 
     </main>
 @endsection
+
+@push('script')
+    <script>
+        $(".cart_increment_button").click(function() {
+            let input = $(this).siblings('input');
+            $(input).get(0).value++;
+        });
+        $(".cart_decrement_button").click(function() {
+            let input = $(this).siblings('input');
+            if ($(input).get(0).value > 1) {
+                $(input).get(0).value--;
+            }
+        });
+    </script>
+@endpush

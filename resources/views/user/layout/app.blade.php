@@ -3,13 +3,14 @@
 <body>
     <!-- Navbar Start -->
     <header>
-        <section class="container mx-auto mb-[50px]">
+        <section class="container mx-auto">
             <div class="navbar bg-base-100 flex flex-col lg:flex-row md:flex-row items-center space-y-4 lg:space-y-0">
                 <div class="navbar-start">
-                    <a class="btn btn-ghost text-[32px] pacifico-regular text-[#E32938]" href="{{route('home')}}">BDKitchen</a>
+                    <a class="btn btn-ghost text-[32px] pacifico-regular text-[#E32938]"
+                        href="{{ route('home') }}">BDKitchen</a>
                 </div>
                 <div class="navbar-center lg:flex flex-col inter-500">
-                    <a href="{{route('register')}}"
+                    <a href="{{ route('register') }}"
                         class="flex items-center btn text-[#E32938] border-radius border border-solid border-[#E3293880] bg-[#FCEAEB]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18"
                             fill="none">
@@ -29,11 +30,12 @@
                                 fill="#E32938" />
                         </svg>
                         @if (auth()->user())
-
-                        <p class="pl-[10px] text-[#E32938] inter-500"><a href="#">{{auth()->user()->name}}</a>/ <a href="{{route('logout')}}">Logout</a></p>
+                            <p class="pl-[10px] text-[#E32938] inter-500"><a
+                                    href="#">{{ auth()->user()->name }}</a>/ <a
+                                    href="{{ route('logout') }}">Logout</a></p>
                         @else
-                        <p class="pl-[10px] text-[#E32938] inter-500"><a href="{{route('login')}}">Login</a>/<a href="{{route('userRegister')}}">SignUp</a></p>
-
+                            <p class="pl-[10px] text-[#E32938] inter-500"><a href="{{ route('login') }}">Login</a>/<a
+                                    href="{{ route('userRegister') }}">SignUp</a></p>
                         @endif
 
                     </div>
@@ -65,5 +67,7 @@
         </div>
     </section>
 </body>
+
+@stack('script')
 
 </html>

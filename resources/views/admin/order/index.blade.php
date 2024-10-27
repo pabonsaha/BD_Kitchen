@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('order.Order'))
 
@@ -53,7 +53,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route('order.index') }}',
+                    url: '{{ route('admin.order.index') }}',
                     data: function (d){
                         d.status = $('#status').val()
                     }

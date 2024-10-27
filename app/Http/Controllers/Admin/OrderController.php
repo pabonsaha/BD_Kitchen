@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Mail\InvoiceMail;
 use Illuminate\Support\Facades\Mail;
@@ -22,6 +22,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 use App\Http\Requests\OrderUpdateRequest;
 use App\Http\Requests\IdValidationRequest;
+use App\Http\Controllers\Controller;
 
 
 class OrderController extends Controller
@@ -31,7 +32,7 @@ class OrderController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Order::where('seller_id', getUserId())->withCount('items')->with(['user', 'orderStatus']);
+            $data = Order::where('kitchen_id', getUserId())->withCount('items')->with(['user', 'orderStatus']);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('order_date', function ($row) {
@@ -54,13 +55,13 @@ class OrderController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '';
                     if (hasPermission('customer_order_list_edit')) {
-                        $btn .= '<a href="' . route('order.edit', $row) . '" class="btn btn-success text-white me-1" >Edit</a>';
+                        $btn .= '<a href="' . route('admin.order.edit', $row) . '" class="btn btn-success text-white me-1" >Edit</a>';
                     }
                     if (hasPermission('customer_order_list_details')) {
-                        $btn .= '<a href="' . route('order.details', $row) . '" class="btn btn-primary text-white me-1" >Details</a>';
+                        $btn .= '<a href="' . route('admin.order.details', $row) . '" class="btn btn-primary text-white me-1" >Details</a>';
                     }
                     if (hasPermission('customer_order_list_read_invoice')) {
-                        $btn .= '<a href="' . route('order.invoicePreview', $row) . '" class="btn btn-warning text-white" ><i class="menu-icon tf-icons ti ti-file-dollar"></i>Invoice</a>';
+                        $btn .= '<a href="' . route('admin.order.invoicePreview', $row) . '" class="btn btn-warning text-white" ><i class="menu-icon tf-icons ti ti-file-dollar"></i>Invoice</a>';
                     }
                     return $btn;
                 })
@@ -69,7 +70,7 @@ class OrderController extends Controller
         }
 
         $orderStatus = OrderStatus::all();
-        return view('order.index', compact('orderStatus'));
+        return view('admin.order.index', compact('orderStatus'));
     }
 
     /**
@@ -174,11 +175,11 @@ class OrderController extends Controller
         $order = Order::with(['items.product', 'user'])
             ->find($order_id);
 
-        $products = Product::where('user_id', getUserId())->get();
-        $shipping_addresses = ShippingAddress::where('user_id', $order->user_id)->orderBy('id', 'desc')->get();
-        hasPermissionForOperation($order);
+//        $products = Product::where('kitchen_id', getUserId())->get();
+//        $shipping_addresses = ShippingAddress::where('user_id', $order->user_id)->orderBy('id', 'desc')->get();
+//        hasPermissionForOperation($order);
 
-        return view('order.edit', compact('order', 'products', 'shipping_addresses'));
+        return view('admin.order.edit', compact('order' ));
     }
 
     public function update(OrderUpdateRequest $request)
@@ -286,7 +287,7 @@ class OrderController extends Controller
         $order = Order::with(['items.product', 'user'])
             ->find($order_id);
         hasPermissionForOperation($order);
-        return view('order.invoice-preview', compact('order'));
+        return view('admin.order.invoice-preview', compact('order'));
     }
 
     public function invoicePrint($order_id)
@@ -296,7 +297,7 @@ class OrderController extends Controller
         $order = Order::with(['items.product', 'user'])
             ->find($order_id);
         hasPermissionForOperation($order);
-        return view('order.invoice', compact('order', 'setting'));
+        return view('admin.order.invoice', compact('order', 'setting'));
     }
 
     public function invoiceDownload($order_id)
@@ -311,7 +312,7 @@ class OrderController extends Controller
             'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
             'logOutputFile' => storage_path('logs/log.htm'),
             'tempDir' => storage_path('logs/'),
-        ])->loadView('order.invoice', compact('order', 'setting'));
+        ])->loadView('admin.order.invoice', compact('order', 'setting'));
         return $pdf->download($order->code . '.pdf');
         // return $pdf->stream();
     }
@@ -330,7 +331,7 @@ class OrderController extends Controller
             'isRemoteEnabled' => true,
             'logOutputFile' => storage_path('logs/log.htm'),
             'tempDir' => storage_path('logs/'),
-        ])->loadView('order.invoice', compact('order', 'setting'));
+        ])->loadView('admin.order.invoice', compact('order', 'setting'));
 
         return $pdf->output();
     }

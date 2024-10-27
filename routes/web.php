@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -37,5 +38,9 @@ Route::get('kitchen/{slug}',[KitchenController::class,'index'])->name('kitchen.i
 
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
+    Route::post('/order',[OrderController::class,'store'])->name('order.store');
+
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });

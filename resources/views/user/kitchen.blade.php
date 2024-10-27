@@ -13,6 +13,7 @@
 
                 <div class="product_id">
                     <p class="capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl mb-[40px]">Product List</p>
+
                     @foreach ($products as $product)
                         <div
                             class="mb-[15px] h-[120px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -24,8 +25,13 @@
                                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{!! $product->description !!}</p>
                                 <div class="flex flex-row justify-between">
                                     <h4 class="font-semibold text-[#E32938]">{{ getPriceFormat($product->unit_price) }}</h4>
-
-                                    <button class="self-end">
+                                    <div class="hidden product_details_container">
+                                        <input class="product_id" value="{{$product->id}}">
+                                        <input class="product_name" value="{{$product->name}}">
+                                        <input class="product_image" value="{{ asset('storage/' . $product->thumbnail_img) }}">
+                                        <input class="product_price" value="{{$product->unit_price}}">
+                                    </div>
+                                    <button class="self-end add_to_cart_button">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                             viewBox="0 0 13 13" fill="none">
                                             <path
@@ -40,28 +46,15 @@
                 </div>
 
                 <div class="cart_list">
-                    <p class="capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl mb-[40px]">Cart List</p>
-                    <div class="border">
-
-                        <div class="w-auto h-auto flex flex-col items-center bg-white border-b md:flex-row">
-                            <img class="object-cover rounded-t-lg h-[50px] w-[150px] md:rounded-none md:rounded-s-lg ml-2"
-                                src="{{ asset('storage/' . $shop->banner) }}" alt="">
-                            <div class="flex flex-col justify-between p-4 leading-normal w-full">
-                                <h5 class="mb-2 text-base font-semibold tracking-tight text-gray-900 dark:text-white">
-                                    test Product</h5>
-                                <div class="flex flex-row">
-                                    <button
-                                        class="text-[#E32938] text-extrabold text-2xl mr-2 cart_increment_button">+</button>
-                                    <input type="number" min="1" disabled value="1"
-                                        class="w-[50px] border border-[#E32938] text-[#E32938] text-extrabold pl-2 text-center">
-                                    <button
-                                        class="text-[#E32938] text-extrabold text-xl ml-2 cart_decrement_button">-</button>
-                                </div>
-                            </div>
+                    <form method="GET" action="{{route('checkout')}}">
+                        <p class="capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl mb-[40px]">Cart List</p>
+                        <input name="shop_id" class="hidden" value="{{$shop->id}}">
+                        <div class="cart_product_list">
                         </div>
-                    </div>
-                    <button
-                        class="mt-2 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB] m-auto">Order</button>
+                        <button type="submit"
+                                class="hidden mt-2 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB] m-auto" id="place_order_button">Checkout</button>
+                    </form>
+
                 </div>
             </div>
 
@@ -73,15 +66,75 @@
 
 @push('script')
     <script>
-        $(".cart_increment_button").click(function() {
+        let productsID = [];
+        $(document).on('click','.cart_increment_button',function(e) {
+
+            e.preventDefault();
             let input = $(this).siblings('input');
             $(input).get(0).value++;
         });
-        $(".cart_decrement_button").click(function() {
+        $(document).on('click','.cart_decrement_button',function(e) {
+            e.preventDefault();
             let input = $(this).siblings('input');
             if ($(input).get(0).value > 1) {
                 $(input).get(0).value--;
             }
         });
+
+        $('.add_to_cart_button').on('click',function ()
+        {
+            let productContainer = $(this).siblings('.product_details_container');
+            let productName = $(productContainer).children('.product_name').val();
+            let productID = $(productContainer).children('.product_id').val();
+            let productPrice = $(productContainer).children('.product_price').val();
+            let productImage = $(productContainer).children('.product_image').val();
+
+            if(productsID.includes(productID))
+            {
+
+                $(`#product_quantity${productID}`).get(0).value++;
+                return 0;
+            }
+            productsID.push(productID);
+
+            if(productsID.length>0)
+            {
+                $('#place_order_button').removeClass('hidden');
+            }else{
+                console.log('jdkfj');
+                $('#place_order_button').addClass('hidden');
+            }
+
+            let s = `<div class="border">
+
+                <div class="w-auto h-auto flex flex-col items-center bg-white border-b md:flex-row">
+                    <img class="object-cover rounded-t-lg h-[50px] w-[150px] md:rounded-none md:rounded-s-lg ml-2"
+                         src="${productImage}" alt="">
+                        <div class="flex flex-col justify-between p-4 leading-normal w-full">
+                               <div class="flex flex-row justify-between">
+<h5 class="mb-2 text-base font-semibold tracking-tight text-gray-900 dark:text-white">
+                                ${productName}</h5>
+<h5 class="mb-2 text-base  font-semibold text-[#E32938]">$
+                                ${productPrice}</h5>
+
+</div>
+
+<input type="number" value="${productID}" name="products[${productID}][id]" class="hidden">
+                            <div class="flex flex-row">
+                                <button
+                                    class="text-[#E32938] text-extrabold text-2xl mr-2 cart_increment_button">+</button>
+                                <input type="number"  min="1" name="products[${productID}][quantity]" value="1" id="product_quantity${productID}"
+                                       class="w-[50px] border border-[#E32938] text-[#E32938] text-extrabold pl-2 text-center">
+                                    <button
+                                        class="text-[#E32938] text-extrabold text-xl ml-2 cart_decrement_button">-</button>
+                            </div>
+                        </div>
+                </div>
+            </div>`;
+
+            $('.cart_product_list').append(s);
+
+        });
+
     </script>
 @endpush

@@ -20,7 +20,7 @@ return new class extends Migration
         });
 
         $status = [
-            'Confirmed',
+            'Pending',
             'Processed',
             'Shipped',
             'Delivered',

@@ -63,5 +63,17 @@
     "Cooking Time" => "Cooking Time",
     "Delivery Time" => "Delivery Time",
     "Delivery Charge" => "Delivery Charge",
+    "Date" => "Date",
+    "Edit Order" => "Edit Order",
+    "Payment Info" => "Payment Info",
+    "Payment status" => "Payment status",
+    "Unpaid" => "Unpaid",
+    "Tax" => "Tax",
+    "Add Item" => "Add Item",
+    "Variation" => "Variation",
+    "qty" => "qty",
+    "Total" => "Total",
+    "Subtotal" => "Subtotal",
+    "Note" => "Note",
         ]
 ?>

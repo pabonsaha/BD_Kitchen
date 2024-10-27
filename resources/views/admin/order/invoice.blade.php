@@ -68,7 +68,6 @@
                         <tr>
 
                             <th style="border: 1px solid #4e4e4e; padding: 10px; background-color: #f2f2f2;">Item </th>
-                            <th style="border: 1px solid #4e4e4e; padding: 10px; background-color: #f2f2f2;">Variation
                             </th>
                             <th style="border: 1px solid #4e4e4e; padding: 10px; background-color: #f2f2f2;">Price</th>
                             <th style="border: 1px solid #4e4e4e; padding: 10px; background-color: #f2f2f2;">Qty</th>
@@ -82,14 +81,6 @@
 
                                 <td style="border: 1px solid #4e4e4e; padding: 10px;">
                                     {{ optional($cart_item->product)->name }}
-                                </td>
-                                <td style="border: 1px solid #4e4e4e; padding: 10px;">
-
-                                    @foreach ($cart_item->variation as $key => $item)
-                                        <span><b class="me-1">{{ $item['attribute'] }}:</b><span
-                                                class="text-primary">{{ $item['value'] }}</span></span><br>
-                                    @endforeach
-
                                 </td>
                                 <td style="border: 1px solid #4e4e4e; padding: 10px;">
                                     <span>{{ getPriceFormat($cart_item->price) }}</span>

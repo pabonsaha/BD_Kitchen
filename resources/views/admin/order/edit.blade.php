@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('common.Edit Order'))
 
@@ -88,7 +88,7 @@
                     </div>
                     <!-- Order Details Table -->
                     <div>
-                        <form action="{{ route('order.update') }}" method="POST">
+                        <form action="{{ route('admin.order.update') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-12 ">
@@ -103,7 +103,6 @@
                                                 <tr>
                                                     <th class="col-1">#</th>
                                                     <th class="col-3">{{_trans('common.Name')}}</th>
-                                                    <th class="col-3">{{_trans('common.Variation')}}</th>
                                                     <th class="col-1">{{_trans('common.Price')}}</th>
                                                     <th class="col-2">{{_trans('common.qty')}}</th>
                                                     <th class="col-2">{{_trans('common.Total')}}</th>
@@ -123,18 +122,7 @@
                                                             <input type="number" value="{{ optional($cart_item->product)->id }}"
                                                                    hidden name="product[{{ $key }}][product_id]">
                                                         </td>
-                                                        <td>
 
-                                                            @foreach ($cart_item->variation as $index => $item)
-                                                                <span><b class="me-1">{{ $item['attribute'] }}:</b><span
-                                                                        class="text-primary">{{ $item['value'] }}</span></span><br>
-                                                                <input type="text" value="{{ $item['attribute'] }}" hidden
-                                                                       name="product[{{ $key }}][variant][{{ $index }}][attribute]">
-                                                                <input type="text" value="{{ $item['value'] }}" hidden
-                                                                       name="product[{{ $key }}][variant][{{ $index }}][value]">
-                                                            @endforeach
-
-                                                        </td>
                                                         <td>
                                                             <span>{{ getPriceFormat($cart_item->price) }}</span>
                                                             <input class="form-control w-60" id="product-{{ $key }}-price"
@@ -292,36 +280,36 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            @foreach ($shipping_addresses as $shipping_address)
-                                <div class="col-6 mb-2">
-                                    <div class="form-check custom-option custom-option-icon">
-                                        <label class="form-check-label custom-option-content"
-                                               for="shippingAddress{{ $shipping_address->id }}">
-                                                <span class="custom-option-body">
+{{--                            @foreach ($shipping_addresses as $shipping_address)--}}
+{{--                                <div class="col-6 mb-2">--}}
+{{--                                    <div class="form-check custom-option custom-option-icon">--}}
+{{--                                        <label class="form-check-label custom-option-content"--}}
+{{--                                               for="shippingAddress{{ $shipping_address->id }}">--}}
+{{--                                                <span class="custom-option-body">--}}
 
-                                                    <small>{{_trans('common.Name')}}:
-                                                        {{ $shipping_address->name }}</small>
-                                                    <br>
-                                                    <small>{{_trans('common.Email')}}:
-                                                        {{ $shipping_address->email }}</small><br>
-                                                    <small>{{_trans('common.Phone')}}:
-                                                        {{ $shipping_address->phone }}</small><br>
-                                                    <small>{{_trans('contact.Street')}}:
-                                                        {{ $shipping_address->street_address }}</small><br>
-                                                    <small>State:
-                                                        {{ $shipping_address->state }}</small><br>
-                                                    <small>{{_trans('contact.ZIP Code')}}:
-                                                        {{ $shipping_address->zip_code }}</small><br>
-                                                    <small>{{_trans('contact.Country')}}:
-                                                        {{ $shipping_address->country }}</small><br>
-                                                </span>
-                                            <input name="shippingAddressId" class="form-check-input" type="radio"
-                                                   value="{{ $shipping_address->id }}"
-                                                   id="shippingAddress{{ $shipping_address->id }}"/>
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
+{{--                                                    <small>{{_trans('common.Name')}}:--}}
+{{--                                                        {{ $shipping_address->name }}</small>--}}
+{{--                                                    <br>--}}
+{{--                                                    <small>{{_trans('common.Email')}}:--}}
+{{--                                                        {{ $shipping_address->email }}</small><br>--}}
+{{--                                                    <small>{{_trans('common.Phone')}}:--}}
+{{--                                                        {{ $shipping_address->phone }}</small><br>--}}
+{{--                                                    <small>{{_trans('contact.Street')}}:--}}
+{{--                                                        {{ $shipping_address->street_address }}</small><br>--}}
+{{--                                                    <small>State:--}}
+{{--                                                        {{ $shipping_address->state }}</small><br>--}}
+{{--                                                    <small>{{_trans('contact.ZIP Code')}}:--}}
+{{--                                                        {{ $shipping_address->zip_code }}</small><br>--}}
+{{--                                                    <small>{{_trans('contact.Country')}}:--}}
+{{--                                                        {{ $shipping_address->country }}</small><br>--}}
+{{--                                                </span>--}}
+{{--                                            <input name="shippingAddressId" class="form-check-input" type="radio"--}}
+{{--                                                   value="{{ $shipping_address->id }}"--}}
+{{--                                                   id="shippingAddress{{ $shipping_address->id }}"/>--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
 
                             <div class="col-6 mb-2">
                                 <div class="form-check custom-option custom-option-icon">
@@ -371,48 +359,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="addItem" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-                <div class="modal-content p-3 p-md-5">
-                    <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <div class="text-center mb-4">
-                            <h3 class="mb-2">{{_trans('order.Add New Address')}}</h3>
-                        </div>
-                        <form id="editUserForm" class="row g-3" onsubmit="return false">
-                            <div class="col-12">
-                                <label class="form-label" for="modalEditUserCountry">{{_trans('order.Select Product')}}</label>
-                                <select id="modalProductSelect" name="modalEditUserCountry" class="select2 form-select"
-                                    data-allow-clear="true">
-                                    <option value="">{{_trans('order.Select Product')}}</option>
-                                    @foreach ($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                    @endforeach
 
-                                </select>
-                            </div>
-
-                            <div id="variantsWrapper" class="col-12">
-
-                            </div>
-                            <div class="col-12">
-                                <h6 id="priceWrapper"> price: {{ getCurrency() }} <span id="modalPrice"></span> </h6>
-                            </div>
-
-
-                            <div class="col-12 text-center">
-                                <button type="button" id="addItemSubmitButton" disabled
-                                    class="btn btn-primary me-sm-3 me-1">{{_trans('common.Submit')}}</button>
-                                <button id="modalClose" type="reset" class="btn btn-label-secondary"
-                                    data-bs-dismiss="modal" aria-label="Close">
-                                    {{_trans('common.Cancel')}}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 

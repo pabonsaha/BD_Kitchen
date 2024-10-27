@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\ShopSetting;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,14 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role_id' => Role::USER])) {
-            return redirect()->route('home');
+
+            $request->session()->regenerate();
+
+            if (Auth::user()->role_id == Role::ADMIN || Auth::user()->role_id == Role::KITCHEN) {
+                return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+            }
+
+            return redirect()->intended(RouteServiceProvider::HOME);
         } else {
             return redirect()->back()->with('message', "credendital didn't matched");
         }

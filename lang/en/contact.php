@@ -5,5 +5,9 @@
     "Linkedin" => "Linkedin",
     "Youtube" => "Youtube",
     "Tiktok" => "Tiktok",
+    "Contact" => "Contact",
+    "Street" => "Street",
+    "ZIP Code" => "ZIP Code",
+    "Country" => "Country",
         ]
 ?>

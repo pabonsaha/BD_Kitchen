@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? __('Invoice'))
 
@@ -53,7 +53,6 @@
                             <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Variation</th>
                                     <th>Price</th>
                                     <th>Qty</th>
                                     <th>Total</th>
@@ -66,14 +65,7 @@
                                         <td>
                                             {{ optional($cart_item->product)->name }}
                                         </td>
-                                        <td>
 
-                                            @foreach ($cart_item->variation as $key => $item)
-                                                <span><b class="me-1">{{ $item['attribute'] }}:</b><span
-                                                        class="text-primary">{{ $item['value'] }}</span></span><br>
-                                            @endforeach
-
-                                        </td>
                                         <td>
                                             <span>{{ getPriceFormat($cart_item->price) }}</span>
                                         </td>
@@ -130,15 +122,15 @@
                 <div class="card">
                     <div class="card-body">
                         <a class="btn btn-label-primary d-grid w-100 mb-2" target="_blank"
-                            href="{{ route('order.invoicePrint', $order->id) }}">
+                            href="{{ route('admin.order.invoicePrint', $order->id) }}">
                             Print
                         </a>
                         <a class="btn btn-label-success d-grid w-100 mb-2" target="_blank"
-                            href="{{ route('order.invoiceDownload', $order->id) }}">
+                            href="{{ route('admin.order.invoiceDownload', $order->id) }}">
                             Download
                         </a>
                         {{-- <button class="btn btn-label-success d-grid w-100 mb-2">Download</button> --}}
-                        <a href="{{ route('order.edit', $order->id) }}" class="btn btn-label-warning d-grid w-100 mb-2">
+                        <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-label-warning d-grid w-100 mb-2">
                             Edit Invoice
                         </a>
 
@@ -177,7 +169,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="offcanvas-body pt-0 flex-grow-1">
-                <form action="{{route('order.sendInvoice')}}" method="post">
+                <form action="{{route('admin.order.sendInvoice')}}" method="post">
                     @csrf
                     <input name="order_id" type="hidden" value="{{$order->id}}">
                     <div class="mb-3">

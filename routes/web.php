@@ -37,6 +37,8 @@ Route::get('kitchens',[HomeController::class,'kitchens'])->name('kitchens');
 Route::get('kitchen/{slug}',[KitchenController::class,'index'])->name('kitchen.index');
 
 
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');

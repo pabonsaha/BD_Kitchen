@@ -23,5 +23,9 @@
     "Shipping Address" => "Shipping Address",
     "Add New Address" => "Add New Address",
     "Select Product" => "Select Product",
+    "Total Product" => "Total Product",
+    "Total Order" => "Total Order",
+    "Cart List" => "Cart List",
+    "WishList" => "WishList",
         ]
 ?>

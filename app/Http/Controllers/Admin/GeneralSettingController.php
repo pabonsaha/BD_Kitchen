@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use App\Http\Requests\GeneralSettingSystemInfoStoreRequest;
 use App\Http\Traits\FileUploadTrait;
@@ -22,7 +23,7 @@ class GeneralSettingController extends Controller
         $date_formats = DateFormat::all();
         $setting = generalSetting();
 
-        return view('setting.general-setting', compact('setting', 'currences', 'time_zones', 'date_formats'));
+        return view('admin.setting.general-setting', compact('setting', 'currences', 'time_zones', 'date_formats'));
     }
 
     public function storeSystemInfo(GeneralSettingSystemInfoStoreRequest $request)

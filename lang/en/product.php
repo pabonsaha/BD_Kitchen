@@ -27,5 +27,7 @@
     "No Discount" => "No Discount",
     "Percentage" => "Percentage",
     "Don't need input if product don't have discount." => "Don't need input if product don't have discount.",
+    "Variation" => "Variation",
+    "Product Name" => "Product Name",
         ]
 ?>

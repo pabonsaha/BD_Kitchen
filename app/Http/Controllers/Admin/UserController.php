@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Exception;
@@ -14,6 +14,7 @@ use App\Models\Wishlist;
 use App\Models\ShopSetting;
 use Illuminate\Http\Request;
 use App\Http\Traits\FileUploadTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Yajra\DataTables\Facades\DataTables;
@@ -34,14 +35,11 @@ class UserController extends Controller
      */
     public function index(Request $request, $roleId)
     {
-        if (!in_array($roleId, [Role::DESIGNER, Role::CUSTOMER, Role::MANUFACTURER])) {
-            abort(403);
-        }
         try {
             $roleName = Role::find($roleId)->name;
         }catch (Exception $e){
             Toastr::error('Invalid Role!');
-            return redirect()->route('user.index',Role::CUSTOMER);
+            return redirect()->route('user.index',Role::USER);
         }
 
         if ($request->ajax()) {
@@ -52,16 +50,10 @@ class UserController extends Controller
                     return "<img src='" . getFilePath($row->avatar) . "' alt='' width='50px' height='50px' />";
                 })
                 ->editColumn('role_id', function ($row) {
-                    if ($row->role_id == Role::SUPER_ADMIN) {
-                        return '<span class="badge bg-danger">Super Admin</span>';
-                    } else if ($row->role_id == Role::ADMIN) {
-                        return '<span class="badge bg-warning">Admin</span>';
-                    } else if ($row->role_id == Role::DESIGNER) {
-                        return '<span class="badge bg-success">Designer</span>';
-                    } else if ($row->role_id == Role::CUSTOMER) {
-                        return '<span class="badge bg-primary">Customer</span>';
-                    }else if ($row->role_id == Role::MANUFACTURER) {
-                        return '<span class="badge bg-info">Manufacturer</span>';
+                    if ($row->role_id == Role::USER) {
+                        return '<span class="badge bg-danger">USER</span>';
+                    } else if ($row->role_id == Role::KITCHEN) {
+                        return '<span class="badge bg-warning">Kitchen</span>';
                     }
                 })
                 ->filter(function ($instance) use ($request) {
@@ -82,23 +74,17 @@ class UserController extends Controller
                         '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical me-2"></i></button>' .
                         '<div class="dropdown-menu dropdown-menu-end m-0">';
 
-                    if ($roleId == Role::CUSTOMER && hasPermission('customers_profile')) {
-                        $btn .= '<a href="' . route('user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
-                    } else if ($roleId == Role::MANUFACTURER && hasPermission('manufacturer_profile')) {
-                        $btn .= '<a href="' . route('user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
-                    } else if ($roleId == Role::DESIGNER && hasPermission('designer_profile')) {
-                        $btn .= '<a href="' . route('user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
+                    if ($roleId == Role::USER && hasPermission('customers_profile')) {
+                        $btn .= '<a href="' . route('admin.user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
+                    } else if ($roleId == Role::KITCHEN && hasPermission('designer_profile')) {
+                        $btn .= '<a href="' . route('admin.user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
                     }
 
-                    if ($roleId == Role::CUSTOMER && hasPermission('customers_delete')) {
+                    if ($roleId == Role::USER && hasPermission('customers_delete')) {
                         $btn .= '<a href="javascript:0;" class="dropdown-item user_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> Delete</a>' .
                             '</div>' .
                             '</div>';
-                    } else if ($roleId == Role::MANUFACTURER && hasPermission('manufacturer_delete')) {
-                        $btn .= '<a href="javascript:0;" class="dropdown-item user_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> Delete</a>' .
-                            '</div>' .
-                            '</div>';
-                    } else if ($roleId == Role::DESIGNER && hasPermission('designer_delete')) {
+                    }  else if ($roleId == Role::KITCHEN && hasPermission('designer_delete')) {
                         $btn .= '<a href="javascript:0;" class="dropdown-item user_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> Delete</a>' .
                             '</div>' .
                             '</div>';
@@ -110,7 +96,7 @@ class UserController extends Controller
                 ->rawColumns(['action', 'avatar', 'status', 'role_id'])
                 ->make(true);
         }
-        return view('user.index', compact('roleId', 'roleName'));
+        return view('admin.user.index', compact('roleId', 'roleName'));
     }
 
 
@@ -155,7 +141,7 @@ class UserController extends Controller
                     }
 
                     if (hasPermission('employees_profile')){
-                        $btn.='<a href="' . route('user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
+                        $btn.='<a href="' . route('admin.user.profile', $row->id) . '" class="dropdown-item"><i class="tf-icons ti ti-id" ></i> Profile</a>';
                     }
                     if (hasPermission('employees_delete')){
                         $btn.='<a href="javascript:0;" class="dropdown-item user_delete_button text-danger" data-id="' . $row->id . '"><i class="ti ti-trash"></i> Delete</a>' .
@@ -174,7 +160,7 @@ class UserController extends Controller
     public function profile(User $user)
     {
         $user = $user->loadCount('products', 'orders', 'shop');
-        return view('user.profile', compact('user'));
+        return view('admin.user.profile', compact('user'));
     }
 
     /**

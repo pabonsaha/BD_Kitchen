@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? __('Profile'))
 
@@ -20,13 +20,10 @@
                                 <div class="user-info text-center">
                                     <h4 class="mb-2">{{ $user->name }}</h4>
                                     @if ($user->role_id == 1)
-                                        <span class="badge bg-danger">{{_trans('user.Super Admin')}}</span>
-                                    @elseif($user->role_id == 2)
-                                        <span class="badge bg-warning">{{_trans('user.Admin')}}</span>
-                                    @elseif($user->role_id == 3)
-                                        <span class="badge bg-success">{{_trans('user.Designer')}}</span>
+                                        <span class="badge bg-danger">{{_trans('user.User')}}</span>
+
                                     @else
-                                        <span class="badge bg-label-primary">{{_trans('user.Customer')}}</span>
+                                        <span class="badge bg-label-primary">{{_trans('user.Kitchen')}}</span>
                                     @endif
 
                                 </div>
@@ -112,15 +109,9 @@
             <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                 <div class="nav-align-top mb-4">
                     <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+
                         <li class="nav-item">
                             <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home"
-                                aria-selected="true">
-                                <i class="tf-icons ti ti-user-check ti-xs me-1"></i> {{_trans('common.Account')}}
-                            </button>
-                        </li>
-                        <li class="nav-item">
-                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile"
                                 aria-selected="false">
                                 <i class="tf-icons ti ti-lock ti-xs me-1"></i> {{_trans('user.Sceurity')}}
@@ -146,94 +137,8 @@
                         @endif
                     </ul>
                     <div class="tab-content p-0 bg-transparent shadow-none">
-                        <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
-                            <!-- Order table -->
-                            <div class="card mb-4">
-                                <h5 class="card-header pb-0">Order List</h5>
 
-                                <div class="card-datatable table-responsive">
-                                    <table class="order-data-table table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>{{_trans('order.Order ID')}}</th>
-                                                <th>{{_trans('user.Designer')}}</th>
-                                                <th>{{_trans('order.No. of Item')}}</th>
-                                                <th>{{_trans('common.Date')}}</th>
-                                                <th>{{_trans('common.Action')}}</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /Order table -->
-
-
-
-
-                            <!-- Cart table -->
-
-                            <div class="card mb-4">
-                                <h5 class="card-header pb-0">{{_trans('order.Cart List')}}</h5>
-
-                                <div class="card-datatable table-responsive">
-                                    <table class="cart-data-table table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>{{_trans('common.Image')}}</th>
-                                                <th>{{_trans('product.Product').' '._trans('common.Name')}}</th>
-                                                <th>{{_trans('product.Variation')}}</th>
-                                                <th>{{_trans('designer.Designer')}}</th>
-                                                <th>{{_trans('common.Action')}}</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- /Cart table -->
-                            <!-- Wishlist table -->
-
-                            <div class="card mb-4">
-                                <h5 class="card-header pb-0">{{_trans('order.WishList')}}</h5>
-
-                                <div class="card-datatable table-responsive">
-                                    <table class="wishlist-data-table table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>{{_trans('common.Image')}}</th>
-                                                <th>{{_trans('product.Product Name')}}</th>
-                                                <th>{{_trans('common.Action')}}</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                            @if ($user && $user->role_id !== 4)
-                                <div class="card mb-4">
-                                    <h5 class="card-header pb-0">{{_trans('product.Product').' '._trans('order.List')}}</h5>
-                                    <div class="card-datatable table-responsive">
-                                        <table class="product-data-table table border-top">
-                                            <thead>
-                                                <tr>
-                                                    <th><input type="checkbox" class="form-check-input"></th>
-                                                    <th>{{_trans('common.Name')}}</th>
-                                                    <th>{{_trans('common.Image')}}</th>
-                                                    <th>{{_trans('product.Base Price')}}</th>
-                                                    <th>{{_trans('common.Status')}}</th>
-                                                    <th width="100px">{{_trans('common.Action')}}</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            @endif
-
-                            <!-- /Wishlist table -->
-                        </div>
-                        <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                        <div class="tab-pane fade show active" id="navs-pills-justified-profile" role="tabpanel">
                             <h5 class="card-header">{{_trans('common.Change').' '._trans('common.Password')}}</h5>
                             <div class="card-body">
                                 <form id="passwordFrom" class="row g-3">
@@ -712,184 +617,7 @@
     <script>
         $(function() {
 
-            var table = $('.order-data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('user.orders', $user->id) }}',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'code',
-                        name: 'code'
-                    },
-                    {
-                        data: 'name',
-                        name: 'designer.name'
-                    },
-                    {
-                        data: 'items_count',
-                        name: 'items_count',
-                        searchable: false
-                    },
-                    {
-                        data: 'order_date',
-                        name: 'order_date',
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ],
-                order: [2, "desc"], //set any columns order asc/desc
-                lengthMenu: [5, 10, 30, 50], //for length of menu
-                language: {
-                    sLengthMenu: "_MENU_",
-                    search: "",
-                    searchPlaceholder: "Search in order list",
-                },
-            });
 
-            var table = $('.cart-data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('user.carts', $user->id) }}',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'thumbnail_img',
-                        name: 'thumbnail_img',
-                        searchable: false
-                    },
-                    {
-                        data: 'product_name',
-                        name: 'product.name'
-                    },
-                    {
-                        data: 'variation',
-                        name: 'variation',
-                        searchable: false
-                    },
-                    {
-                        data: 'designer',
-                        name: 'designer.name'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ],
-                order: [2, "desc"], //set any columns order asc/desc
-                lengthMenu: [5, 10, 30, 50], //for length of menu
-                language: {
-                    sLengthMenu: "_MENU_",
-                    search: "",
-                    searchPlaceholder: "Search in cart list",
-                },
-            });
-
-            var table = $('.wishlist-data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('user.wishlist', $user->id) }}',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'thumbnail_img',
-                        name: 'thumbnail_img',
-                        searchable: false
-                    },
-                    {
-                        data: 'product_name',
-                        name: 'product.name'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ],
-                order: [2, "desc"], //set any columns order asc/desc
-                lengthMenu: [5, 10, 30, 50], //for length of menu
-                language: {
-                    sLengthMenu: "_MENU_",
-                    search: "",
-                    searchPlaceholder: "Search in Wishlist",
-                },
-            });
-            @if ($user && $user->role_id !== 4)
-                var table = $('.product-data-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{{ route('user.products', $user->id) }}',
-                    columns: [{
-                            data: '',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'thumbnail_img',
-                            name: 'thumbnail_img'
-                        },
-                        {
-                            data: 'unit_price',
-                            name: 'unit_price'
-                        },
-                        {
-                            data: 'status',
-                            name: 'status'
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        },
-                    ],
-                    columnDefs: [{
-                        targets: 0,
-                        className: "control",
-                        responsivePriority: 1,
-                        render: function() {
-                            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
-                        },
-                    }],
-                    order: [2, "desc"], //set any columns order asc/desc
-                    dom: '<"card-header d-flex flex-wrap pb-2"' +
-                        "<f>" +
-                        '<"d-flex justify-content-center justify-content-md-end align-items-baseline"<"dt-action-buttons d-flex justify-content-center flex-md-row mb-3 mb-md-0 ps-1 ms-1 align-items-baseline"lB>>' +
-                        ">t" +
-                        '<"row mx-2"' +
-                        '<"col-sm-12 col-md-6"i>' +
-                        '<"col-sm-12 col-md-6"p>' +
-                        ">",
-                    lengthMenu: [5, 10, 20], //for length of menu
-                    language: {
-                        sLengthMenu: "_MENU_",
-                        search: "",
-                        searchPlaceholder: "Search Product",
-                    },
-                    // Button for offcanvas
-                    buttons: [],
-                });
-            @endif
 
 
 
@@ -909,7 +637,7 @@
 
                 $('.error').text('');
                 $.ajax({
-                    url: '{{ route('user.passwordReset') }}',
+                    url: '{{ route('admin.user.passwordReset') }}',
                     type: 'POST',
                     contentType: 'multipart/form-data',
                     cache: false,
@@ -955,7 +683,7 @@
 
                 $('.error').text('');
                 $.ajax({
-                    url: '{{ route('user.update') }}',
+                    url: '{{ route('admin.user.update') }}',
                     type: 'POST',
                     contentType: 'multipart/form-data',
                     cache: false,
@@ -999,7 +727,7 @@
                     }).then(function(result) {
                         if (result.value) {
                             $.ajax({
-                                url: '{{ route('user.changeStatus') }}',
+                                url: '{{ route('admin.user.changeStatus') }}',
                                 method: 'POST',
                                 data: {
                                     "_token": "{{ csrf_token() }}",
@@ -1047,7 +775,7 @@
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('user.shopInfoUpdate') }}',
+                url: '{{ route('admin.user.shopInfoUpdate') }}',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -1105,7 +833,7 @@
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('user.shoplogoUpdate') }}',
+                url: '{{ route('admin.user.shoplogoUpdate') }}',
                 type: 'POST',
                 contentType: 'multipart/form-data',
                 cache: false,
@@ -1136,7 +864,7 @@
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('user.shoplinkUpdate') }}',
+                url: '{{ route('admin.user.shoplinkUpdate') }}',
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",

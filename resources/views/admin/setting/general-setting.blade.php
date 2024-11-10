@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('setting.General').' '._trans('setting.Settings'))
 
@@ -127,7 +127,7 @@
 
             $('.error').text('');
             $.ajax({
-                url: '{{ route('setting.general-setting.system_info.store') }}',
+                url: '{{ route('admin.setting.general-setting.system_info.store') }}',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",

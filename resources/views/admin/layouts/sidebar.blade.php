@@ -196,55 +196,40 @@
 {{--            </li>--}}
 {{--        @endif--}}
 
-{{--        @if (hasPermission('user_management_read'))--}}
-{{--            <li class="menu-item {{ openMenu(['user']) }}">--}}
-{{--                <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
-{{--                    <i class="menu-icon ti ti-users"></i>--}}
-{{--                    <div data-i18n="{{ _trans('user.User') }} {{ _trans('product.Management') }}">--}}
-{{--                        {{ _trans('user.User') }} {{ _trans('product.Management') }}</div>--}}
-{{--                </a>--}}
-{{--                <ul class="menu-sub">--}}
+        @if (hasPermission('user_management_read'))
+            <li class="menu-item {{ openMenu(['admin.user']) }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon ti ti-users"></i>
+                    <div data-i18n="{{ _trans('user.User') }} {{ _trans('product.Management') }}">
+                        {{ _trans('user.User') }} {{ _trans('product.Management') }}</div>
+                </a>
+                <ul class="menu-sub">
 
-{{--                    @if (hasPermission('customers_read'))--}}
-{{--                        <li class="menu-item {{ activeMenu(route('user.index', Role::CUSTOMER)) }}">--}}
-{{--                            <a href="{{ route('user.index', Role::CUSTOMER) }}" class="menu-link">--}}
-{{--                                <div data-i18n="{{ _trans('user.Customers') }}">{{ _trans('user.Customers') }}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
+                    @if (hasPermission('customers_read'))
+                        <li class="menu-item {{ activeMenu(route('admin.user.index', Role::USER)) }}">
+                            <a href="{{ route('admin.user.index', Role::USER) }}" class="menu-link">
+                                <div data-i18n="{{ _trans('user.Customers') }}">{{ _trans('user.Customers') }}
+                                </div>
+                            </a>
+                        </li>
+                    @endif
 
-{{--                    @if (hasPermission('manufacturer_read'))--}}
-{{--                        <li class="menu-item {{ activeMenu(route('user.index', Role::MANUFACTURER)) }}">--}}
-{{--                            <a href="{{ route('user.index', Role::MANUFACTURER) }}" class="menu-link">--}}
-{{--                                <div data-i18n="{{ _trans('product.Manufacturer') }}">--}}
-{{--                                    {{ _trans('product.Manufacturer') }}</div>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
 
-{{--                    @if (hasPermission('designer_read'))--}}
-{{--                        <li class="menu-item {{ activeMenu(route('user.index', Role::DESIGNER)) }}">--}}
-{{--                            <a href="{{ route('user.index', Role::DESIGNER) }}" class="menu-link">--}}
-{{--                                <div data-i18n="{{ _trans('user.Designers') }}">{{ _trans('user.Designers') }}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
 
-{{--                    @if (hasPermission('employees_read'))--}}
-{{--                        <li class="menu-item {{ activeMenu(route('user.employeeList')) }}">--}}
-{{--                            <a href="{{ route('user.employeeList') }}" class="menu-link">--}}
-{{--                                <div data-i18n="{{ _trans('user.Employees') }}">{{ _trans('user.Employees') }}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endif--}}
 
-{{--                </ul>--}}
-{{--            </li>--}}
+                        <li class="menu-item {{ activeMenu(route('admin.user.index', Role::KITCHEN)) }}">
+                            <a href="{{ route('admin.user.index', Role::KITCHEN) }}" class="menu-link">
+                                <div data-i18n="{{ _trans('user.Designers') }}">{{ _trans('user.Designers') }}
+                                </div>
+                            </a>
+                        </li>
 
-{{--        @endif--}}
+
+
+                </ul>
+            </li>
+
+        @endif
 
 
 {{--        @if (hasPermission('subscribers_read'))--}}
@@ -438,43 +423,45 @@
                         {{ _trans('system.System') }} {{ _trans('system.Settings') }}</div>
                 </a>
                 <ul class="menu-sub">
-                    {{-- @if (hasPermission('general_settings_read'))
-                        <li class="menu-item {{ activeMenu('setting.general-setting') }}">
-                            <a href="{{ route('setting.general-setting.index') }}" class="menu-link">
+                    @if (hasPermission('general_settings_read'))
+                        <li class="menu-item {{ activeMenu('admin.setting.general-setting') }}">
+                            <a href="{{ route('admin.setting.general-setting.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('system.General') }} {{ _trans('system.Settings') }}">
                                     {{ _trans('system.General') }} {{ _trans('system.Settings') }}</div>
                             </a>
                         </li>
                     @endif
 
-                    @if (hasPermission('file_system_read'))
-                        <li class="menu-item {{ activeMenu('setting.file-system') }}">
-                            <a href="{{ route('setting.file-system.index') }}" class="menu-link">
-                                <div data-i18n="{{ _trans('system.File') }} {{ _trans('system.System') }}">
-                                    {{ _trans('system.File') }} {{ _trans('system.System') }}</div>
-                            </a>
-                        </li>
-                    @endif --}}
+                        {{--  @if (hasPermission('file_system_read'))
+                             <li class="menu-item {{ activeMenu('setting.file-system') }}">
+                                 <a href="{{ route('setting.file-system.index') }}" class="menu-link">
+                                     <div data-i18n="{{ _trans('system.File') }} {{ _trans('system.System') }}">
+                                         {{ _trans('system.File') }} {{ _trans('system.System') }}</div>
+                                 </a>
+                             </li>
+                         @endif --}}
+                        @if (\Illuminate\Support\Facades\Auth::user()->role_id == Role::KITCHEN)
+                            <li class="menu-item {{ activeMenu('admin.setting.shop-setting') }}">
+                                <a href="{{ route('admin.setting.shop-setting.index') }}" class="menu-link">
+                                    <div data-i18n="{{ _trans('system.Shop') }} {{ _trans('system.System') }}">
+                                        {{ _trans('system.Shop') }} {{ _trans('system.System') }}</div>
+                                </a>
+                            </li>
+
+                        @endif
 
 
-                        <li class="menu-item {{ activeMenu('admin.setting.shop-setting') }}">
-                            <a href="{{ route('admin.setting.shop-setting.index') }}" class="menu-link">
-                                <div data-i18n="{{ _trans('system.Shop') }} {{ _trans('system.System') }}">
-                                    {{ _trans('system.Shop') }} {{ _trans('system.System') }}</div>
-                            </a>
-                        </li>
 
+{{--                     @if (hasPermission('global_settings_read'))--}}
+{{--                        <li class="menu-item {{ activeMenu('admin.setting.global-setting') }}">--}}
+{{--                            <a href="{{ route('admin.setting.global-setting.index') }}" class="menu-link">--}}
+{{--                                <div data-i18n="{{ _trans('system.Global') }} {{ _trans('system.System') }}">--}}
+{{--                                    {{ _trans('system.Global') }} {{ _trans('system.System') }}</div>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    @endif--}}
 
-                    {{-- @if (hasPermission('global_settings_read'))
-                        <li class="menu-item {{ activeMenu('setting.global-setting') }}">
-                            <a href="{{ route('setting.global-setting.index') }}" class="menu-link">
-                                <div data-i18n="{{ _trans('system.Global') }} {{ _trans('system.System') }}">
-                                    {{ _trans('system.Global') }} {{ _trans('system.System') }}</div>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if (hasPermission('payment_method_read'))
+                    {{--@if (hasPermission('payment_method_read'))
                         <li class="menu-item {{ activeMenu('setting.payment-method') }}">
                             <a href="{{ route('setting.payment-method.index') }}" class="menu-link">
                                 <div data-i18n="{{ _trans('system.Payment') }} {{ _trans('system.Method') }}">

@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\GlobalSetting;
 use Illuminate\Http\Request;
 
@@ -10,7 +10,7 @@ class GlobalSettingController extends Controller
     public function index()
     {
         $settings = GlobalSetting::all();
-        return view('setting.global-setting', compact('settings'));
+        return view('admin.setting.global-setting', compact('settings'));
     }
 
 

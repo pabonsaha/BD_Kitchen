@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('setting.Global') . ' ' . _trans('setting.Settings'))
 

@@ -1,5 +1,5 @@
 @php use App\Models\Role; @endphp
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('role.Role'))
 
@@ -49,7 +49,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ route('user.index',$roleId) }}',
+                    url: '{{ route('admin.user.index',$roleId) }}',
                     data: function (d){
                         d.status = $('#status').val()
                     }
@@ -134,7 +134,7 @@
                     if (result.value) {
 
                         $.ajax({
-                            url: '{{ route('user.destroy') }}',
+                            url: '{{ route('admin.user.destroy') }}',
                             method: 'POST',
                             data: {
                                 "_token": "{{ csrf_token() }}",

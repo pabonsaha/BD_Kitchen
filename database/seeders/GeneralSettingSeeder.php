@@ -15,9 +15,9 @@ class GeneralSettingSeeder extends Seeder
     public function run(): void
     {
         $setting = new GeneralSetting();
-        $setting->site_name         = "House Brand";
-        $setting->site_title        = 'House Brand Website';
-        $setting->copyright_text    = '&copy; 2024 <strong>House-Brand</strong>, All Rights Reserved. Developed by <a target="_blank" href="https://mediusware.com/">Mediusware Ltd</a>';
+        $setting->site_name         = "BD Kitchen";
+        $setting->site_title        = 'BD Kitchen Website';
+        $setting->copyright_text    = '&copy; 2024 <strong>BD Kitchen</strong>, All Rights Reserved. Developed by <a target="_blank" href="">Emon Arefin & Sukonna</a>';
         $setting->save();
     }
 }

@@ -468,7 +468,6 @@
                 },
                 success: function(response) {
                     if (response.status == 403) {
-                        console.log(response.errors.phone[0]);
 
                         $('.shop_nameError').text(response.errors?.shop_name ? response.errors
                             ?.shop_name[
@@ -481,7 +480,7 @@
                         $('.emailError').text(response.errors?.email ? response.errors?.email[0] : '');
                         $('.delivery_timeError').text(response.errors?.delivery_time ? response.errors
                             ?.delivery_time[0] : '');
-                        $('.delivery_chargeError').text(response.errors?.delivery_charge ? response
+                        $('.delivery_chargeError').text(response.errors?.delivery_charge[0] ? response
                             .errors
                             ?.delivery_charge[0] : '');
 

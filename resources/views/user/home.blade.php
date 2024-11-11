@@ -4,10 +4,10 @@
     <!-- Banner part start -->
     <main>
         <!-- Missing Home Made Start -->
-        <section>
+        <section class="py-10">
             <div
-                class="w-[320px] md:w-[550px] lg:w-[1034px] text-center box-shadow border-radius2 bg-gradient-to-b from-[#E329380D] to-[#E3293800] container mx-auto">
-                <h1 class="text-[#455A64] inter-500 text-xl md:text-4xl lg:text-[64px] pt-[91px] pb-[41px]">
+                class=" w-[320px] md:w-[550px] lg:w-[1034px] rounded-lg text-center box-shadow border-radius2 bg-gradient-to-b from-[#e3293950] to-[#E3293800] container mx-auto">
+                <h1 class="text-[#455A64] inter-500 text-xl  md:text-4xl lg:text-[64px] pt-[91px] pb-[41px]">
                     Missing Home Made <span class="text-[#E32938]">Food?</span>
                 </h1>
                 <p class="lg:text-[32px] pt-[20px] text-[#575A5B] inter-400 md:text-xl text-xs pb-4">
@@ -41,61 +41,72 @@
 
         <!-- Favourite Bengeli Food Start -->
         <section>
-            <div class="container mx-auto mt-[71px]">
-                <h1 class="capitalize inter-700 text-center text-2xl text-wrap md:text-3xl lg:text-4xl mb-[63px]">
-                    Your favourite <span class="text-[#E32938]">Bangali </span>Food
+            <div class="container mx-auto py-12">
+                <h1 class="capitalize inter-700 text-center text-2xl text-wrap md:text-3xl lg:text-4xl mb-4">
+                    Your favourite <span class="text-[#E32938]">Bangali</span> Food
                 </h1>
                 <div
                     class="flex justify-center items-center flex-col md:flex-row lg:flex-row gap-6 text-[black] inter-600 mb-[50px]">
-                    <a href="#" target="_blank"
-                        class="hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Mixed</a>
-                    <a href="#" target="_blank"
-                        class="hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Breakfast</a>
-                    <a href="#" target="_blank"
-                        class="hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Lunch</a>
-                    <a href="#" target="_blank"
-                        class="hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Dinner</a>
-                    <a href="#" target="_blank"
-                        class="hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Dessert</a>
+                    <a href="#" data-filter="all" class="tab-link hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Mixed</a>
+                    <a href="#" data-filter="breakfast" class="tab-link hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Breakfast</a>
+                    <a href="#" data-filter="lunch" class="tab-link hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Lunch</a>
+                    <a href="#" data-filter="dinner" class="tab-link hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Dinner</a>
+                    <a href="#" data-filter="dessert" class="tab-link hover:bg-[#FCEAEB] hover:text-[#E32938] menu-padding menu-border_radius">Dessert</a>
                 </div>
-
+        
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 lg:grid-cols-4">
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="lunch">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 22.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Fish</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="lunch">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 23.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Chicken</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="dinner">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 24.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Beef</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="breakfast">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 25.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Vegetable</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="lunch">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 26.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Biriyani</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="dinner">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 27.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Kabab</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="breakfast">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 28.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Butter Nan</h3>
                     </div>
-                    <div class="flex flex-col items-center justify-center text-center">
+                    <div class="flex flex-col items-center justify-center text-center item" data-category="dessert">
                         <img src="{{ asset('bd-kitten-assets/images/Rectangle 29.png') }}" alt="" />
                         <h3 class="inter-700 mt-4">Dessert</h3>
                     </div>
                 </div>
             </div>
         </section>
-
+        
+        <script>
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const filter = link.getAttribute('data-filter');
+                    document.querySelectorAll('.item').forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
+        
         <!-- Favourite Bengeli Food End -->
 
         <!-- Popular kitchen part start -->
@@ -103,7 +114,7 @@
         <!-- populer kitchen description start  -->
         <section class="container mx-auto mt-[60px]">
             <div class="text-center">
-                <h3 class="text-4xl inter-700 text-[#455A64] mb-[40px]">
+                <h3 class="text-4xl inter-700 text-[#455A64] mb-4">
                     <span class="text-[#E32938]">Popular </span>Kitchen Near You
                 </h3>
                 <p class="text-[18px] text-[#455A64]">
@@ -126,7 +137,7 @@
                 @foreach ($shops as $shop)
                 <a href="{{route('kitchen.index',$shop->slug)}}">
                     <div class="flex flex-col items-center justify-center">
-                        <div class="card w-[306px] h-[327px] asset-shadow">
+                        <div class="card w-[306px] h-[327px] border border-red-200 rounded-lg asset-shadow">
                             <figure class="px-[12px] pt-[40px]">
                                 <img src="{{getFilePath($shop->banner)}}" alt="asset1" />
                             </figure>
@@ -205,12 +216,12 @@
     <section class="mt-[60px] advertise w-auto h-auto">
         <div class="flex container mx-auto lg:flex-row flex-col items-center justify-center">
             <div class="md:w-3/5 text-center lg:text-left">
-                <h2 class="text-[#455A64] text-[40px] lg:text-wrap mb-[39px] inter-700 capitalize">
+                <h2 class="text-[#455A64] text-[40px] lg:text-wrap mb-2 inter-700 capitalize">
                     Experience the Taste of
                     <span class="text-[#E32938]">Home,</span> Delivered to Your
                     Doorstep!
                 </h2>
-                <p class="capitalize inter-400 mb-10">
+                <p class="capitalize text-xl inter-400 mb-5">
                     where every meal is a masterpiece of homemade excellence. Say
                     goodbye to bland and uninspired meals - our kitchen is here to
                     elevate your dining experience with authentic flavors and comforting
@@ -220,7 +231,7 @@
                     Order Now
                 </button>
             </div>
-            <div class="lg:relative lg:right-24 static">
+            <div class="lg:relative static">
                 <img src="{{ asset('bd-kitten-assets/group image.png') }}" alt="" />
             </div>
         </div>
@@ -228,40 +239,69 @@
     <!-- Experience Part End -->
 
     <!-- What Our Customer’s Say Start -->
-    <section class="container mx-auto">
+    <section class="container mx-auto py-12">
         <div class="text-center">
-            <h1 class="text-[#455A64] text-4xl inter-700">
-                What Our Customer’s Say?
-            </h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="38" viewBox="0 0 43 38" fill="none">
-                <path
-                    d="M38.9688 19H32.25V13.5714C32.25 10.5772 34.6604 8.14286 37.625 8.14286H38.2969C39.4139 8.14286 40.3125 7.23527 40.3125 6.10714V2.03571C40.3125 0.907589 39.4139 0 38.2969 0H37.625C30.2008 0 24.1875 6.07321 24.1875 13.5714V33.9286C24.1875 36.1763 25.9932 38 28.2188 38H38.9688C41.1943 38 43 36.1763 43 33.9286V23.0714C43 20.8237 41.1943 19 38.9688 19ZM14.7812 19H8.0625V13.5714C8.0625 10.5772 10.4729 8.14286 13.4375 8.14286H14.1094C15.2264 8.14286 16.125 7.23527 16.125 6.10714V2.03571C16.125 0.907589 15.2264 0 14.1094 0H13.4375C6.01328 0 0 6.07321 0 13.5714V33.9286C0 36.1763 1.80566 38 4.03125 38H14.7812C17.0068 38 18.8125 36.1763 18.8125 33.9286V23.0714C18.8125 20.8237 17.0068 19 14.7812 19Z"
-                    fill="#E32938" />
-            </svg>
-            <p class="text-[#455A64] text-[28px] inter-400">
-                The ordering process is simple, and the delivery is consistently
-                prompt. The <br />packaging is eco-friendly, and the food arrives as
-                if it's been lovingly prepared <br />
-                just for me. I appreciate the transparency in ingredients and the...
-            </p>
+            <h1 class="text-[#455A64] text-4xl mb-8 inter-700">What Our Customer’s Say?</h1>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                <!-- Each slide -->
+                <div class="swiper-slide bg-red-100 p-4 rounded-lg shadow">
+                    <p class="text-2xl">“Amazing service and delicious meals! Highly recommend. The food was fresh, hot, and perfectly prepared. The ordering process was simple, and delivery was fast. I’m very impressed by the quality and will definitely be a repeat customer!”</p>
+                    <p class="text-lg text-center font-semibold mt-2">- Samuel Scriptsmith</p>
+                </div>
+                
+                <div class="swiper-slide p-4 bg-red-100 rounded-lg shadow">
+                    <p class="text-2xl">“Eco-friendly packaging and timely delivery make them my top choice. The meals arrive neatly packaged, and I appreciate the company's commitment to sustainability. The quality of the ingredients is top-notch, and I always feel good about supporting a business with such values.”</p>
+                    <p class="text-lg text-center font-semibold mt-2">- Jessica Thompson</p>
+                </div>
+                
+                <div class="swiper-slide p-4 bg-red-100 rounded-lg shadow">
+                    <p class="text-2xl">“Absolutely love their food! The variety of dishes is impressive, and every meal I've ordered has been delicious. The service is quick, and I appreciate the clear communication about delivery time. Always a pleasure to order from here!”</p>
+                    <p class="text-lg text-center font-semibold mt-2">- Mark Johnson</p>
+                </div>
+                
+                <div class="swiper-slide p-4 bg-red-100 rounded-lg shadow">
+                    <p class="text-2xl">“The customer service is fantastic! I had an issue with my order once, and they handled it so well. The food quality is consistently great, and it’s always delivered on time. I highly recommend this place to anyone looking for great food and excellent service.”</p>
+                    <p class="text-lg text-center font-semibold mt-2">- Laura Williams</p>
+                </div>
+                
+                <div class="swiper-slide p-4 bg-red-100 rounded-lg shadow">
+                    <p class="text-2xl">“From the moment I placed my order to the moment I received my meal, everything was perfect. The food was flavorful, the portions were generous, and the delivery was fast. I will definitely continue ordering from here and recommend it to my friends!”</p>
+                    <p class="text-lg text-center font-semibold mt-2">- David Carter</p>
+                </div>
+                
+                
+                <!-- Add more slides as needed -->
+            </div>
         </div>
-        <div class="absolute right-28">
-            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="38" viewBox="0 0 43 38" fill="none">
-                <path
-                    d="M38.9688 0H28.2188C25.9932 0 24.1875 1.82366 24.1875 4.07143V14.9286C24.1875 17.1763 25.9932 19 28.2188 19H34.9375V24.4286C34.9375 27.4228 32.5271 29.8571 29.5625 29.8571H28.8906C27.7736 29.8571 26.875 30.7647 26.875 31.8929V35.9643C26.875 37.0924 27.7736 38 28.8906 38H29.5625C36.9867 38 43 31.9268 43 24.4286V4.07143C43 1.82366 41.1943 0 38.9688 0ZM14.7812 0H4.03125C1.80566 0 0 1.82366 0 4.07143V14.9286C0 17.1763 1.80566 19 4.03125 19H10.75V24.4286C10.75 27.4228 8.33965 29.8571 5.375 29.8571H4.70312C3.58613 29.8571 2.6875 30.7647 2.6875 31.8929V35.9643C2.6875 37.0924 3.58613 38 4.70312 38H5.375C12.7992 38 18.8125 31.9268 18.8125 24.4286V4.07143C18.8125 1.82366 17.0068 0 14.7812 0Z"
-                    fill="#E32938" />
-            </svg>
+    
+    
+            <!-- Swiper Pagination and Navigation -->
+            {{-- <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div> --}}
         </div>
-        <div class="flex lg:flex-row flex-col items-center justify-center mt-[51px] gap-[14px]">
-            <img src="Assets/Ellipse 1.svg" alt="" />
-            <h3 class="text-2xl text-[#455A64]">Samuel Scriptsmith</h3>
-        </div>
-        <p class="text-center text-[#455A64] mt-2">Manager At Voice Shop</p>
     </section>
+
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            slidesPerView: 1, // Set the number of slides shown at a time
+            spaceBetween: 40, // Add space between slides (optional)
+            autoplay: {
+                delay: 3000, // Delay between transitions (in milliseconds)
+                disableOnInteraction: false, // Continue autoplay even after user interaction
+            },
+            
+        });
+    </script>
+    
+    
+    
     <!-- What Our Customer’s Say End -->
 
     <!-- Accordian Part Start -->
-    <section class="container mx-auto mt-[135px] mb-[135px]">
+    <section class="container mx-auto  py-12">
         <h2 class="text-center text-[#455A64] text-4xl inter-700 mb-[60px]">
             Frequently Asked Question
         </h2>

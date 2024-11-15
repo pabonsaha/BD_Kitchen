@@ -25,17 +25,43 @@
 
                         @if (auth()->user())
                         <div class="flex flex-row justify-center items-center">
-                            <button
-                                class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13"
-                                    fill="none">
-                                    <path
-                                        d="M6.5 0C7.36195 0 8.1886 0.34241 8.7981 0.951903C9.40759 1.5614 9.75 2.38805 9.75 3.25C9.75 4.11195 9.40759 4.9386 8.7981 5.5481C8.1886 6.15759 7.36195 6.5 6.5 6.5C5.63805 6.5 4.8114 6.15759 4.2019 5.5481C3.59241 4.9386 3.25 4.11195 3.25 3.25C3.25 2.38805 3.59241 1.5614 4.2019 0.951903C4.8114 0.34241 5.63805 0 6.5 0ZM6.5 8.125C10.0913 8.125 13 9.57938 13 11.375V13H0V11.375C0 9.57938 2.90875 8.125 6.5 8.125Z"
-                                        fill="white" />
-                                </svg>
-                                <a href="#">{{ auth()->user()->name }}</a>
-                            </button>
+                            <div class="relative inline-block text-left">
+                                <button
+                                    class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2"
+                                    id="profile-button" aria-expanded="true" aria-haspopup="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                                        <path
+                                            d="M6.5 0C7.36195 0 8.1886 0.34241 8.7981 0.951903C9.40759 1.5614 9.75 2.38805 9.75 3.25C9.75 4.11195 9.40759 4.9386 8.7981 5.5481C8.1886 6.15759 7.36195 6.5 6.5 6.5C5.63805 6.5 4.8114 6.15759 4.2019 5.5481C3.59241 4.9386 3.25 4.11195 3.25 3.25C3.25 2.38805 3.59241 1.5614 4.2019 0.951903C4.8114 0.34241 5.63805 0 6.5 0ZM6.5 8.125C10.0913 8.125 13 9.57938 13 11.375V13H0V11.375C0 9.57938 2.90875 8.125 6.5 8.125Z"
+                                            fill="white" />
+                                    </svg>
+                                    <span>{{ auth()->user()->name }}</span>
+                                </button>
+                        
+                                <!-- Dropdown menu -->
+                                <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none hidden" id="profile-menu" role="menu" aria-orientation="vertical" aria-labelledby="profile-button" tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-1">About Bd Kitchen</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <script>
+                            const profileButton = document.getElementById('profile-button');
+                            const profileMenu = document.getElementById('profile-menu');
+                        
+                            profileButton.addEventListener('click', () => {
+                                profileMenu.classList.toggle('hidden');
+                            });
+                        
+                            document.addEventListener('click', (event) => {
+                                if (!profileButton.contains(event.target) && !profileMenu.contains(event.target)) {
+                                    profileMenu.classList.add('hidden');
+                                }
+                            });
+                        </script>
+                        
                         <div class="flex items-center justify-around">
                             <button class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="white">

@@ -22,6 +22,7 @@
         "@fullcalendar/list": "6.1.9",
         "@fullcalendar/timegrid": "6.1.9",
         "@fullcalendar/timeline": "6.1.9",
+        "@material-tailwind/html": "^2.3.2",
         "vite-plugin-require": "^1.1.14"
     }
 }

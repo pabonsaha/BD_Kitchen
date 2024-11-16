@@ -26,8 +26,8 @@
                     @endif
 
                     <div class="submit">
-                        <p>Already have accout? <a href="{{ route('userRegister') }}">register</a></p>
-                        <button type="submit">Register</button>
+                        <p>Do not have account? <a href="{{ route('userRegister') }}">register</a></p>
+                        <button type="submit">Login</button>
                     </div>
 
                 </form>

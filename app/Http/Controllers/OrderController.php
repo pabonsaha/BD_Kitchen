@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
 
+    public function index()
+    {
+        // Fetch orders from the database
+        $orders = Order::all(); // You can use Order::paginate(10) for pagination
+        return view('orders.index', compact('orders'));
+
+    }
+
     public function checkout(Request $request)
     {
         $productsIDs = [];
@@ -40,6 +48,8 @@ class OrderController extends Controller
         return view('user.checkout', compact('products','shop'));
 
     }
+
+
 
     public function store(Request $request)
     {

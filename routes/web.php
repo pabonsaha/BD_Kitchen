@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,9 +41,23 @@ Route::get('kitchen/{slug}',[KitchenController::class,'index'])->name('kitchen.i
 
 
 Route::middleware(['auth'])->group(function () {
+    
+// profileroutes/web.php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+});
+
 
     Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
     Route::post('/order',[OrderController::class,'store'])->name('order.store');
+//order
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+
 
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+
+    Route::get('/thank-you', function () {
+        return view('thank-you');
+    })->name('thank-you');
 });

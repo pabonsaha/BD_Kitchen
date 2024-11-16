@@ -8,13 +8,13 @@
             <h4 class="text-[#E32938] capitalize inter-700 text-2xl text-wrap md:text-3xl lg:text-4xl m-[40px]">
                 Checkout</h4>
         </section>
-        <form method="POST" action="{{route('order.store')}}">
+        <form method="POST" action="{{ route('order.store') }}">
             @csrf
             <section class="container mx-auto mt-[40px]">
                 <div class="grid grid-cols-2">
 
-                    <input class="hidden" name="shipping_charge" value="{{$shop->delivery_charge}}">
-                    <input class="hidden" name="seller_id" value="{{$shop->user_id}}">
+                    <input class="hidden" name="shipping_charge" value="{{ $shop->delivery_charge }}">
+                    <input class="hidden" name="seller_id" value="{{ $shop->user_id }}">
 
                     <div class="product_id">
                         <p class="capitalize inter-700 text-xl text-wrap  mb-[40px]">Product List</p>
@@ -22,17 +22,15 @@
                             $subTotal = 0;
                         @endphp
                         @foreach ($products as $product)
-
-                            <input class="hidden" name="product[{{$product->id}}][id]" value="{{$product->id}}">
-                            <input class="hidden" name="product[{{$product->id}}][price]"
-                                   value="{{$product->unit_price}}">
-                            <input class="hidden" name="product[{{$product->id}}][quantity]"
-                                   value="{{$product->quantity_value}}">
+                            <input class="hidden" name="product[{{ $product->id }}][id]" value="{{ $product->id }}">
+                            <input class="hidden" name="product[{{ $product->id }}][price]"
+                                value="{{ $product->unit_price }}">
+                            <input class="hidden" name="product[{{ $product->id }}][quantity]"
+                                value="{{ $product->quantity_value }}">
 
                             <div
                                 class="mb-[15px] h-[120px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <img
-                                    class="object-contain w-full rounded-t-lg h-36 md:w-48 md:rounded-none md:rounded-s-lg"
+                                <img class="object-contain w-full rounded-lg h-30 md:w-48 md:h-full md:rounded-none md:rounded-s-lg"
                                     src="{{ asset('storage/' . $product->thumbnail_img) }}" alt="">
                                 <div class="flex flex-col justify-between p-4 leading-normal w-full">
                                     <h5 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -40,94 +38,182 @@
                                     <div class="flex flex-row justify-between">
                                         <h4 class="font-semibold text-[#E32938]">{{ getPriceFormat($product->unit_price) }}
                                             *
-                                            {{$product->quantity_value}}</h4>
+                                            {{ $product->quantity_value }}</h4>
                                         <div class="hidden product_details_container">
-                                            <input class="product_id" value="{{$product->id}}">
-                                            <input class="product_name" value="{{$product->name}}">
+                                            <input class="product_id" value="{{ $product->id }}">
+                                            <input class="product_name" value="{{ $product->name }}">
                                             <input class="product_image"
-                                                   value="{{ asset('storage/' . $product->thumbnail_img) }}">
-                                            <input class="product_price" value="{{$product->unit_price}}">
+                                                value="{{ asset('storage/' . $product->thumbnail_img) }}">
+                                            <input class="product_price" value="{{ $product->unit_price }}">
                                         </div>
-                                        <h4 class="font-semibold text-[#E32938]">{{ getPriceFormat($product->unit_price* $product->quantity_value) }}</h4>
-
+                                        <h4 class="font-semibold text-[#E32938]">
+                                            {{ getPriceFormat($product->unit_price * $product->quantity_value) }}</h4>
                                     </div>
                                 </div>
                             </div>
+
                             @php
-                                $subTotal += ((int)$product->unit_price*$product->quantity_value);
+                                $subTotal += (int) $product->unit_price * $product->quantity_value;
                             @endphp
                         @endforeach
                         <div
                             class="mt-[20px] flex flex-row justify-between   md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                             <p class="font-semibold">Subtotal</p>
-                            <p class="text-[#E32938] font-semibold">{{getPriceFormat($subTotal)}}</p>
-                            <input name="sub_total" class="hidden" value="{{$subTotal}}">
+                            <p class="text-[#E32938] font-semibold">{{ getPriceFormat($subTotal) }}</p>
+                            <input name="sub_total" class="hidden" value="{{ $subTotal }}">
                         </div>
                         <div
                             class="mt-[10px] flex flex-row justify-between   md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                             <p class="font-semibold">Delivery Charge</p>
-                            <p class="text-[#E32938] font-semibold">{{getPriceFormat($shop->delivery_charge)}}</p>
+                            <p class="text-[#E32938] font-semibold">{{ getPriceFormat($shop->delivery_charge) }}</p>
                         </div>
                         <div
                             class="mt-[10px] flex flex-row justify-between   md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                             <p class="font-semibold">Total</p>
-                            <p class="text-[#E32938] font-semibold">{{getPriceFormat($subTotal+$shop->delivery_charge)}}</p>
-                            <input name="total" class="hidden" value="{{$subTotal+$shop->delivery_charge}}">
+                            <p class="text-[#E32938] font-semibold">
+                                {{ getPriceFormat($subTotal + $shop->delivery_charge) }}
+                            </p>
+                            <input name="total" class="hidden" value="{{ $subTotal + $shop->delivery_charge }}">
 
                         </div>
                     </div>
 
                     <div class="cart_list">
-                        <p class="capitalize inter-700 text-xl text-wrap mb-[12px]">Shipping Address</p>
+                        <p class="capitalize inter-700 text-xl text-wrap mb-[40px]">Shipping Address</p>
 
-
-                        <div class="form">
-                            <label for="Name">Name</label>
-                            <input class="inputForm" required value="{{old('name')}}" type="text"
-                                   name="shipping_addresses_name">
-                            @error('name')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
+                        <!-- Default Shipping Address Card -->
+                        <div
+                            class="address-card bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4">
+                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Default Address</h5>
+                            <p class="text-gray-700 dark:text-gray-400">Name: John Doe</p>
+                            <p class="text-gray-700 dark:text-gray-400">Phone: +1234567890</p>
+                            <p class="text-gray-700 dark:text-gray-400">Street Address: 123 Main St</p>
+                            <p class="text-gray-700 dark:text-gray-400">City: Dhaka</p>
                         </div>
 
+                        <!-- Button to Open Modal -->
+                        <button id="addAddressBtn"
+                            class="px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB]"
+                            type="button">
+                            Add Address
+                        </button>
 
-                        <div class="form">
-                            <label for="Name">Phone Number</label>
-                            <input class="inputForm" required type="tel" value="{{old('phone')}}"
-                                   name="shipping_addresses_phone">
-                            @error('phone')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
+                        <!-- Modal Structure -->
+                        <div id="addressModal" class="fixed z-[999] inset-0 overflow-y-auto hidden">
+                            <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
+                                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                    <div class="absolute inset-0 bg-gray-500 opacity-60"></div>
+                                </div>
 
+                                <div
+                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                    <div class="relative items-center flex justify-center text-white h-20 bg-[#E32938]">
+                                        <h3 class="text-2xl">Add Address</h3>
+                                    </div>
+                                    <div class="flex flex-col gap-4 p-6">
+                                        <form>
+                                            <div class="form mb-4">
+                                                <label for="Name"
+                                                    class="block text-sm font-medium text-gray-700">Name</label>
+                                                <input
+                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                                    required value="{{ old('name') }}" type="text"
+                                                    name="shipping_addresses_name">
+                                                @error('name')
+                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form mb-4">
+                                                <label for="Phone Number"
+                                                    class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                                <input
+                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                                    required type="tel" value="{{ old('phone') }}"
+                                                    name="shipping_addresses_phone">
+                                                @error('phone')
+                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form mb-4">
+                                                <label for="Street Address"
+                                                    class="block text-sm font-medium text-gray-700">Street Address</label>
+                                                <input
+                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                                    required value="{{ old('street_address') }}" type="text"
+                                                    name="shipping_addresses_street_address">
+                                                @error('street_address')
+                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form mb-4">
+                                                <label for="City"
+                                                    class="block text-sm font-medium text-gray-700">City</label>
+                                                <input
+                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                                    required value="{{ old('city') }}" type="text"
+                                                    name="shipping_addresses_city">
+                                                @error('city')
+                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <button type="submit"
+                                                class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Submit</button>
+                                        </form>
+                                    </div>
+                                    <div class="p-6 pt-0">
+                                        <button type="button"
+                                            class="close w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="form">
-                            <label for="Name">Street Address</label>
-                            <input class="inputForm" required value="{{old('name')}}" type="text"
-                                   name="shipping_addresses_street_address">
-                            @error('name')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form">
-                            <label for="Name">City</label>
-                            <input class="inputForm" required value="{{old('name')}}" type="text"
-                                   name="shipping_addresses_city">
-                            @error('name')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-
                     </div>
+
+
+                    <script>
+                        // Get the modal
+                        var modal = document.getElementById("addressModal");
+
+                        // Get the button that opens the modal
+                        var btn = document.getElementById("addAddressBtn");
+
+                        // Get the <span> element that closes the modal
+                        var closeBtn = document.getElementsByClassName("close")[0];
+
+                        // When the user clicks the button, open the modal
+                        btn.onclick = function() {
+                            modal.classList.remove('hidden');
+                        }
+
+                        // When the user clicks on <span> (x), close the modal
+                        closeBtn.onclick = function() {
+                            modal.classList.add('hidden');
+                        }
+
+                        // When the user clicks anywhere outside of the modal, close it
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.classList.add('hidden');
+                            }
+                        }
+                    </script>
+
+
+
                 </div>
 
-                <div>
+                <div class="flex justify-end mt-6">
                     <button
-                        class="mt-2 px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB] m-auto"
+                        class="px-6 flex items-center btn text-white bg-[#E32938] border border-solid border-[#E32938] hover:bg-[#c62828] hover:border-[#c62828] transition ease-in-out duration-300 transform hover:scale-105"
                         type="submit">Place Order
                     </button>
+
                 </div>
+
 
             </section>
 
@@ -138,7 +224,6 @@
 @endsection
 
 @push('script')
-
 @endpush
 
 @push('css')

@@ -42,7 +42,7 @@ Route::get('kitchen/{slug}',[KitchenController::class,'index'])->name('kitchen.i
 
 Route::middleware(['auth'])->group(function () {
     
-// routes/web.php
+// profileroutes/web.php
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
 });
@@ -50,6 +50,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
     Route::post('/order',[OrderController::class,'store'])->name('order.store');
+//order
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+
 
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
+
+    Route::get('/thank-you', function () {
+        return view('thank-you');
+    })->name('thank-you');
 });

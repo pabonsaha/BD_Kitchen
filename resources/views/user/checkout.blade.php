@@ -24,13 +24,14 @@
                         @foreach ($products as $product)
                             <input class="hidden" name="product[{{ $product->id }}][id]" value="{{ $product->id }}">
                             <input class="hidden" name="product[{{ $product->id }}][price]"
-                                value="{{ $product->unit_price }}">
+                                   value="{{ $product->unit_price }}">
                             <input class="hidden" name="product[{{ $product->id }}][quantity]"
-                                value="{{ $product->quantity_value }}">
+                                   value="{{ $product->quantity_value }}">
 
                             <div
                                 class="mb-[15px] h-[120px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                <img class="object-contain w-full rounded-lg h-30 md:w-48 md:h-full md:rounded-none md:rounded-s-lg"
+                                <img
+                                    class="object-contain w-full rounded-lg h-30 md:w-48 md:h-full md:rounded-none md:rounded-s-lg"
                                     src="{{ asset('storage/' . $product->thumbnail_img) }}" alt="">
                                 <div class="flex flex-col justify-between p-4 leading-normal w-full">
                                     <h5 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -43,7 +44,7 @@
                                             <input class="product_id" value="{{ $product->id }}">
                                             <input class="product_name" value="{{ $product->name }}">
                                             <input class="product_image"
-                                                value="{{ asset('storage/' . $product->thumbnail_img) }}">
+                                                   value="{{ asset('storage/' . $product->thumbnail_img) }}">
                                             <input class="product_price" value="{{ $product->unit_price }}">
                                         </div>
                                         <h4 class="font-semibold text-[#E32938]">
@@ -80,130 +81,113 @@
 
                     <div class="cart_list">
                         <p class="capitalize inter-700 text-xl text-wrap mb-4 mt-[40px]">Shipping Address</p>
+                        <!-- Default Shipping Address Card -->
+                        <div class="flex flex-wrap justify-start space-x-4">
+                        @foreach($shippingAdddresses as $shippingAdddress)
+                                <div
+                                    class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
+                                    <input type="radio" name="shippingAddressId" class="mr-2" value="{{$shippingAdddress->id}}"
+                                           @if($shippingAdddress->is_default == 1) checked @endif >
+                                    <div>
+                                        <p class="text-black dark:text-gray-400">Name: {{$shippingAdddress->name}}</p>
+                                        <p class="text-black dark:text-gray-400">Phone: {{$shippingAdddress->phone}}</p>
+                                        <p class="text-black dark:text-gray-400">Street
+                                            Address: {{$shippingAdddress->street_address}}</p>
+                                        <p class="text-black dark:text-gray-400">City: {{$shippingAdddress->state}}</p>
+                                    </div>
+                                </div>
+                        @endforeach
 
-                <!-- Default Shipping Address Card -->
-                <div class="flex flex-wrap justify-start space-x-4">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2" checked>
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Default Address</h5>
-                            <p class="text-black dark:text-gray-400">Name: John Doe</p>
-                            <p class="text-black dark:text-gray-400">Phone: +1234567890</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 123 Main St</p>
-                            <p class="text-black dark:text-gray-400">City: Dhaka</p>
+
+
                         </div>
-                    </div>  
-                
-                
-                <!-- Additional Demo Address Card 1 -->
-                <div class="flex justify-start">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2">
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 1</h5>
-                            <p class="text-black dark:text-gray-400">Name: Jane Smith</p>
-                            <p class="text-black dark:text-gray-400">Phone: +9876543210</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 456 Elm St</p>
-                            <p class="text-black dark:text-gray-400">City: Chittagong</p>
-                        </div>
-                    </div>  
-                </div>
-                
-                <!-- Additional Demo Address Card 2 -->
-                <div class="flex justify-start">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2">
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 2</h5>
-                            <p class="text-black dark:text-gray-400">Name: Alice Johnson</p>
-                            <p class="text-black dark:text-gray-400">Phone: +1122334455</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 789 Pine St</p>
-                            <p class="text-black dark:text-gray-400">City: Khulna</p>
-                        </div>
-                    </div>  
-                </div>
-            </div>
 
                         <!-- Button to Open Modal -->
-                        <button id="addAddressBtn"
-                            class="px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB]"
-                            type="button">
-                            Add Address
-                        </button>
+                        {{--                        <button id="addAddressBtn"--}}
+                        {{--                            class="px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB]"--}}
+                        {{--                            type="button">--}}
+                        {{--                            Add Address--}}
+                        {{--                        </button>--}}
 
                         <!-- Modal Structure -->
-                        <div id="addressModal" class="fixed z-[999] inset-0 overflow-y-auto hidden">
-                            <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
-                                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                    <div class="absolute inset-0 bg-gray-500 opacity-60"></div>
-                                </div>
+{{--                        <div id="addressModal" class="fixed z-[999] inset-0 overflow-y-auto hidden">--}}
+{{--                            <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">--}}
+{{--                                <div class="fixed inset-0 transition-opacity" aria-hidden="true">--}}
+{{--                                    <div class="absolute inset-0 bg-gray-500 opacity-60"></div>--}}
+{{--                                </div>--}}
 
-                                <div
-                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                    <div class="relative items-center flex justify-center text-white h-20 bg-[#E32938]">
-                                        <h3 class="text-2xl">Add Address</h3>
-                                    </div>
-                                    <div class="flex flex-col gap-4 p-6">
-                                        <form>
-                                            <div class="form mb-4">
-                                                <label for="Name"
-                                                    class="block text-sm font-medium text-gray-700">Name</label>
-                                                <input
-                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                                    required value="{{ old('name') }}" type="text"
-                                                    name="shipping_addresses_name">
-                                                @error('name')
-                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+{{--                                <div--}}
+{{--                                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">--}}
+{{--                                    <div class="relative items-center flex justify-center text-white h-20 bg-[#E32938]">--}}
+{{--                                        <h3 class="text-2xl">Add Address</h3>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="flex flex-col gap-4 p-6">--}}
+{{--                                        <form>--}}
+{{--                                            <div class="form mb-4">--}}
+{{--                                                <label for="Name"--}}
+{{--                                                       class="block text-sm font-medium text-gray-700">Name</label>--}}
+{{--                                                <input--}}
+{{--                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"--}}
+{{--                                                    required value="{{ old('name') }}" type="text"--}}
+{{--                                                    name="shipping_addresses_name">--}}
+{{--                                                @error('name')--}}
+{{--                                                <span class="text-red-500 text-sm">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
 
-                                            <div class="form mb-4">
-                                                <label for="Phone Number"
-                                                    class="block text-sm font-medium text-gray-700">Phone Number</label>
-                                                <input
-                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                                    required type="tel" value="{{ old('phone') }}"
-                                                    name="shipping_addresses_phone">
-                                                @error('phone')
-                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+{{--                                            <div class="form mb-4">--}}
+{{--                                                <label for="Phone Number"--}}
+{{--                                                       class="block text-sm font-medium text-gray-700">Phone--}}
+{{--                                                    Number</label>--}}
+{{--                                                <input--}}
+{{--                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"--}}
+{{--                                                    required type="tel" value="{{ old('phone') }}"--}}
+{{--                                                    name="shipping_addresses_phone">--}}
+{{--                                                @error('phone')--}}
+{{--                                                <span class="text-red-500 text-sm">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
 
-                                            <div class="form mb-4">
-                                                <label for="Street Address"
-                                                    class="block text-sm font-medium text-gray-700">Street Address</label>
-                                                <input
-                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                                    required value="{{ old('street_address') }}" type="text"
-                                                    name="shipping_addresses_street_address">
-                                                @error('street_address')
-                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+{{--                                            <div class="form mb-4">--}}
+{{--                                                <label for="Street Address"--}}
+{{--                                                       class="block text-sm font-medium text-gray-700">Street--}}
+{{--                                                    Address</label>--}}
+{{--                                                <input--}}
+{{--                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"--}}
+{{--                                                    required value="{{ old('street_address') }}" type="text"--}}
+{{--                                                    name="shipping_addresses_street_address">--}}
+{{--                                                @error('street_address')--}}
+{{--                                                <span class="text-red-500 text-sm">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
 
-                                            <div class="form mb-4">
-                                                <label for="City"
-                                                    class="block text-sm font-medium text-gray-700">City</label>
-                                                <input
-                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                                    required value="{{ old('city') }}" type="text"
-                                                    name="shipping_addresses_city">
-                                                @error('city')
-                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+{{--                                            <div class="form mb-4">--}}
+{{--                                                <label for="City"--}}
+{{--                                                       class="block text-sm font-medium text-gray-700">City</label>--}}
+{{--                                                <input--}}
+{{--                                                    class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"--}}
+{{--                                                    required value="{{ old('city') }}" type="text"--}}
+{{--                                                    name="shipping_addresses_city">--}}
+{{--                                                @error('city')--}}
+{{--                                                <span class="text-red-500 text-sm">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
 
-                                            <button type="submit"
-                                                class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Submit</button>
-                                        </form>
-                                    </div>
-                                    <div class="p-6 pt-0">
-                                        <button type="button"
-                                            class="close w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+{{--                                            <button type="submit"--}}
+{{--                                                    class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">--}}
+{{--                                                Submit--}}
+{{--                                            </button>--}}
+{{--                                        </form>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="p-6 pt-0">--}}
+{{--                                        <button type="button"--}}
+{{--                                                class="close w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">--}}
+{{--                                            Close--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
 
 
@@ -218,23 +202,22 @@
                         var closeBtn = document.getElementsByClassName("close")[0];
 
                         // When the user clicks the button, open the modal
-                        btn.onclick = function() {
+                        btn.onclick = function () {
                             modal.classList.remove('hidden');
                         }
 
                         // When the user clicks on <span> (x), close the modal
-                        closeBtn.onclick = function() {
+                        closeBtn.onclick = function () {
                             modal.classList.add('hidden');
                         }
 
                         // When the user clicks anywhere outside of the modal, close it
-                        window.onclick = function(event) {
+                        window.onclick = function (event) {
                             if (event.target == modal) {
                                 modal.classList.add('hidden');
                             }
                         }
                     </script>
-
 
 
                 </div>

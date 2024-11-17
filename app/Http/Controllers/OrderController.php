@@ -44,8 +44,9 @@ class OrderController extends Controller
 
         }
         $shop = ShopSetting::find($request->shop_id);
+        $shippingAdddresses = ShippingAddress::where('user_id', Auth::user()->id)->get();
 
-        return view('user.checkout', compact('products','shop'));
+        return view('user.checkout', compact('products','shop', 'shippingAdddresses'));
 
     }
 
@@ -56,22 +57,20 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
 
-//            $shipping_addresses = ShippingAddress::where('id', $request->shippingAddressId)->where('user_id', $request->user_id)->first();
-//
-//
-//
-//            if (!$shipping_addresses) {
-//                DB::rollBack();
-//                Toastr::error('Shipping Address did not found');
-//                return redirect()->back();
-//            }
+            $shipping_addresses = ShippingAddress::where('id', $request->shippingAddressId)->where('user_id', Auth::user()->id)->first();
+
+            if (!$shipping_addresses) {
+                DB::rollBack();
+                Toastr::error('Add Shipping Address from Profile');
+                return redirect()->back();
+            }
 
             $shipping_addresses_arary = [];
 
-            $shipping_addresses_arary['name'] = $request->shipping_addresses_name;
-            $shipping_addresses_arary['phone'] = $request->shipping_addresses_phone;
-            $shipping_addresses_arary['city'] = $request->shipping_addresses_city;
-            $shipping_addresses_arary['street_address'] = $request->shipping_addresses_street_address;
+            $shipping_addresses_arary['name'] = $shipping_addresses->name;
+            $shipping_addresses_arary['phone'] = $shipping_addresses->phone;
+            $shipping_addresses_arary['city'] = $shipping_addresses->street_address;
+            $shipping_addresses_arary['street_address'] = $shipping_addresses->state;
 
             $order = new Order();
             $order->user_id = Auth::user()->id;

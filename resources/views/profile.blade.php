@@ -10,7 +10,7 @@
 
                 <div class="flex items-center space-x-4 mb-6">
                     <img class="w-24 h-24 rounded-full"
-                        src="{{ $user->profile_photo_url ?? 'https://via.placeholder.com/150' }}" alt="Profile Picture">
+                        src="{{ getFilePath($user->avatar) }}" alt="Profile Picture">
                     <div>
                         <h2 class="text-xl font-semibold">{{ $user->name }}</h2>
                         <p class="text-gray-600">{{ $user->email }}</p>
@@ -36,9 +36,8 @@
                                 <h3 class="text-2xl">Edit Profile</h3>
                             </div>
                             <div class="flex flex-col gap-4 p-6">
-                                <form method="POST" action="#" enctype="multipart/form-data">
+                                <form method="POST" action="{{route('profile.update')}}" enctype="multipart/form-data">
                                     @csrf
-                                    @method('PUT')
                                     <div class="form mb-4">
                                         <label for="name" class="block text-sm font-medium text-black">Name</label>
                                         <input id="name"
@@ -53,7 +52,7 @@
                                         <label for="email" class="block text-sm font-medium text-black">Email</label>
                                         <input id="email"
                                             class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required value="{{ $user->email }}" type="email" name="email">
+                                            required disabled value="{{ $user->email }}" type="email" name="email">
                                         @error('email')
                                             <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
@@ -64,7 +63,7 @@
                                             Number</label>
                                         <input id="contact_number"
                                             class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required value="{{ $user->phone }}" type="text" name="contact_number">
+                                            required value="{{ $user->phone }}" type="text" name="phone">
                                         @error('contact_number')
                                             <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
@@ -85,8 +84,8 @@
                                             Photo</label>
                                         <input id="profile_photo"
                                             class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            type="file" name="profile_photo">
-                                        @error('profile_photo')
+                                            type="file" name="avatar">
+                                        @error('avatar')
                                             <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -151,48 +150,26 @@
 
                 <!-- Default Shipping Address Card -->
                 <div class="flex flex-wrap justify-start space-x-4">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2" checked>
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Default Address</h5>
-                            <p class="text-black dark:text-gray-400">Name: John Doe</p>
-                            <p class="text-black dark:text-gray-400">Phone: +1234567890</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 123 Main St</p>
-                            <p class="text-black dark:text-gray-400">City: Dhaka</p>
+                    @foreach($shippingAdddresses as $shippingAdddress)
+
+                        <div
+                            class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
+                            <input type="radio" name="address" class="mr-2"
+                                   @if($shippingAdddress->is_default == 1) checked @endif >
+                            <div>
+                                <p class="text-black dark:text-gray-400">Name: {{$shippingAdddress->name}}</p>
+                                <p class="text-black dark:text-gray-400">Phone: {{$shippingAdddress->phone}}</p>
+                                <p class="text-black dark:text-gray-400">Street
+                                    Address: {{$shippingAdddress->street_address}}</p>
+                                <p class="text-black dark:text-gray-400">City: {{$shippingAdddress->state}}</p>
+                            </div>
                         </div>
-                    </div>  
-                
-                
-                <!-- Additional Demo Address Card 1 -->
-                <div class="flex justify-start">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2">
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 1</h5>
-                            <p class="text-black dark:text-gray-400">Name: Jane Smith</p>
-                            <p class="text-black dark:text-gray-400">Phone: +9876543210</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 456 Elm St</p>
-                            <p class="text-black dark:text-gray-400">City: Chittagong</p>
-                        </div>
-                    </div>  
-                </div>
-                
-                <!-- Additional Demo Address Card 2 -->
-                <div class="flex justify-start">
-                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
-                        <input type="radio" name="address" class="mr-2">
-                        <div>
-                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 2</h5>
-                            <p class="text-black dark:text-gray-400">Name: Alice Johnson</p>
-                            <p class="text-black dark:text-gray-400">Phone: +1122334455</p>
-                            <p class="text-black dark:text-gray-400">Street Address: 789 Pine St</p>
-                            <p class="text-black dark:text-gray-400">City: Khulna</p>
-                        </div>
-                    </div>  
-                </div>
+                    @endforeach
+
+
             </div>
-                
-                
+
+
 
 
                 <!-- Button to Open Modal -->
@@ -215,7 +192,8 @@
                                 <h3 class="text-2xl">Add Address</h3>
                             </div>
                             <div class="flex flex-col gap-4 p-6">
-                                <form>
+                                <form method="post" action="{{route('shippingAddress.store')}}">
+                                    @csrf
                                     <div class="form mb-4">
                                         <label for="Name" class="block text-sm font-medium text-black">Name</label>
                                         <input

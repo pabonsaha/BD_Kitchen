@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShippingAddress;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Brian2694\Toastr\Facades\Toastr;
-use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ShippingAddressController extends Controller
 {
-    //
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

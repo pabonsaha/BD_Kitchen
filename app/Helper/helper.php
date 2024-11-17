@@ -49,7 +49,7 @@ if (!function_exists('getFilePath')) {
         if ($path) {
             return asset('storage/' . $path);
         }
-        return asset('/assets/img/placeholder/placeholder.png');
+        return 'https://via.placeholder.com/150';
     }
 }
 

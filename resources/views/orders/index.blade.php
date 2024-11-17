@@ -13,27 +13,15 @@
                 </tr>
             </thead>
             <tbody>
+
                 @if($orders->isEmpty())
-                    <tr>
-                        <td colspan="3" class="py-4 px-6 text-center text-gray-500">No orders found. Here is some demo data:</td>
-                    </tr>
-                    <!-- Demo data -->
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="py-3 px-6">DEMO-001</td>
-                        <td class="py-3 px-6">2024-11-01</td>
-                        <td class="py-3 px-6">$99.99</td>
-                    </tr>
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="py-3 px-6">DEMO-002</td>
-                        <td class="py-3 px-6">2024-11-02</td>
-                        <td class="py-3 px-6">$49.50</td>
-                    </tr>
+                    <h5>No Order Found</h5>
                 @else
                     @foreach($orders as $order)
                         <tr class="border-b hover:bg-gray-50">
                             <td class="py-3 px-6">{{ $order->id }}</td>
                             <td class="py-3 px-6">{{ $order->created_at->format('Y-m-d') }}</td>
-                            <td class="py-3 px-6">${{ number_format($order->total_price, 2) }}</td>
+                            <td class="py-3 px-6">{{ number_format($order->grand_total_amount, 2) }}tk</td>
                         </tr>
                     @endforeach
                 @endif

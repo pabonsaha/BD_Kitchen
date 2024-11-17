@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         // Fetch orders from the database
-        $orders = Order::all(); // You can use Order::paginate(10) for pagination
+        $orders = Order::where('user_id',Auth::user()->id)->get(); // You can use Order::paginate(10) for pagination
         return view('orders.index', compact('orders'));
 
     }

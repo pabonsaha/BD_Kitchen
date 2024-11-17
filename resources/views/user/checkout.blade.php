@@ -79,17 +79,50 @@
                     </div>
 
                     <div class="cart_list">
-                        <p class="capitalize inter-700 text-xl text-wrap mb-[40px]">Shipping Address</p>
+                        <p class="capitalize inter-700 text-xl text-wrap mb-4 mt-[40px]">Shipping Address</p>
 
-                        <!-- Default Shipping Address Card -->
-                        <div
-                            class="address-card bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4">
+                <!-- Default Shipping Address Card -->
+                <div class="flex flex-wrap justify-start space-x-4">
+                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
+                        <input type="radio" name="address" class="mr-2" checked>
+                        <div>
                             <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Default Address</h5>
-                            <p class="text-gray-700 dark:text-gray-400">Name: John Doe</p>
-                            <p class="text-gray-700 dark:text-gray-400">Phone: +1234567890</p>
-                            <p class="text-gray-700 dark:text-gray-400">Street Address: 123 Main St</p>
-                            <p class="text-gray-700 dark:text-gray-400">City: Dhaka</p>
+                            <p class="text-black dark:text-gray-400">Name: John Doe</p>
+                            <p class="text-black dark:text-gray-400">Phone: +1234567890</p>
+                            <p class="text-black dark:text-gray-400">Street Address: 123 Main St</p>
+                            <p class="text-black dark:text-gray-400">City: Dhaka</p>
                         </div>
+                    </div>  
+                
+                
+                <!-- Additional Demo Address Card 1 -->
+                <div class="flex justify-start">
+                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
+                        <input type="radio" name="address" class="mr-2">
+                        <div>
+                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 1</h5>
+                            <p class="text-black dark:text-gray-400">Name: Jane Smith</p>
+                            <p class="text-black dark:text-gray-400">Phone: +9876543210</p>
+                            <p class="text-black dark:text-gray-400">Street Address: 456 Elm St</p>
+                            <p class="text-black dark:text-gray-400">City: Chittagong</p>
+                        </div>
+                    </div>  
+                </div>
+                
+                <!-- Additional Demo Address Card 2 -->
+                <div class="flex justify-start">
+                    <div class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
+                        <input type="radio" name="address" class="mr-2">
+                        <div>
+                            <h5 class="text-xl font-semibold text-gray-900 dark:text-white">Address 2</h5>
+                            <p class="text-black dark:text-gray-400">Name: Alice Johnson</p>
+                            <p class="text-black dark:text-gray-400">Phone: +1122334455</p>
+                            <p class="text-black dark:text-gray-400">Street Address: 789 Pine St</p>
+                            <p class="text-black dark:text-gray-400">City: Khulna</p>
+                        </div>
+                    </div>  
+                </div>
+            </div>
 
                         <!-- Button to Open Modal -->
                         <button id="addAddressBtn"

@@ -12,9 +12,9 @@
                 <!-- Overlay -->
                 <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div class="text-center text-white p-4">
-                        <h1 class="text-2xl md:text-4xl font-bold">Khanas</h1>
-                        <p class="mt-2 text-sm md:text-lg">Baily Road,Dhaka</p>
-                        <p class="mt-1 text-sm md:text-lg">Delivery Time: {{ $shop->delivery_time }}</p>
+                        <h1 class="text-2xl md:text-4xl font-bold">{{ $shop->shop_name }}</h1>
+                        <p class="mt-2 text-sm md:text-lg">{{ $shop->location }}</p>
+                        <p class="mt-1 text-sm md:text-lg">Delivery Time: {{ $shop->delivery_time }} | Delivery Fee: {{ $shop->delivery_charge }}tk</p>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title', $title ?? _trans('order.Order Details'))
 
@@ -84,17 +84,11 @@
                                 <div class="row mt-2">
                                     @if(hasPermission('customer_order_list_read_invoice'))
                                         <div class="col-4">
-                                            <a href="{{ route('order.invoicePreview', $order->id) }}"
+                                            <a href="{{ route('admin.order.invoicePreview', $order->id) }}"
                                                class="btn btn-label-warning d-grid w-100 mb-2 waves-effect">{{_trans('order.Invoice')}}</a>
                                         </div>
                                     @endif
-                                    @if(hasPermission('customer_order_list_claim'))
 
-                                        <div class="col-4">
-                                            <a href="{{ url('order-claim') . '?order_id=' . $order->id }}"
-                                               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect">{{_trans('order.Claim Order')}}</a>
-                                        </div>
-                                    @endif
                                     @if(hasPermission('customer_order_list_cancel'))
 
                                         <div class="col-4">
@@ -117,11 +111,10 @@
                                 <tr>
                                     <th class="col-1">#</th>
                                     <th class="col-3">{{_trans('common.Name')}}</th>
-                                    <th class="col-3">{{_trans('common.Variation')}}</th>
                                     <th class="col-1">{{_trans('common.Price')}}</th>
                                     <th class="col-2">{{_trans('common.qty')}}</th>
                                     <th class="col-2">{{_trans('common.Total')}}</th>
-                                    <th class="col-2">{{_trans('common.Action')}}</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,14 +128,7 @@
                                                 class="me-2" height="50px" alt="">
                                             {{ optional($cart_item->product)->name }}
                                         </td>
-                                        <td>
 
-                                            @foreach ($cart_item->variation as $key => $item)
-                                                <span><b class="me-1">{{ $item['attribute'] }}:</b><span
-                                                        class="text-primary">{{ $item['value'] }}</span></span><br>
-                                            @endforeach
-
-                                        </td>
                                         <td>
                                             <span>{{ getPriceFormat($cart_item->price) }}</span>
 
@@ -159,108 +145,9 @@
                                             <span>{{ number_format($cart_item->price * $cart_item->quantity, 2) }}</span>
 
                                         </td>
-                                        <td>
-
-                                            <span><button type="button" data-id="{{ $cart_item->id }}"
-                                                    class="btn btn-label-dark trackbutton" data-bs-toggle="modal"
-                                                    data-bs-target="#trackModal{{ $cart_item->id }}">
-                                                    {{_trans('order.Track')}}
-                                                </button>
-
-                                        </td>
                                     </tr>
 
-                                    <div class="modal fade" id="trackModal{{ $cart_item->id }}" tabindex="-1"
-                                        aria-hidden="true">
-                                        <div
-                                            class="modal-dialog modal-lg modal-simple modal-enable-otp modal-dialog-centered">
-                                            <div class="modal-content p-3 p-md-5">
-                                                <div class="modal-body">
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                    <div class="text-center mb-4">
-                                                        <h3 class="mb-1">{{_trans('order.Order Item Track')}}</h3>
-                                                        <p class="text-muted">{{_trans('order.Change and track the order item status')}}</p>
-                                                    </div>
-                                                    <h5 class="card-header">{{_trans('order.Change Order Item Status')}}</h5>
-                                                    <div class="card-body">
-                                                        <div class="row mb-2">
-                                                            <input type="text" hidden value="{{ $cart_item->id }}"
-                                                                id="orderItemID{{ $cart_item->id }}">
-                                                            <div class="col-4">
-                                                                <label class="form-label">{{_trans('order.Select brand status')}}</label>
-                                                                <select id="order_item_status{{ $cart_item->id }}"
-                                                                    name="order_item_status" class="select2 form-select"
-                                                                    data-placeholder="Select Order Item Status">
-                                                                    <option value="">{{_trans('common.Select') }} {{_trans('common.Status')}}</option>
-                                                                    @foreach ($status as $data)
-                                                                        <option value="{{ $data->id }}">
-                                                                            {{ $data->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                <span
-                                                                    class="text-danger orderItemStatusError{{ $cart_item->id }} error"></span>
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <label for="html5-datetime-local-input"
-                                                                    class="form-label">{{_trans('common.Datetime')}}</label>
 
-                                                                <input class="form-control" type="datetime-local"
-                                                                    value="2021-06-18T12:30:00"
-                                                                    id="order_item_status_date{{ $cart_item->id }}" />
-
-                                                                <span
-                                                                    class="text-danger orderItemStatusDateError{{ $cart_item->id }} error"></span>
-
-                                                            </div>
-                                                            <div class="col-4">
-                                                                <label class="form-label">{{_trans('common.Note')}}</label>
-                                                                <textarea name="" class="form-control" id="order_status_note{{ $cart_item->id }}" cols="60"
-                                                                    rows="1"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-
-                                                            <button class="btn btn-primary submitOrderItemStatus"
-                                                                data-id="{{ $cart_item->id }}">{{_trans('common.Submit')}}</button>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <hr>
-
-                                                    <h5 class="card-header mb-3">{{_trans('order.Order Item Log Timeline')}}</h5>
-                                                    <div class="card-body pb-0">
-                                                        <ul class="timeline mb-0">
-                                                            @forelse  ($cart_item->statusLog as $log)
-                                                                <li
-                                                                    class="timeline-item timeline-item-transparent @if ($loop->last) border-transparent @endif">
-                                                                    <span class="timeline-point timeline-point-primary"
-                                                                        style="background-color: {{ $log->status->color }} !important"></span>
-                                                                    <div class="timeline-event">
-                                                                        <div class="timeline-header mb-1">
-                                                                            <h6 class="mb-0">{{ $log->status->name }}
-                                                                            </h6>
-                                                                            <small
-                                                                                class="text-muted">{{ dateFormatwithTime($log->date_time) }}</small>
-                                                                        </div>
-                                                                        <p class="mb-2">{{ $log->note }}</p>
-                                                                        <div class="d-flex">
-
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            @empty
-                                                                <!-- Display a message if the collection is empty -->
-                                                                <p>{{_trans('order.No Log Added')}}.</p>
-                                                            @endforelse
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -290,7 +177,7 @@
                                 <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
                             </div>
                             <div class="d-flex flex-column">
-                                <a href="app-user-view-account.html" class="text-body text-nowrap">
+                                <a href="" class="text-body text-nowrap">
                                     <h6 class="mb-0">{{ optional($order->user)->name }}</h6>
                                 </a>
                                 <small class="text-muted">{{_trans('order.Customer ID')}}: #58909</small>
@@ -367,7 +254,7 @@
                     if (result.value) {
 
                         $.ajax({
-                            url: '{{ route('order.destroy') }}',
+                            url: '{{ route('admin.order.destroy') }}',
                             method: 'POST',
                             data: {
                                 "_token": "{{ csrf_token() }}",
@@ -383,7 +270,7 @@
                                     }
                                 }).then(function(result) {
                                     window.location.href =
-                                        "{{ route('order.index') }}";
+                                        "{{ route('admin.order.index') }}";
                                 });
                             },
                             error: function(error) {
@@ -395,40 +282,6 @@
                 });
             });
 
-            $(document).on('click', '.submitOrderItemStatus', function() {
-                $('.error').text('');
-                let id = $(this).data('id');
-                console.log('working');
-                $.ajax({
-                    url: '{{ route('order.items.status.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        order_item_id: $(`#orderItemID${id}`).val(),
-                        order_item_status: $(`#order_item_status${id} option:selected`).val(),
-                        order_item_status_date: $(`#order_item_status_date${id}`).val(),
-                        note: $(`#order_status_note${id}`).val(),
-                    },
-                    success: function(response) {
-                        if (response.status == 403) {
-                            $(`.orderItemStatusError${id}`).text(response.errors
-                                ?.order_item_status ?
-                                response.errors
-                                ?.order_item_status[0] : '');
-                            $(`.orderItemStatusDateError${id}`).text(response.errors
-                                ?.order_item_status_date ? response.errors
-                                ?.order_item_status_date[0] : '');
-                        } else if (response.status == 200) {
-                            toastr.success(response.message);
-                            location.reload();
-                        }
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON.message);
-                        // handle the error case
-                    }
-                });
-            })
         });
     </script>
 @endpush

@@ -162,12 +162,12 @@ class OrderController extends Controller
 
     public function details($order_id)
     {
-        $order = Order::with(['items.product', 'user', 'items.statusLog.status', 'orderStatus'])
+        $order = Order::with(['items.product', 'user','orderStatus'])
             ->find($order_id);
 
         $status = OrderStatus::where('active_status',1)->get();
         hasPermissionForOperation($order);
-        return view('order.details', compact('order', 'status'));
+        return view('admin.order.details', compact('order', 'status'));
     }
 
     public function edit($order_id)

@@ -90,5 +90,10 @@
     "favicon" => "favicon",
     "Cancel" => "Cancel",
     "Currency" => "Currency",
+    "Contact info" => "Contact info",
+    "Mobile" => "Mobile",
+    "State" => "State",
+    "Zip Code" => "Zip Code",
+    "Country" => "Country",
         ]
 ?>

@@ -27,5 +27,14 @@
     "Total Order" => "Total Order",
     "Cart List" => "Cart List",
     "WishList" => "WishList",
+    "Order Details" => "Order Details",
+    "Invoice" => "Invoice",
+    "Claim Order" => "Claim Order",
+    "Cancel Order" => "Cancel Order",
+    "Track" => "Track",
+    "It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You" => "It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You",
+    "Customer details" => "Customer details",
+    "Customer ID" => "Customer ID",
+    "Shipping address" => "Shipping address",
         ]
 ?>

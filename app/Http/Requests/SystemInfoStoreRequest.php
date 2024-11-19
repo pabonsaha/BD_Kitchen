@@ -17,12 +17,13 @@ class SystemInfoStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_name' =>  ['required', 'regex:/^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/', 'string', 'max:50'],
-            'address' => 'nullable|string',
+            'shop_name' =>  ['required', 'alpha', 'string', 'max:50'],
+            'address' => 'required|string',
             'phone' => ['required', 'string', 'regex:/^(?:\+88|88)?(01[3-9]\d{8})$/'],
             'email' => 'required|email',
             'delivery_charge' => 'required|numeric',
             'delivery_time' => 'required',
+            'order_per_hour' => 'required|numeric',
             'map_location' => 'nullable|string',
             'copy_right' => 'nullable|string',
         ];

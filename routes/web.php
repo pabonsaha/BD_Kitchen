@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 //order
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/order/thank-you', [OrderController::class, 'greeting'])->name('order.greeting');
 
     Route::post('/shipping-address/store',[\App\Http\Controllers\ShippingAddressController::class, 'store'])->name('shippingAddress.store');
 
@@ -56,7 +57,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/thank-you', function () {
-        return view('thank-you');
-    })->name('thank-you');
+
 });

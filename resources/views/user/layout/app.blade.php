@@ -36,7 +36,7 @@
                                     </svg>
                                     <span>{{ auth()->user()->name }}</span>
                                 </button>
-                        
+
                                 <!-- Dropdown menu -->
                                 <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none hidden" id="profile-menu" role="menu" aria-orientation="vertical" aria-labelledby="profile-button" tabindex="-1">
                                     <div class="py-1" role="none">
@@ -46,22 +46,22 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <script>
                             const profileButton = document.getElementById('profile-button');
                             const profileMenu = document.getElementById('profile-menu');
-                        
+
                             profileButton.addEventListener('click', () => {
                                 profileMenu.classList.toggle('hidden');
                             });
-                        
+
                             document.addEventListener('click', (event) => {
                                 if (!profileButton.contains(event.target) && !profileMenu.contains(event.target)) {
                                     profileMenu.classList.add('hidden');
                                 }
                             });
                         </script>
-                        
+
                         <div class="flex items-center justify-around">
                             <a href="{{ route('orders.index') }}">
                                 <button class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2">
@@ -73,14 +73,14 @@
                                     <span>Orders</span>
                                 </button>
                             </a>
-                            
+
                         </div>
-                        
+
                         <button class="bg-transparent hover:bg-[#E32938] text-[#E32938] font-semibold hover:text-white pt-[7px] pb-[7px] px-4 border border-[#E32938] hover:border-transparent rounded mx-2"> <a
                                 href="{{ route('logout') }}">Logout</a></button>
                         @else
                         <button class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2"><a href="{{ route('login') }}">Login</a></button>
-                            
+
                             <button class="bg-[#E32938] text-white font-bold py-2 px-4 rounded flex items-center space-x-2 mx-2"><a
                                 href="{{ route('userRegister') }}">SignUp</a></button>
                         @endif
@@ -102,6 +102,32 @@
         </div>
     </section> --}}
 </body>
+
+<script>
+    document.onload = function() {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    }
+
+
+</script>
+    {!! Toastr::message() !!}
 
 @stack('script')
 

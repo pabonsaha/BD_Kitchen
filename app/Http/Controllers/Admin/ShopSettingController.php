@@ -39,6 +39,7 @@ class ShopSettingController extends Controller
             $shop_setting->email = $request->email;
             $shop_setting->delivery_time = $request->delivery_time;
             $shop_setting->delivery_charge = $request->delivery_charge;
+            $shop_setting->order_per_hour = $request->order_per_hour;
             $shop_setting->map_location = $request->map_location;
             $shop_setting->save();
 

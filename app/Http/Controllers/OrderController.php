@@ -54,6 +54,17 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        $startTime = date('Y-m-d H:00:00');
+        $endTime = date('Y-m-d H:59:59');
+
+        $orderCount = Order::where('kitchen_id', $request->seller_id)->whereBetween('order_date',[$startTime,$endTime])->count();
+        $shopSetting = ShopSetting::where('user_id', $request->seller_id)->first();
+
+        if ($shopSetting->order_per_hour && $orderCount >= $shopSetting->order_per_hour) {
+            Toastr::error('Order limit exceeded for this hour');
+            return redirect()->back();
+        }
+
         try {
             DB::beginTransaction();
 
@@ -102,7 +113,7 @@ class OrderController extends Controller
             DB::commit();
 
             Toastr::success('Order Placed Successfully');
-            return redirect()->route('home');
+            return redirect()->route('order.greeting');
         } catch (Exception $e) {
             DB::rollBack();
             return abort(404, "Something went wrong");
@@ -114,5 +125,10 @@ class OrderController extends Controller
     {
         $timestamp = time();
         return "ORD-{$timestamp}";
+    }
+
+    public function greeting()
+    {
+        return view('orders.thank-you');
     }
 }

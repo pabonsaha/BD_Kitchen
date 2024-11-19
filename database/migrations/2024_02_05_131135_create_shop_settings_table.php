@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('delivery_charge')->nullable();
+            $table->string('order_per_hour')->nullable();
             $table->string('delivery_time')->nullable();
             $table->longText('shipping_policy')->nullable();
             $table->longText('return_policy')->nullable();

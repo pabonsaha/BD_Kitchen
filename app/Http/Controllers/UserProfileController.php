@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Traits\FileUploadTrait;
 use App\Models\ShippingAddress;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Exceptions\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,7 @@ class UserProfileController extends Controller
             }
 
             $user->save();
-
+            Toastr::success('Profile Updated');
             return redirect()->back();
         } catch (Exception $e) {
             return sendError("Something went wrong");

@@ -109,7 +109,7 @@
                                 <label class="form-label" for="email">{{ _trans('common.Delivery Charge') }}</label>
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="delivery_charge" name="delivery_charge" class="form-control"
-                                        required value="{{ $setting->delivery_charge }}" placeholder="30min" />
+                                        required value="{{ $setting->delivery_charge }}" placeholder="30" />
                                 </div>
 
                                 <span class="text-danger delivery_chargeError error"></span>
@@ -123,6 +123,16 @@
                                 </div>
 
                                 <span class="text-danger delivery_timeError error"></span>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="email">{{ _trans('common.Order Per Hour') }}</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="order_per_hour" name="order_per_hour" class="form-control"
+                                           required value="{{ $setting->order_per_hour }}" placeholder="10" />
+                                </div>
+
+                                <span class="text-danger order_per_hourError error"></span>
 
                             </div>
                             <div class="col-sm-12">
@@ -463,6 +473,7 @@
                     delivery_charge: $('#delivery_charge').val(),
                     delivery_time: $('#delivery_time').val(),
                     email: $('#email').val(),
+                    order_per_hour: $('#order_per_hour').val(),
 
                     map_location: $('#map_location').val(),
                 },
@@ -480,9 +491,12 @@
                         $('.emailError').text(response.errors?.email ? response.errors?.email[0] : '');
                         $('.delivery_timeError').text(response.errors?.delivery_time ? response.errors
                             ?.delivery_time[0] : '');
-                        $('.delivery_chargeError').text(response.errors?.delivery_charge[0] ? response
+                        $('.delivery_chargeError').text(response.errors?.delivery_charge ? response
                             .errors
                             ?.delivery_charge[0] : '');
+                        $('.order_per_hourError').text(response.errors?.order_per_hour ? response
+                            .errors
+                            ?.order_per_hour[0] : '');
 
                     } else if (response.status == 200) {
                         toastr.success(response.message);

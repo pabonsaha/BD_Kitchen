@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="{{asset('/assets/vendor/libs/toastr/toastr.css')}}">
+    <script src="{{ asset('assets/vendor/libs/toastr/toastr.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/bd_kitchen_style.css') }}" />
 

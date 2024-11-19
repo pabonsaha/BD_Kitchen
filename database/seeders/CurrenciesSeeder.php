@@ -14,7 +14,7 @@ class CurrenciesSeeder extends Seeder
     public function run(): void
     {
         $currencies = [
-            [1, 'Dollars', 'USD', '$'],
+            [1, 'Taka', 'BDT', '৳'],
             [2, 'Dollars', 'USD', '$'],
             [3, 'Afghanis', 'AFN', '؋'],
             [4, 'Pesos', 'ARS', '$'],

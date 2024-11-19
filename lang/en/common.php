@@ -95,5 +95,6 @@
     "State" => "State",
     "Zip Code" => "Zip Code",
     "Country" => "Country",
+    "Order Per Hour" => "Order Per Hour",
         ]
 ?>

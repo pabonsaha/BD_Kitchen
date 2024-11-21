@@ -27,8 +27,7 @@ return new class extends Migration
             'Cancelled',
             'Returned',
             'Refunded',
-            'Claim',
-            'Partial Delivery',
+
         ];
         $colors = [
             '#2DCCFF',
@@ -38,8 +37,6 @@ return new class extends Migration
             '#FF3838',
             '#A4ABB6',
             '#e3b7eb',
-            '#ffcd85',
-            '#7367f0',
         ];
 
         foreach ($status as $key => $value) {

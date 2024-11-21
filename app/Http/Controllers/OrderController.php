@@ -20,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         // Fetch orders from the database
-        $orders = Order::where('user_id',Auth::user()->id)->get(); // You can use Order::paginate(10) for pagination
+        $orders = Order::with('orderStatus')->where('user_id', Auth::user()->id)->get(); // You can use Order::paginate(10) for pagination
         return view('orders.index', compact('orders'));
 
     }
@@ -38,7 +38,7 @@ class OrderController extends Controller
         foreach ($products as $product) {
             foreach ($request->products as $item) {
                 if ($item['id'] == $product->id) {
-                    $product->quantity_value=$item['quantity'];
+                    $product->quantity_value = $item['quantity'];
                 }
             }
 
@@ -46,10 +46,9 @@ class OrderController extends Controller
         $shop = ShopSetting::find($request->shop_id);
         $shippingAdddresses = ShippingAddress::where('user_id', Auth::user()->id)->get();
 
-        return view('user.checkout', compact('products','shop', 'shippingAdddresses'));
+        return view('user.checkout', compact('products', 'shop', 'shippingAdddresses'));
 
     }
-
 
 
     public function store(Request $request)
@@ -57,7 +56,7 @@ class OrderController extends Controller
         $startTime = date('Y-m-d H:00:00');
         $endTime = date('Y-m-d H:59:59');
 
-        $orderCount = Order::where('kitchen_id', $request->seller_id)->whereBetween('order_date',[$startTime,$endTime])->count();
+        $orderCount = Order::where('kitchen_id', $request->seller_id)->whereBetween('order_date', [$startTime, $endTime])->count();
         $shopSetting = ShopSetting::where('user_id', $request->seller_id)->first();
 
         if ($shopSetting->order_per_hour && $orderCount >= $shopSetting->order_per_hour) {
@@ -86,7 +85,7 @@ class OrderController extends Controller
             $order = new Order();
             $order->user_id = Auth::user()->id;
             $order->kitchen_id = $request->seller_id; //here user id refer to designer id
-            $order->code =  $this->generateOrderID();
+            $order->code = $this->generateOrderID();
             $order->shipping_address = json_encode($shipping_addresses_arary);
             $order->note = $request->note;
             $order->sub_total_amount = $request->sub_total;
@@ -130,5 +129,13 @@ class OrderController extends Controller
     public function greeting()
     {
         return view('orders.thank-you');
+    }
+
+    public function cancelOrder($order_id)
+    {
+        $order = Order::find($order_id);
+        $order->status = 5;
+        $order->save();
+        return redirect()->route('orders.index');
     }
 }

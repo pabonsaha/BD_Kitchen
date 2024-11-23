@@ -83,9 +83,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class,'dashboard'])->name('dashboard');
 
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');

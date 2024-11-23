@@ -115,7 +115,7 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ getFilePath(Auth::user()->avatar) }}" alt class="rounded-circle" />
+                        <img src="{{ getFilePath(shopSetting()->logo) }}" alt class="rounded-circle" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -136,21 +136,7 @@
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('admin.profile') }}">
-                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                            <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        {{-- <a class="dropdown-item" href="{{route('admin.setting.shop-setting.index')}}">
-                            <i class="ti ti-settings me-2 ti-sm"></i>
-                            <span class="align-middle">Settings</span>
-                        </a> --}}
-                    </li>
+
 
                     <li>
                         <div class="dropdown-divider"></div>

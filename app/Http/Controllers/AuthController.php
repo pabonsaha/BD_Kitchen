@@ -85,13 +85,14 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'regex:/^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/', 'string', 'max:50'],
             'email' => 'required|email|unique:users',
-            'phone' => ['required', 'string', 'regex:/^(?:\+88|88)?(01[3-9]\d{8})$/'],
+            'phone' => ['required', 'string', 'regex:/^(01[3-9]\d{8})$/'],
             'password' => 'required|min:6|confirmed',
         ]);
         $user = new User();
         $user->name = $request->name;
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
+        $user->phone = $request->phone;
         $user->role_id = Role::USER;
         $user->active_status = 1;
         $user->save();

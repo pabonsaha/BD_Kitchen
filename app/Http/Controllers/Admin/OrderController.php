@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Mail\InvoiceMail;
+use http\Client\Curl\User;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Exception;
@@ -387,8 +388,23 @@ class OrderController extends Controller
         $order = Order::find($request->order_id);
         $order->payment_status = $request->payment_status_id;
         $order->save();
+        $user = User::find($order->user_id);
+        if ($order->status == 5) {
+            $this->sendSMS("Your order has been canceled. Order ID {$order->code}.}",$user->phone);
+        }elseif ($order->status == 2) {
+            $this->sendSMS("Your order has been processed. Order ID {$order->code}.}",$user->phone);
+        }elseif ($order->status == 3) {
+            $this->sendSMS("Your order has been shipped. Order ID {$order->code}.}",$user->phone);
+        }elseif ($order->status == 4) {
+            $this->sendSMS("Your order has been delivered. Order ID {$order->code}.}",$user->phone);
+        }
         Toastr::success('Payment Status Update Successfully');
         return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
+    }
+
+    function sendSMS($message,$number)
+    {
+        $sms = "http://bulksmsbd.net/api/smsapi?api_key=HTX91g3ajPPo7WlBlpuV&type=text&number={$number}&senderid=Random&message={$message}";
     }
 
 

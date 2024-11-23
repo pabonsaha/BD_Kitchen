@@ -1,7 +1,6 @@
 <?php
 
 
-
 use App\Http\Controllers\Admin\BackgroundSettingsController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogPostController;
@@ -80,8 +79,6 @@ use Stripe\Checkout\Session as StripeSession;
 Route::get('/', function () {
     return redirect('/login');
 })->name('login');
-
-
 
 
 Route::middleware(['auth'])->group(function () {
@@ -201,9 +198,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/invoice-send', [OrderController::class, 'sendInvoice'])->name('sendInvoice');
         Route::get('/product/{id}', [OrderController::class, 'getProduct']);
 
-        Route::prefix('items')->name('items.')->group(function () {
-            Route::post('/status/store', [OrderItemController::class, 'statusStore'])->name('status.store');
-        });
+
+        Route::post('/order-status/update', [OrderController::class, 'orderStatusUpdate'])->name('status.update');
+        Route::post('/payment-status/update', [OrderController::class, 'paymentStatusUpdate'])->name('payment.status.update');
+
     });
 
     Route::prefix('order-claim')->name('order-claim.')->group(function () {
@@ -454,12 +452,12 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::prefix('slider')->name('slider.')->group(function () {
-           Route::get('/', [SliderController::class, 'index'])->name('index')->middleware('checkPermission:slider_read');
-           Route::post('/store', [SliderController::class, 'store'])->name('store')->middleware('checkPermission:slider_create');
-           Route::get('/edit/{id}', [SliderController::class, 'edit'])->name('edit')->middleware('checkPermission:slider_update');
-           Route::post('/update', [SliderController::class, 'update'])->name('update')->middleware('checkPermission:slider_update');
-           Route::post('/change-status', [SliderController::class, 'changeStatus'])->name('changeStatus')->middleware('checkPermission:slider_status_change');
-           Route::post('/delete-slider', [SliderController::class, 'delete'])->name('destroy')->middleware('checkPermission:slider_delete');
+            Route::get('/', [SliderController::class, 'index'])->name('index')->middleware('checkPermission:slider_read');
+            Route::post('/store', [SliderController::class, 'store'])->name('store')->middleware('checkPermission:slider_create');
+            Route::get('/edit/{id}', [SliderController::class, 'edit'])->name('edit')->middleware('checkPermission:slider_update');
+            Route::post('/update', [SliderController::class, 'update'])->name('update')->middleware('checkPermission:slider_update');
+            Route::post('/change-status', [SliderController::class, 'changeStatus'])->name('changeStatus')->middleware('checkPermission:slider_status_change');
+            Route::post('/delete-slider', [SliderController::class, 'delete'])->name('destroy')->middleware('checkPermission:slider_delete');
         });
     });
 
@@ -473,8 +471,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/change-status', [PlanController::class, 'changeStatus'])->name('changeStatus')->middleware('checkPermission:plan_status_change');
             Route::post('/make-popular', [PlanController::class, 'makePopular'])->name('makePopular')->middleware('checkPermission:plan_make_popular');
 
-            Route::get('/buy-plan',[PlanController::class,'buyPlan'])->name('buyPlan')->withoutMiddleware('is_subscribed');
-            Route::post('/plan-make-payment',[PlanController::class,'makePayment'])->name('make-payment')->withoutMiddleware('is_subscribed');
+            Route::get('/buy-plan', [PlanController::class, 'buyPlan'])->name('buyPlan')->withoutMiddleware('is_subscribed');
+            Route::post('/plan-make-payment', [PlanController::class, 'makePayment'])->name('make-payment')->withoutMiddleware('is_subscribed');
 
         });
         Route::prefix('customer')->name('customer.')->group(function () {
@@ -487,8 +485,8 @@ Route::middleware(['auth'])->group(function () {
 
             Route::get('/stripe-generate-invoice/{invoice_no}', [SubscripitonController::class, 'stripeGenerateInvoice'])->name('stripeGenerateInvoice');
 
-            Route::get('/immediate-cancel-stripe-subscription/{user_id}',[SubscripitonController::class,'immediateSubscriptionCancel'])->name('immediateSubscriptionCancel');
-            Route::get('/revoke-cancel-stripe-subscription/{user_id}',[SubscripitonController::class,'revokeSubscriptionCancel'])->name('revokeSubscriptionCancel');
+            Route::get('/immediate-cancel-stripe-subscription/{user_id}', [SubscripitonController::class, 'immediateSubscriptionCancel'])->name('immediateSubscriptionCancel');
+            Route::get('/revoke-cancel-stripe-subscription/{user_id}', [SubscripitonController::class, 'revokeSubscriptionCancel'])->name('revokeSubscriptionCancel');
 
         });
     });
@@ -568,14 +566,12 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::post('stripe/webhook', [StripeWebhookController::class,'handleWebhook'])->name('stripe.webhook')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+Route::post('stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook')->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
 
 
 require __DIR__ . '/auth.php';
 
 
-
-Route::get('/home',function()
-{
+Route::get('/home', function () {
     return view('user.home');
 });

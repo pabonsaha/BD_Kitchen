@@ -31,7 +31,7 @@ return new class extends Migration
         ];
         $colors = [
             '#2DCCFF',
-            '#FCE83A',
+            '#ff9f43',
             '#FFB302',
             '#28c76f',
             '#FF3838',

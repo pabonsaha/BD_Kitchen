@@ -96,5 +96,6 @@
     "Zip Code" => "Zip Code",
     "Country" => "Country",
     "Order Per Hour" => "Order Per Hour",
+    "Paid" => "Paid",
         ]
 ?>

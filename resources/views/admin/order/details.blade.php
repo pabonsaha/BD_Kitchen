@@ -17,28 +17,21 @@
                                     <tbody>
                                     <tr>
                                         <td class="pe-4">{{_trans('common.Payment status')}}:</td>
-                                        <td class="fw-medium"> @if ($order->payment_status == 'paid')
+                                        <td class="fw-medium">
+                                            @if ($order->payment_status == 'paid')
                                                 <span class="badge bg-label-success">{{_trans('common.Paid')}}</span>
-                                                @php
-                                                    $payment_details = json_decode($order->payment_details);
-                                                    $paymentDetailsText = _trans('common.Date').': ' . dateFormatwithTime($payment_details->created)."<br>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Payment ID') . ': ' . $payment_details->payment_intent_id . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Currency') . ': ' . $payment_details->currency . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Amount') . ': ' . $payment_details->amount_total . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Status') . ': ' . $payment_details->payment_status . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Customer Name') . ': ' . $payment_details->customer_details->name . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Customer Email') . ': ' . $payment_details->customer_details->email . "</p>";
-
-                                                @endphp
-
-                                                <span class="badge bg-label-primary" data-bs-toggle="popover"
-                                                      data-bs-placement="right"
-                                                      data-bs-content="{{ htmlspecialchars_decode($paymentDetailsText) }}"
-                                                      title="Payment Details">{{_trans('common.Details')}}
-                                                </span>
                                             @else
                                                 <span class="badge bg-label-danger">{{_trans('common.Unpaid')}}</span>
-                                            @endif</td>
+                                            @endif
+                                            <select class="form-control mt-1" id="payment_status">
+                                                <option @if($order->payment_status == 'paid') selected
+                                                        @endif value="paid">Paid
+                                                </option>
+                                                <option @if($order->payment_status == 'unpaid') selected
+                                                        @endif value="unpaid">Unpaid
+                                                </option>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="pe-4">{{_trans('order.Total Amount')}}:</td>
@@ -67,29 +60,38 @@
                                 <h6 class="mb fw-bold">{{_trans('order.Order Info')}}</h6>
                                 <table>
                                     <tbody>
-                                        <tr>
-                                            <td class="pe-4">{{_trans('order.Order Code')}}:</td>
-                                            <td class="fw-medium">{{ $order->code }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pe-4">{{_trans('order.Order Date')}}:</td>
-                                            <td>{{ dateFormat($order->order_date) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pe-4">{{_trans('order.Order Status')}}:</td>
-                                            <td><span class="badge bg-label-info">{{ $order->orderStatus->name }}</span></td>
-                                        </tr>
+                                    <tr>
+                                        <td class="pe-4">{{_trans('order.Order Code')}}:</td>
+                                        <td class="fw-medium">{{ $order->code }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pe-4">{{_trans('order.Order Date')}}:</td>
+                                        <td>{{ dateFormat($order->order_date) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pe-4">{{_trans('order.Order Status')}}:</td>
+                                        <td>
+                                            <span class="badge bg-label-info">{{ $order->orderStatus->name }}</span>
+                                            <select id='order_status' class="form-control filter_dropdown m-1"
+                                                    style="width: 200px">
+                                                @foreach($status as $statu)
+                                                    <option @if($statu->id == $order->status) selected
+                                                            @endif value="{{$statu->id}}">{{$statu->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <div class="row mt-2">
-                                    @if(hasPermission('customer_order_list_read_invoice'))
-                                        <div class="col-4">
-                                            <a href="{{ route('admin.order.invoicePreview', $order->id) }}"
-                                               class="btn btn-label-warning d-grid w-100 mb-2 waves-effect">{{_trans('order.Invoice')}}</a>
-                                        </div>
-                                    @endif
 
-                                    @if(hasPermission('customer_order_list_cancel'))
+                                    <div class="col-4">
+                                        <a href="{{ route('admin.order.invoicePreview', $order->id) }}"
+                                           class="btn btn-label-warning d-grid w-100 mb-2 waves-effect">{{_trans('order.Invoice')}}</a>
+                                    </div>
+
+
+                                    @if($order->orderStatus->id !== 5)
 
                                         <div class="col-4">
                                             <button class="btn btn-label-danger delete-order" data-id="{{ $order->id }}"
@@ -108,47 +110,46 @@
 
                         <table class="datatables-order-details table border-top">
                             <thead>
-                                <tr>
-                                    <th class="col-1">#</th>
-                                    <th class="col-3">{{_trans('common.Name')}}</th>
-                                    <th class="col-1">{{_trans('common.Price')}}</th>
-                                    <th class="col-2">{{_trans('common.qty')}}</th>
-                                    <th class="col-2">{{_trans('common.Total')}}</th>
+                            <tr>
+                                <th class="col-1">#</th>
+                                <th class="col-3">{{_trans('common.Name')}}</th>
+                                <th class="col-1">{{_trans('common.Price')}}</th>
+                                <th class="col-2">{{_trans('common.qty')}}</th>
+                                <th class="col-2">{{_trans('common.Total')}}</th>
 
-                                </tr>
+                            </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($order->items as $cart_item)
-                                    <tr id="cartRow{{ $cart_item->id }}">
-                                        <td><span>{{ $loop->iteration }}</span></td>
+                            @foreach ($order->items as $cart_item)
+                                <tr id="cartRow{{ $cart_item->id }}">
+                                    <td><span>{{ $loop->iteration }}</span></td>
 
-                                        <td>
-                                            <img src="{{ getFilePath(optional($cart_item->product)->thumbnail_img) }}"
-                                                class="me-2" height="50px" alt="">
-                                            {{ optional($cart_item->product)->name }}
-                                        </td>
+                                    <td>
+                                        <img src="{{ getFilePath(optional($cart_item->product)->thumbnail_img) }}"
+                                             class="me-2" height="50px" alt="">
+                                        {{ optional($cart_item->product)->name }}
+                                    </td>
 
-                                        <td>
-                                            <span>{{ getPriceFormat($cart_item->price) }}</span>
+                                    <td>
+                                        <span>{{ getPriceFormat($cart_item->price) }}</span>
 
-                                        </td>
+                                    </td>
 
-                                        </td>
-                                        <td>
+                                    </td>
+                                    <td>
 
-                                            <span>{{ $cart_item->quantity }}</span>
+                                        <span>{{ $cart_item->quantity }}</span>
 
-                                        </td>
-                                        <td>
-                                            {{ getCurrency() }}
-                                            <span>{{ number_format($cart_item->price * $cart_item->quantity, 2) }}</span>
+                                    </td>
+                                    <td>
+                                        {{ getCurrency() }}
+                                        <span>{{ number_format($cart_item->price * $cart_item->quantity, 2) }}</span>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
-
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -174,7 +175,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-start align-items-center mb-4">
                             <div class="avatar me-2">
-                                <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle"/>
                             </div>
                             <div class="d-flex flex-column">
                                 <a href="" class="text-body text-nowrap">
@@ -205,11 +206,13 @@
                         </p>
                         <p class="mb-0">{{_trans('common.Phone')}}: {{ optional($order->shipping_address)->phone }}
                         </p>
-                        <p class="mb-0">{{_trans('order.Shipping address')}}: {{ optional($order->shipping_address)->street_address }}
+                        <p class="mb-0">{{_trans('order.Shipping address')}}
+                            : {{ optional($order->shipping_address)->street_address }}
                         </p>
                         <p class="mb-0">{{_trans('common.State')}}: {{ optional($order->shipping_address)->state }}
                         </p>
-                        <p class="mb-0">{{_trans('common.Zip Code')}}: {{ optional($order->shipping_address)->zip_code }}
+                        <p class="mb-0">{{_trans('common.Zip Code')}}
+                            : {{ optional($order->shipping_address)->zip_code }}
                         </p>
                         <p class="mb-0">{{_trans('common.Country')}}: {{ optional($order->shipping_address)->country }}
                         </p>
@@ -227,16 +230,14 @@
         </div>
 
 
-
-
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        $(function() {
+        $(function () {
 
-            $(document).on("click", "#delete_order", function() {
+            $(document).on("click", "#delete_order", function () {
 
                 let id = $(this).attr("data-id");
                 Swal.fire({
@@ -250,7 +251,7 @@
                         cancelButton: 'btn btn-label-secondary waves-effect waves-light'
                     },
                     buttonsStyling: false
-                }).then(function(result) {
+                }).then(function (result) {
                     if (result.value) {
 
                         $.ajax({
@@ -260,7 +261,7 @@
                                 "_token": "{{ csrf_token() }}",
                                 order_id: id,
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 Swal.fire({
                                     icon: response.icon,
                                     title: 'Canceled!',
@@ -268,18 +269,62 @@
                                     customClass: {
                                         confirmButton: 'btn btn-success waves-effect waves-light'
                                     }
-                                }).then(function(result) {
+                                }).then(function (result) {
                                     window.location.href =
                                         "{{ route('admin.order.index') }}";
                                 });
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 console.log(error.responseJSON.message);
                                 // handle the error case
                             }
                         });
                     }
                 });
+            });
+            $(document).on("change", "#order_status", function () {
+
+                let id = $(this).val();
+
+
+                $.ajax({
+                    url: '{{ route('admin.order.status.update') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        status_id: id,
+                        order_id: {{$order->id}}
+                    },
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error.responseJSON.message);
+                        // handle the error case
+                    }
+                });
+
+            });
+            $(document).on("change", "#payment_status", function () {
+                let id = $(this).val();
+
+                $.ajax({
+                    url: '{{ route('admin.order.payment.status.update') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        payment_status_id: id,
+                        order_id: {{$order->id}}
+                    },
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error.responseJSON.message);
+                        // handle the error case
+                    }
+                });
+
             });
 
         });

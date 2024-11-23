@@ -21,23 +21,7 @@
                                         <td class="pe-4">{{_trans('common.Payment status')}}:</td>
                                         <td class="fw-medium"> @if ($order->payment_status == 'paid')
                                                 <span class="badge bg-label-success">{{_trans('common.Paid')}}</span>
-                                                @php
-                                                    $payment_details = json_decode($order->payment_details);
-                                                    $paymentDetailsText = _trans('common.Date').': ' . dateFormatwithTime($payment_details->created)."<br>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Payment ID') . ': ' . $payment_details->payment_intent_id . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Currency') . ': ' . $payment_details->currency . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Amount') . ': ' . $payment_details->amount_total . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('common.Status') . ': ' . $payment_details->payment_status . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Customer Name') . ': ' . $payment_details->customer_details->name . "</p>";
-                                                    $paymentDetailsText .= '<p>' . _trans('order.Customer Email') . ': ' . $payment_details->customer_details->email . "</p>";
 
-                                                @endphp
-
-                                                <span class="badge bg-label-primary" data-bs-toggle="popover"
-                                                      data-bs-placement="right"
-                                                      data-bs-content="{{ htmlspecialchars_decode($paymentDetailsText) }}"
-                                                      title="Payment Details">{{_trans('common.Details')}}
-                                                </span>
                                             @else
                                                 <span class="badge bg-label-danger">{{_trans('common.Unpaid')}}</span>
                                             @endif</td>
@@ -94,8 +78,8 @@
                                 <div class="col-12 ">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <h5 class="card-title m-0">{{_trans('order.Order Items')}}</h5>
-                                            <button type="button" id="addItemButton" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#addItem"><i class="ti ti-plus ti-xs me-0 me-sm-2"></i>{{_trans('common.Add Item')}}</button>
+{{--                                            <button type="button" id="addItemButton" class="btn btn-primary" data-bs-toggle="modal"--}}
+{{--                                                    data-bs-target="#addItem"><i class="ti ti-plus ti-xs me-0 me-sm-2"></i>{{_trans('common.Add Item')}}</button>--}}
                                         </div>
                                         <div class="card-datatable table-responsive">
                                             <table class="data-table table border-top">

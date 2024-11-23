@@ -32,7 +32,7 @@ class OrderController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Order::where('kitchen_id', getUserId())->withCount('items')->with(['user', 'orderStatus']);
+            $data = Order::isKitchen()->withCount('items')->with(['user', 'orderStatus']);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('order_date', function ($row) {
@@ -371,6 +371,24 @@ class OrderController extends Controller
         $product = Product::with('choiceOptions', 'variants')->find($id);
 
         return $product;
+    }
+
+    public function orderStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->status = $request->status_id;
+        $order->save();
+        Toastr::success('Order Status Update Successfully');
+        return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
+    }
+
+    public function paymentStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->payment_status = $request->payment_status_id;
+        $order->save();
+        Toastr::success('Payment Status Update Successfully');
+        return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
     }
 
 

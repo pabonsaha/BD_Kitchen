@@ -219,7 +219,7 @@
 
                         <li class="menu-item {{ activeMenu(route('admin.user.index', Role::KITCHEN)) }}">
                             <a href="{{ route('admin.user.index', Role::KITCHEN) }}" class="menu-link">
-                                <div data-i18n="{{ _trans('user.Designers') }}">{{ _trans('user.Designers') }}
+                                <div data-i18n="{{ _trans('user.Kitchen') }}">{{ _trans('user.Kitchen') }}
                                 </div>
                             </a>
                         </li>

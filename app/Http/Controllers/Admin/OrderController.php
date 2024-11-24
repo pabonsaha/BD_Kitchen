@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Mail\InvoiceMail;
-use http\Client\Curl\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use Exception;
@@ -379,15 +379,7 @@ class OrderController extends Controller
         $order = Order::find($request->order_id);
         $order->status = $request->status_id;
         $order->save();
-        Toastr::success('Order Status Update Successfully');
-        return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
-    }
 
-    public function paymentStatusUpdate(Request $request)
-    {
-        $order = Order::find($request->order_id);
-        $order->payment_status = $request->payment_status_id;
-        $order->save();
         $user = User::find($order->user_id);
         if ($order->status == 5) {
             $this->sendSMS("Your order has been canceled. Order ID {$order->code}.}",$user->phone);
@@ -398,6 +390,17 @@ class OrderController extends Controller
         }elseif ($order->status == 4) {
             $this->sendSMS("Your order has been delivered. Order ID {$order->code}.}",$user->phone);
         }
+
+        Toastr::success('Order Status Update Successfully');
+        return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
+    }
+
+    public function paymentStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        $order->payment_status = $request->payment_status_id;
+        $order->save();
+        
         Toastr::success('Payment Status Update Successfully');
         return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
     }

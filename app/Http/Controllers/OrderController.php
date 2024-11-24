@@ -110,6 +110,8 @@ class OrderController extends Controller
             }
 
             DB::commit();
+            $shopSetting = ShopSetting::where('user_id',$request->seller_id)->first();
+            $this->sendSMS("You Have new Order. The order id is {$order->code}", $shopSetting->phone);
 
             Toastr::success('Order Placed Successfully');
             return redirect()->route('order.greeting');
@@ -137,5 +139,32 @@ class OrderController extends Controller
         $order->status = 5;
         $order->save();
         return redirect()->route('orders.index');
+    }
+
+    function sendSMS($message,$number)
+    {
+        // $sms = "http://bulksmsbd.net/api/smsapi?api_key=HTX91g3ajPPo7WlBlpuV&type=text&number=88{$number}&senderid=Random&message={$message}";
+        
+
+        $url = "http://bulksmsbd.net/api/smsapi";
+        $api_key = "HTX91g3ajPPo7WlBlpuV";
+        $senderid = "8809617622684";
+        $number = "88{$number}";
+        $message = $message;
+    
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "number" => $number,
+            "message" => $message
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
     }
 }

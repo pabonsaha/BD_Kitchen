@@ -17,7 +17,7 @@ class SystemInfoStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_name' =>  ['required', 'alpha', 'string', 'max:50'],
+            'shop_name' =>  ['required', 'string', 'max:50', 'regex:/^[A-Za-z]+((\s)?((\'|\-|\.)?([A-Za-z])+))*$/'],
             'address' => 'required|string',
             'phone' => ['required', 'string', 'regex:/^(?:\+88|88)?(01[3-9]\d{8})$/'],
             'email' => 'required|email',

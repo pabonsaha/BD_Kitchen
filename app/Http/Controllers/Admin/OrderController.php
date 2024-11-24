@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests\OrderStoreRequest;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Http;
 
 use App\Http\Requests\OrderUpdateRequest;
 use App\Http\Requests\IdValidationRequest;
@@ -376,23 +377,28 @@ class OrderController extends Controller
 
     public function orderStatusUpdate(Request $request)
     {
-        $order = Order::find($request->order_id);
-        $order->status = $request->status_id;
-        $order->save();
-
-        $user = User::find($order->user_id);
-        if ($order->status == 5) {
-            $this->sendSMS("Your order has been canceled. Order ID {$order->code}.}",$user->phone);
-        }elseif ($order->status == 2) {
-            $this->sendSMS("Your order has been processed. Order ID {$order->code}.}",$user->phone);
-        }elseif ($order->status == 3) {
-            $this->sendSMS("Your order has been shipped. Order ID {$order->code}.}",$user->phone);
-        }elseif ($order->status == 4) {
-            $this->sendSMS("Your order has been delivered. Order ID {$order->code}.}",$user->phone);
+        try{
+            $order = Order::find($request->order_id);
+            $order->status = $request->status_id;
+            $order->save();
+    
+            $user = User::find($order->user_id);
+            if ($order->status == 5) {
+                $this->sendSMS("Your order has been canceled. Order ID {$order->code}",$user->phone);
+            }elseif ($order->status == 2) {
+                $this->sendSMS("Your order has been processed. Order ID {$order->code}",$user->phone);
+            }elseif ($order->status == 3) {
+                $this->sendSMS("Your order has been shipped. Order ID {$order->code}",$user->phone);
+            }elseif ($order->status == 4) {
+                $this->sendSMS("Your order has been delivered. Order ID {$order->code}",$user->phone);
+            }
+    
+            Toastr::success('Order Status Update Successfully');
+            return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
+        }catch(Exception $e){
+            return $e;
         }
-
-        Toastr::success('Order Status Update Successfully');
-        return response()->json(['text' => 'Order status has been updated.', 'icon' => 'success']);
+        
     }
 
     public function paymentStatusUpdate(Request $request)
@@ -407,7 +413,29 @@ class OrderController extends Controller
 
     function sendSMS($message,$number)
     {
-        $sms = "http://bulksmsbd.net/api/smsapi?api_key=HTX91g3ajPPo7WlBlpuV&type=text&number={$number}&senderid=Random&message={$message}";
+        // $sms = "http://bulksmsbd.net/api/smsapi?api_key=HTX91g3ajPPo7WlBlpuV&type=text&number=88{$number}&senderid=Random&message={$message}";
+        
+
+        $url = "http://bulksmsbd.net/api/smsapi";
+        $api_key = "HTX91g3ajPPo7WlBlpuV";
+        $senderid = "8809617622684";
+        $number = "88{$number}";
+        $message = $message;
+    
+        $data = [
+            "api_key" => $api_key,
+            "senderid" => $senderid,
+            "number" => $number,
+            "message" => $message
+        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
     }
 
 

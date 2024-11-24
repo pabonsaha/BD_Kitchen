@@ -54,7 +54,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'regex:/^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/', 'string', 'max:50'],
             'email' => 'required|email|unique:users',
-            'kitchen_name' => 'required',
+            'kitchen_name' => ['required','regex:/^[A-Za-z]+((\s)?((\'|\-|\.)?([A-Za-z])+))*$/'],
             'password' => 'required|min:6|confirmed',
         ]);
         $user = new User();

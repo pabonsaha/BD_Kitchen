@@ -27,16 +27,12 @@ class UserProfileController extends Controller
     public function update(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate( [
             'name' => 'required|string',
             'avatar' => 'sometimes|image|mimes:jpeg,png,jpg|max:1024',
-            'phone' => 'required|string',
+            'phone' => ['required', 'string', 'regex:/^(01[3-9]\d{8})$/'],
 
         ]);
-
-        if ($validator->fails()) {
-            return sendError('Validation Error', $validator->errors(), 403);
-        }
 
         try {
 

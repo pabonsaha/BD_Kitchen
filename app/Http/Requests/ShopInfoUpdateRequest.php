@@ -18,7 +18,7 @@ class ShopInfoUpdateRequest extends FormRequest
         return [
             'shop_name' => 'required|string|max:255',
             'address' => 'nullable|string',
-            'phone' => 'required|string|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
+            'phone' => 'required|string|regex:/^(01[3-9]\d{8})$/',
             'email' => 'required|email',
             'map_location' => 'nullable|string',
             'copy_right' => 'nullable|string',

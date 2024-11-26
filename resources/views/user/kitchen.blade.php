@@ -131,7 +131,7 @@
                             <h4 class="font-semibold mb-2">Order Summary</h4>
                             <div class="flex justify-between text-sm">
                                 <p>Subtotal</p>
-                                <p>Tk <span id="subtotal">500</span></p>
+                                <p>Tk <span id="subtotal">0</span></p>
                             </div>
                             <div class="flex justify-between text-sm">
                                 <p>Delivery Fee</p>
@@ -139,7 +139,7 @@
                             </div>
                             <div class="flex justify-between text-lg font-semibold mt-2 border-t pt-2">
                                 <p>Total</p>
-                                <p>Tk <span id="total">535</span></p>
+                                <p>Tk <span id="total">0</span></p>
                             </div>
                         </div>
 

@@ -120,7 +120,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                        <a class="dropdown-item" href="">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
@@ -131,7 +131,7 @@
                                 <div class="flex-grow-1">
                                     <span class="fw-medium d-block">{{ Auth::user()->name }}</span>
                                     <small
-                                        class="text-muted">{{ Auth::user()->role_id == 1 ? 'Super Admin' : (Auth::user()->role_id == 2 ? 'Admin' : 'Designer') }}</small>
+                                        class="text-muted">{{ Auth::user()->role_id == 1 ? 'Super Admin' : (Auth::user()->role_id == 2 ? 'Admin' : 'Kitchen') }}</small>
                                 </div>
                             </div>
                         </a>

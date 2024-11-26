@@ -70,13 +70,11 @@
                                     <span class="fw-medium me-1">{{_trans('role.Role')}}:</span>
 
                                     @if ($user->role_id == 1)
-                                        <span>{{_trans('user.Super Admin')}}</span>
+                                        <span>{{_trans('user.Customer')}}</span>
                                     @elseif($user->role_id == 2)
                                         <span>{{_trans('user.Admin')}}</span>
                                     @elseif($user->role_id == 3)
                                         <span>{{_trans('user.Kitchen')}}</span>
-                                    @else
-                                        <span>{{_trans('user.Customer')}}</span>
                                     @endif
                                 </li>
                                 <li class="mb-2 pt-1">

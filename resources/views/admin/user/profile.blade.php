@@ -74,7 +74,7 @@
                                     @elseif($user->role_id == 2)
                                         <span>{{_trans('user.Admin')}}</span>
                                     @elseif($user->role_id == 3)
-                                        <span>{{_trans('user.Designer')}}</span>
+                                        <span>{{_trans('user.Kitchen')}}</span>
                                     @else
                                         <span>{{_trans('user.Customer')}}</span>
                                     @endif

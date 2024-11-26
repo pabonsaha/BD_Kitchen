@@ -19,7 +19,7 @@ class SystemInfoStoreRequest extends FormRequest
         return [
             'shop_name' =>  ['required', 'string', 'max:50', 'regex:/^[A-Za-z]+((\s)?((\'|\-|\.)?([A-Za-z])+))*$/'],
             'address' => 'required|string',
-            'phone' => ['required', 'string', 'regex:/^(?:\+88|88)?(01[3-9]\d{8})$/'],
+            'phone' => ['required', 'string', 'regex:/^(01[3-9]\d{8})$/'],
             'email' => 'required|email',
             'delivery_charge' => 'required|numeric',
             'delivery_time' => 'required',

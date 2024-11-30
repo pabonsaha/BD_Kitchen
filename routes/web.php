@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/thank-you', [OrderController::class, 'greeting'])->name('order.greeting');
 
     Route::post('/shipping-address/store',[\App\Http\Controllers\ShippingAddressController::class, 'store'])->name('shippingAddress.store');
+    Route::post('/shipping-address/destroy',[\App\Http\Controllers\ShippingAddressController::class, 'destroy'])->name('shippingAdddresses.destroy');
 
 
 

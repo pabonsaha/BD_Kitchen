@@ -55,4 +55,5 @@ class ShippingAddressController extends Controller
             return sendError('Something went wrong');
         }
     }
+
 }

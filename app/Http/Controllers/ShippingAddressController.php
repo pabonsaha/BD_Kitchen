@@ -52,4 +52,16 @@ class ShippingAddressController extends Controller
             return sendError('Something went wrong');
         }
     }
+
+
+    public function destroy(Request $request)
+    {
+        $shippingAddress = ShippingAddress::find($request->addressID);
+        $shippingAddress->delete();
+        Toastr::success("Shipping Address Deleted Successfully");
+        return response()->json([
+            'message' => 'Shipping Address Deleted Successfully',
+            'status' => 200
+        ]);
+    }
 }

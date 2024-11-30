@@ -10,7 +10,7 @@
 
                 <div class="flex items-center space-x-4 mb-6">
                     <img class="w-24 h-24 rounded-full"
-                        src="{{ getFilePath($user->avatar) }}" alt="Profile Picture">
+                         src="{{ getFilePath($user->avatar) }}" alt="Profile Picture">
                     <div>
                         <h2 class="text-xl font-semibold">{{ $user->name }}</h2>
                         <p class="text-gray-600">{{ $user->email }}</p>
@@ -19,7 +19,7 @@
 
                 <!-- Edit Button -->
                 <button id="editProfileBtn"
-                    class="rounded-md bg-[#E32938] py-2 px-4 text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
+                        class="rounded-md bg-[#E32938] py-2 px-4 text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
                     Edit Profile
                 </button>
 
@@ -41,20 +41,20 @@
                                     <div class="form mb-4">
                                         <label for="name" class="block text-sm font-medium text-black">Name</label>
                                         <input id="name"
-                                            class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required value="{{ $user->name }}" type="text" name="name">
+                                               class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                               required value="{{ $user->name }}" type="text" name="name">
                                         @error('name')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="form mb-4">
                                         <label for="email" class="block text-sm font-medium text-black">Email</label>
                                         <input id="email"
-                                            class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required disabled value="{{ $user->email }}" type="email" name="email">
+                                               class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                               required disabled value="{{ $user->email }}" type="email" name="email">
                                         @error('email')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
@@ -62,20 +62,21 @@
                                         <label for="contact_number" class="block text-sm font-medium text-black">Contact
                                             Number</label>
                                         <input id="contact_number"
-                                            class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required value="{{ $user->phone }}" type="text" name="phone">
+                                               class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                               required value="{{ $user->phone }}" type="text" name="phone">
                                         @error('contact_number')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <div class="form mb-4">
-                                        <label for="address" class="block text-sm font-medium text-black">Address</label>
+                                        <label for="address"
+                                               class="block text-sm font-medium text-black">Address</label>
                                         <input id="address"
-                                            class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            required value="{{ $user->address }}" type="text" name="address">
+                                               class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                               required value="{{ $user->address }}" type="text" name="address">
                                         @error('address')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
@@ -83,21 +84,25 @@
                                         <label for="profile_photo" class="block text-sm font-medium text-black">Profile
                                             Photo</label>
                                         <input id="profile_photo"
-                                            class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
-                                            type="file" name="avatar">
+                                               class="inputForm mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-[#c62828] hover:border-gray-400 shadow-sm"
+                                               type="file" name="avatar">
                                         @error('avatar')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <button type="submit"
-                                        class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Update
-                                        Profile</button>
+                                            class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
+                                        Update
+                                        Profile
+                                    </button>
                                 </form>
                             </div>
                             <div class="p-6 pt-0">
                                 <button type="button"
-                                    class="close-btn w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Close</button>
+                                        class="close-btn w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
+                                    Close
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -115,19 +120,19 @@
                 var closeBtns = profileModal.querySelectorAll(".close-btn");
 
                 // When the user clicks the button, open the modal
-                editProfileBtn.onclick = function() {
+                editProfileBtn.onclick = function () {
                     profileModal.classList.remove("hidden");
                 }
 
                 // When the user clicks on close buttons, close the modal
-                closeBtns.forEach(function(closeBtn) {
-                    closeBtn.onclick = function() {
+                closeBtns.forEach(function (closeBtn) {
+                    closeBtn.onclick = function () {
                         profileModal.classList.add("hidden");
                     }
                 });
 
                 // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
+                window.onclick = function (event) {
                     if (event.target == profileModal) {
                         profileModal.classList.add("hidden");
                     }
@@ -135,11 +140,11 @@
             </script>
 
 
-
             <div class="mt-4">
                 <h3 class="text-lg font-semibold mb-2">Contact Information</h3>
                 <p><span class=" text-black font-medium">Name:</span> {{ $user->name ?? 'Not available' }}</p>
-                <p><span class=" text-black font-medium">Contact Number:</span> {{ $user->phone ?? 'Not available' }}</p>
+                <p><span class=" text-black font-medium">Contact Number:</span> {{ $user->phone ?? 'Not available' }}
+                </p>
                 <p><span class=" text-black font-medium">Address:</span> {{ $user->address ?? 'Not available' }}</p>
             </div>
 
@@ -156,7 +161,22 @@
                             class="text-start address-card  bg-white border border-gray-200 rounded-lg shadow p-4 dark:border-gray-700 dark:bg-gray-800 mb-4 flex items-center">
                             <input type="radio" name="address" class="mr-2"
                                    @if($shippingAdddress->is_default == 1) checked @endif >
-                            <div>
+                            <div class="relative">
+                                @if($shippingAdddress->is_default != 1)
+                                    <p data-id="{{$shippingAdddress->id}}"
+                                       class="absolute top-0 right-0 text-red-500 cursor-pointer remove_address">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="lucide lucide-trash-2">
+                                            <path d="M3 6h18"/>
+                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                            <line x1="10" x2="10" y1="11" y2="17"/>
+                                            <line x1="14" x2="14" y1="11" y2="17"/>
+                                        </svg>
+                                    </p>
+                                @endif
                                 <p class="text-black dark:text-gray-400">Name: {{$shippingAdddress->name}}</p>
                                 <p class="text-black dark:text-gray-400">Phone: {{$shippingAdddress->phone}}</p>
                                 <p class="text-black dark:text-gray-400">Street
@@ -167,15 +187,13 @@
                     @endforeach
 
 
-            </div>
-
-
+                </div>
 
 
                 <!-- Button to Open Modal -->
                 <button id="addAddressBtn"
-                    class="px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB]"
-                    type="button">
+                        class="px-6 flex items-center btn text-[#E32938] border border-solid border-[#E3293880] bg-[#FCEAEB]"
+                        type="button">
                     Add Address
                 </button>
 
@@ -201,7 +219,7 @@
                                             required value="{{ old('name') }}" type="text"
                                             name="shipping_addresses_name">
                                         @error('name')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
@@ -213,7 +231,7 @@
                                             required type="tel" value="{{ old('phone') }}"
                                             name="shipping_addresses_phone">
                                         @error('phone')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
@@ -225,7 +243,7 @@
                                             required value="{{ old('street_address') }}" type="text"
                                             name="shipping_addresses_street_address">
                                         @error('street_address')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
@@ -236,17 +254,21 @@
                                             required value="{{ old('city') }}" type="text"
                                             name="shipping_addresses_city">
                                         @error('city')
-                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
                                         @enderror
                                     </div>
 
                                     <button type="submit"
-                                        class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Submit</button>
+                                            class="w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
+                                        Submit
+                                    </button>
                                 </form>
                             </div>
                             <div class="p-6 pt-0">
                                 <button type="button"
-                                    class="close w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">Close</button>
+                                        class="close w-full rounded-md bg-[#E32938] py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-[#c62828] focus:shadow-none active:bg-[#c62828] hover:bg-[#c62828] active:shadow-none">
+                                    Close
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -263,17 +285,17 @@
                 var closeBtn = document.getElementsByClassName("close")[0];
 
                 // When the user clicks the button, open the modal
-                btn.onclick = function() {
+                btn.onclick = function () {
                     modal.classList.remove('hidden');
                 }
 
                 // When the user clicks on <span> (x), close the modal
-                closeBtn.onclick = function() {
+                closeBtn.onclick = function () {
                     modal.classList.add('hidden');
                 }
 
                 // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
+                window.onclick = function (event) {
                     if (event.target == modal) {
                         modal.classList.add('hidden');
                     }
@@ -282,3 +304,29 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        let productsID = [];
+        $(document).on('click', '.remove_address', function (e) {
+            e.preventDefault();
+            let addressID = $(this).data("id");
+            $.ajax({
+                url: '{{ route('shippingAdddresses.destroy') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    addressID: addressID,
+                },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log(error.responseJSON.message);
+                    // handle the error case
+                }
+            });
+
+        });
+        </script>
+@endpush

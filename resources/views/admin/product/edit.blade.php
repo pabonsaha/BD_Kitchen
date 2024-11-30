@@ -62,42 +62,42 @@
                         </div>
                         <!-- /Product Information -->
 
-                        <!-- Product Image -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">{{_trans('product.Product') .' '._trans('common.Image')}}
-                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
-                                        data-bs-toggle="popover" data-bs-placement="right"
-                                        data-bs-content="You can upload multiple image of a product" title="Variants"><small
-                                            class="rounded-circle p-0 m-0 px-1 bg-primary"><i
-                                                class="fa-solid fa-question text-white"
-                                                style="font-size: 10px !important"></i></small>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="multiple-uploader" id="multiple-uploader">
-                                    <div class="mup-msg">
-                                        <span class="mup-main-msg">{{_trans('product.Click') .' '._trans('common.To').' '. _trans('common.Upload').' '._trans('common.Image')}}</span>
-                                        <span class="mup-msg" id="max-upload-number">{{_trans('common.Upload'). _trans('common.Up'). _trans('common.To'). 10 ._trans('common.Image')}}</span>
-                                        <span class="mup-msg">{{_trans('common.Select') .' '._trans('product.Multiple').' '. _trans('common.Image').' '. _trans('common.Together')}}</span>
-                                    </div>
-                                </div>
-                            </div>
+{{--                        <!-- Product Image -->--}}
+{{--                        <div class="card mb-4">--}}
+{{--                            <div class="card-header">--}}
+{{--                                <h5 class="card-title mb-0">{{_trans('product.Product') .' '._trans('common.Image')}}--}}
+{{--                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"--}}
+{{--                                        data-bs-toggle="popover" data-bs-placement="right"--}}
+{{--                                        data-bs-content="You can upload multiple image of a product" title="Variants"><small--}}
+{{--                                            class="rounded-circle p-0 m-0 px-1 bg-primary"><i--}}
+{{--                                                class="fa-solid fa-question text-white"--}}
+{{--                                                style="font-size: 10px !important"></i></small>--}}
+{{--                                    </button>--}}
+{{--                                </h5>--}}
+{{--                            </div>--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="multiple-uploader" id="multiple-uploader">--}}
+{{--                                    <div class="mup-msg">--}}
+{{--                                        <span class="mup-main-msg">{{_trans('product.Click') .' '._trans('common.To').' '. _trans('common.Upload').' '._trans('common.Image')}}</span>--}}
+{{--                                        <span class="mup-msg" id="max-upload-number">{{_trans('common.Upload'). _trans('common.Up'). _trans('common.To'). 10 ._trans('common.Image')}}</span>--}}
+{{--                                        <span class="mup-msg">{{_trans('common.Select') .' '._trans('product.Multiple').' '. _trans('common.Image').' '. _trans('common.Together')}}</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="card-footer">
-                                <div class="row">
-                                    @foreach ($product->images as $image)
-                                        <div class="col-1 position-relative ">
-                                            <img src="{{ getFilePath($image->path) }}" class="rounded px-0 mx-1 img-fluid"
-                                                width="100%" alt="...">
-                                            <i class="fa-solid fa-trash-can text-danger position-absolute top-0 end-0 cursor-pointer deleteProductImage"
-                                                data-id="{{ $image->id }}"></i>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+{{--                            <div class="card-footer">--}}
+{{--                                <div class="row">--}}
+{{--                                    @foreach ($product->images as $image)--}}
+{{--                                        <div class="col-1 position-relative ">--}}
+{{--                                            <img src="{{ getFilePath($image->path) }}" class="rounded px-0 mx-1 img-fluid"--}}
+{{--                                                width="100%" alt="...">--}}
+{{--                                            <i class="fa-solid fa-trash-can text-danger position-absolute top-0 end-0 cursor-pointer deleteProductImage"--}}
+{{--                                                data-id="{{ $image->id }}"></i>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <!-- Product Image -->
 
                         <!-- /Diamension & Specifications-->

@@ -65,29 +65,29 @@
                         <!-- /Product Information -->
 
                         <!-- Product Image -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">{{ _trans('product.Product Images') }}
-                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"
-                                        data-bs-toggle="popover" data-bs-placement="right"
-                                        data-bs-content="You can upload multiple image of a product" title="Variants"><small
-                                            class="rounded-circle p-0 m-0 px-1 bg-primary"><i
-                                                class="fa-solid fa-question text-white"
-                                                style="font-size: 10px !important"></i></small>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="multiple-uploader" id="multiple-uploader">
-                                    <div class="mup-msg">
-                                        <span class="mup-main-msg">{{ _trans('product.Click to upload images') }}.</span>
-                                        <span class="mup-msg"
-                                            id="max-upload-number">{{ _trans('product.Upload up to 10 images') }}</span>
-                                        <span class="mup-msg">{{ _trans('product.Select multiple image together') }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="card mb-4">--}}
+{{--                            <div class="card-header">--}}
+{{--                                <h5 class="card-title mb-0">{{ _trans('product.Product Images') }}--}}
+{{--                                    <button type="button" class="border border-0 text-primary bg-transparent m-0 p-0"--}}
+{{--                                        data-bs-toggle="popover" data-bs-placement="right"--}}
+{{--                                        data-bs-content="You can upload multiple image of a product" title="Variants"><small--}}
+{{--                                            class="rounded-circle p-0 m-0 px-1 bg-primary"><i--}}
+{{--                                                class="fa-solid fa-question text-white"--}}
+{{--                                                style="font-size: 10px !important"></i></small>--}}
+{{--                                    </button>--}}
+{{--                                </h5>--}}
+{{--                            </div>--}}
+{{--                            <div class="card-body">--}}
+{{--                                <div class="multiple-uploader" id="multiple-uploader">--}}
+{{--                                    <div class="mup-msg">--}}
+{{--                                        <span class="mup-main-msg">{{ _trans('product.Click to upload images') }}.</span>--}}
+{{--                                        <span class="mup-msg"--}}
+{{--                                            id="max-upload-number">{{ _trans('product.Upload up to 10 images') }}</span>--}}
+{{--                                        <span class="mup-msg">{{ _trans('product.Select multiple image together') }}</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <!-- Product Image -->
 
 

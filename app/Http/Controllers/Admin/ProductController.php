@@ -187,17 +187,6 @@ class ProductController extends Controller
             $product->save();
 
 
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $path = $this->uploadFile($image, 'products/' . $product->id);
-                    $productImage = new ProductImage();
-                    $productImage->path = $path;
-                    $productImage->product_id = $product->id;
-                    $productImage->save();
-                }
-            }
-
-
 
             DB::commit();
 
@@ -213,7 +202,7 @@ class ProductController extends Controller
     public function edit($id)
     {
 
-        $product = Product::with('images')->find($id);
+        $product = Product::find($id);
         hasPermissionForOperation($product);
         $categories = Category::where('active_status', 1)->get();
         return view('admin.product.edit', compact('categories','product'));
@@ -309,15 +298,6 @@ class ProductController extends Controller
                 $product->thumbnail_img = $path;
             }
 
-            if ($request->hasFile('images')) {
-                foreach ($request->file('images') as $image) {
-                    $path = $this->uploadFile($image, 'products/' . $product->id);
-                    $productImage = new ProductImage();
-                    $productImage->path = $path;
-                    $productImage->product_id = $product->id;
-                    $productImage->save();
-                }
-            }
             $product->save();
 
 

@@ -37,7 +37,7 @@ class ShippingAddressController extends Controller
             $shipping_address->state = $request->shipping_addresses_city;
             $shipping_address->created_by = Auth::user()->id;
 
-            $data = ShippingAddress::where('is_default', 1)->get();
+            $data = ShippingAddress::where('is_default', 1)->where('user_id', Auth::user()->id)->get();
             foreach ($data as $shippingAddress) {
                 $shippingAddress->is_default = 0;
                 $shippingAddress->save();

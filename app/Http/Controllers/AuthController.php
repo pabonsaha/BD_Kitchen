@@ -38,7 +38,7 @@ class AuthController extends Controller
 
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
-            return redirect()->back()->with('message', "credendital didn't matched");
+            return redirect()->back()->with('message', "credential didn't matched");
         }
     }
 

@@ -71,6 +71,7 @@ The platform includes a comprehensive administrative backend for managing vendor
 * PHP
 * MySQL
 * Eloquent ORM
+* Redis
 
 ### Frontend
 
@@ -85,6 +86,8 @@ The platform includes a comprehensive administrative backend for managing vendor
 * Laravel Migrations
 * Laravel Seeders
 * Git & GitHub
+* SMS Service
+* Payment Gateway
 
 ---
 

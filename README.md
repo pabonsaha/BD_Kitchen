@@ -1,66 +1,254 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 🍽️ BD Kitchen
 
-## About Laravel
+### Multi-Vendor Food Ordering Platform
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A full-stack food ordering marketplace built with Laravel and Vue.js, enabling restaurants and independent food vendors to register, showcase their menus, and serve customers through a centralized ordering platform.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge\&logo=laravel\&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge\&logo=vuedotjs\&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge\&logo=bootstrap\&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge\&logo=javascript\&logoColor=black)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge\&logo=mysql\&logoColor=white)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+</div>
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📖 Overview
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+BD Kitchen is a multi-vendor food ordering platform that connects customers with restaurants and independent food sellers. Vendors can register their businesses, manage menus, receive orders, and serve customers through a unified marketplace.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Customers can browse food items from multiple vendors, place orders, and enjoy a seamless online food ordering experience.
 
-## Laravel Sponsors
+The platform includes a comprehensive administrative backend for managing vendors, customers, products, orders, and platform activities.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## ✨ Features
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 👨‍🍳 Vendor Features
 
-## Contributing
+* Vendor Registration & Authentication
+* Restaurant & Home Chef Registration
+* Menu Management
+* Product Management
+* Order Management
+* Profile Management
+* Dashboard Analytics
+* Inventory Updates
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🛒 Customer Features
 
-## Code of Conduct
+* User Registration & Login
+* Browse Food Categories
+* Search Food Items
+* Add to Cart
+* Place Orders
+* Order Tracking
+* Order History
+* Responsive User Experience
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 🛠️ Admin Features
 
-## Security Vulnerabilities
+* Admin Dashboard
+* Vendor Management
+* Customer Management
+* Product Management
+* Category Management
+* Order Monitoring
+* User Management
+* Platform Analytics
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🚀 Technology Stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Backend
+
+* Laravel
+* PHP
+* MySQL
+* Eloquent ORM
+
+### Frontend
+
+* Vue.js
+* Bootstrap
+* JavaScript
+* Axios
+
+### Development Tools
+
+* Laravel Authentication
+* Laravel Migrations
+* Laravel Seeders
+* Git & GitHub
+
+---
+
+## 🎯 Core Modules
+
+### 🍴 Vendor Management
+
+* Vendor Registration
+* Business Profile Setup
+* Menu Management
+* Product Listings
+* Order Processing
+
+### 🛍️ Customer Management
+
+* Account Creation
+* Shopping Cart
+* Food Browsing
+* Order Placement
+* Order Tracking
+
+### 📦 Order Management
+
+* Order Processing
+* Order Status Updates
+* Order History
+* Customer Notifications
+
+### 📊 Administration
+
+* Vendor Approval
+* Product Oversight
+* User Management
+* Reporting & Analytics
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/pabonsaha/BD_Kitchen.git
+cd BD_Kitchen
+```
+
+### Install Dependencies
+
+```bash
+composer install
+npm install
+```
+
+### Configure Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure your database credentials in the `.env` file:
+
+```env
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### Run Database Migrations
+
+```bash
+php artisan migrate
+```
+
+### Seed Database (Optional)
+
+```bash
+php artisan db:seed
+```
+
+### Build Frontend Assets
+
+```bash
+npm run dev
+```
+
+For production:
+
+```bash
+npm run build
+```
+
+### Start Application
+
+```bash
+php artisan serve
+```
+
+Application URL:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+app/
+├── Http/
+├── Models/
+├── Services/
+
+database/
+├── migrations/
+├── seeders/
+
+resources/
+├── js/
+├── views/
+
+routes/
+├── web.php
+├── api.php
+
+public/
+```
+
+---
+
+## 🔒 Security Features
+
+* Authentication & Authorization
+* CSRF Protection
+* Form Validation
+* Password Hashing
+* Role-Based Access Control
+
+---
+
+## 🔮 Future Enhancements
+
+* Online Payment Integration
+* Real-Time Order Tracking
+* Delivery Management System
+* Vendor Subscription Plans
+* Customer Reviews & Ratings
+* Push Notifications
+* Mobile Application
+* Advanced Analytics Dashboard
+
+---
+
+## 👨‍💻 Author
+
+**Pabon Saha**
+
+Full-Stack Web Developer
+
+* GitHub: https://github.com/pabonsaha
+
+---
+
+## 📄 License
+
+This project is developed for educational and commercial purposes.
